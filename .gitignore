@@ -80,3 +80,5 @@ playwright/.cache/
 .tanstack
 
 .source
+
+*.gen.ts

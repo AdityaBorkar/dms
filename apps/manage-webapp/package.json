@@ -1,19 +1,4 @@
 {
-  "name": "@dms/manage-webapp",
-  "private": true,
-  "type": "module",
-  "imports": {
-    "#/*": "./src/*"
-  },
-  "scripts": {
-    "dev": "vite dev --port 3000",
-    "gen:routes": "tsr generate",
-    "build": "vite build",
-    "preview": "vite preview",
-    "test": "vitest run",
-    "check:types": "tsc --noEmit",
-    "check:lint": "biome check --fix ."
-  },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.2",
     "@tanstack/react-devtools": "latest",
@@ -44,10 +29,22 @@
     "vite": "^8.1.5",
     "vitest": "^4.1.10"
   },
+  "imports": {
+    "#/*": "./src/*"
+  },
+  "name": "@dms/manage-webapp",
   "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "lightningcss"
-    ]
-  }
+    "onlyBuiltDependencies": ["esbuild", "lightningcss"]
+  },
+  "private": true,
+  "scripts": {
+    "build": "vite build",
+    "check:lint": "biome check --fix .",
+    "check:types": "tsc --noEmit",
+    "dev": "vite dev --port 3000",
+    "gen:routes": "tsr generate",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "type": "module"
 }

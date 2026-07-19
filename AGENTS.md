@@ -1,58 +1,77 @@
 # AGENTS.md
 
-Bun workspace monorepo. Install with `bun install` (not pnpm/npm — the `pnpm.onlyBuiltDependencies` field in app `package.json` files is a scaffold leftover).
+Bun workspace monorepo (`bun.lock`, text format). Install with `bun install` — not pnpm/npm. The `pnpm.onlyBuiltDependencies` field in `apps/{manage-webapp,webapp,website}/package.json` is a scaffold leftover; ignore it.
 
 ## Commands
 
-Root scripts (run from repo root):
+Root (run from repo root):
 
 - `bun run check:lint` — Biome `check --fix` across the repo.
-- `bun run check:types` — `tsc --noEmit` over the whole workspace (root `tsconfig.json` has no `include`, so it picks up every `.ts`/`.tsx`).
-- `bun run update:deps` — `taze -rw --maturity-period 3` (only versions ≥3 months mature).
+- `bun run check:types` — `tsc --noEmit` over the whole workspace (root `tsconfig.json` has no `include`, so it typechecks every `.ts`/`.tsx`).
+- `bun run update:deps` — `taze -rw --maturity-period 3`.
 
-Per-app scripts live in each app's `package.json`. The two apps use **different script names for the same task** — don't assume one name works in both:
+Per-app script names differ across the 4 apps — **don't assume one name works in another**:
 
-| Task        | `apps/management` | `apps/webapp`        |
-| ----------- | ----------------- | -------------------- |
-| Lint/format | `check:lint`      | `lint` / `format` / `check` (split) |
-| Typecheck   | `check:types`     | — (use root)         |
-| Test        | `test` (vitest run) | `test` (vitest run) |
-| Route codegen | `gen:routes`    | `generate-routes`    |
-| Dev server  | `dev`             | `dev`                |
+| Task          | `manage-webapp`          | `webapp`                 | `website`            | `documentation`                |
+| ------------- | ------------------------ | ------------------------ | -------------------- | ------------------------------ |
+| Lint/format   | `check:lint` (`--fix .`) | `lint` / `format` / `check` (split, no `--write`) | — (use root) | `lint` / `format` (`--write`)  |
+| Typecheck     | `check:types`            | — (use root)             | — (use root)         | `types:check` (codegen + tsc)  |
+| Test          | `test` (vitest run)      | `test` (vitest run)      | `test` (vitest run) | —                              |
+| Route codegen | `gen:routes`             | `generate-routes`        | `generate-routes`   | — (fumadocs-mdx, see below)    |
+| Dev server    | `dev` (`--port 3000`)    | `dev` (`--port 3000`)    | `dev` (`--port 3000`) | `dev` (port 3000 via `vite.config.ts`) |
+| Deploy        | —                        | —                        | `deploy` (build + `wrangler deploy`) | —                  |
 
-Recommended order after edits: `check:lint` → `check:types` → `test`. No tests exist yet (vitest is wired but finds nothing).
+Recommended order after edits: `check:lint` → `check:types` → `test`. No test files exist yet (vitest is wired but finds nothing). No CI is configured.
 
 ## Layout
 
-- `apps/webapp` (`@dms/webapp`) — public-facing TanStack Start app.
-- `apps/management` (`@dms/management-webapp`) — admin/management TanStack Start app.
+Apps (each is a TanStack Start app unless noted):
+
+- `apps/webapp` (`@dms/webapp`) — public-facing app.
+- `apps/manage-webapp` (`@dms/manage-webapp`) — admin/management app.
+- `apps/website` (`website`, unscoped) — marketing site; deployed to **Cloudflare** (`@cloudflare/vite-plugin` in `vite.config.ts`, `wrangler.jsonc`). No `.env` — uses Cloudflare bindings.
+- `apps/documentation` (`documentation`, unscoped) — **Fumadocs MDX** docs app with AI chat (`@ai-sdk/react` + OpenRouter). Prerendered, nitro `vercel` preset. Needs `OPENROUTER_API_KEY`.
 - `apps/infra` (`@dms/infra`) — empty placeholder.
-- `packages/database` (`@dms/database`) — Drizzle + Postgres client; per-app submodules `src/management` and `src/webapp`.
-- `scripts/seed/` — `index.ts`, `nuke.ts`, and `data/{aries,cpcb,mtdc}`.
-- `docs/` — `CONTEXT.md`, `GLOSSARY.md`, `adr/`, `plans/`, `sow/` (for the `domain-modeling` and `grill-with-docs` skills).
 
-**The `packages/database` source, `drizzle.config.ts`, `scripts/seed/*`, seed data, and all `docs/` files are currently empty (0-byte) placeholders.** Don't assume implementation exists — they're scaffolds.
+Packages:
 
-## Routing codegen (TanStack Router)
+- `packages/database` (`@dms/database`) — Drizzle + Postgres client; submodules `src/management/index.tsx`, `src/webapp/index.tsx`, `src/client.ts`. **All empty 0-byte placeholders**, including `drizzle.config.ts`. Intended stack (Drizzle + Postgres + Better Auth) is not wired up yet.
+- `packages/customized-dms` — empty dir, no `package.json` yet.
 
-Both apps use file-based routing. `src/routeTree.gen.ts` is **generated** by `tsr generate` (`gen:routes` / `generate-routes`). Never hand-edit it — Biome and the editor exclude it, and it regenerates when routes change. Add/edit files under `src/routes/` instead.
+Scripts: `scripts/seed/` has `index.ts`, `data/{aries,cpcb,mtdc}/`, `management/onboard.ts`, `organization/{nuke.ts,onboard.ts}` — all empty placeholders.
+
+Docs: `docs/` has `CONTEXT.md`, `GLOSSARY.md`, `adr/`, `plans/`, `sow/` (used by the `domain-modeling` and `grill-with-docs` skills). All empty placeholders.
+
+Don't assume implementation exists in `packages/database`, `scripts/seed/*`, seed data, or `docs/*` — they're scaffolds.
+
+## Routing codegen
+
+`webapp`, `manage-webapp`, `website` use TanStack file-based routing. `src/routeTree.gen.ts` is **generated** by `tsr generate` (`gen:routes` / `generate-routes`). Never hand-edit it — Biome excludes it and it regenerates when routes change. Edit files under `src/routes/` instead. (`.tanstack/` and `routeTree.gen.ts` are gitignored.)
+
+`documentation` uses **Fumadocs MDX**, not TanStack Router codegen: content lives in `content/docs/*.mdx`; `fumadocs-mdx` codegens `.source/` (gitignored). It runs on `postinstall` and again inside `types:check` (`fumadocs-mdx && tsc --noEmit`).
 
 ## Path aliases
 
-`#/*` → `./src/*` (Node subpath `imports` in each app's `package.json` — canonical) and `@/*` → `./src/*` (tsconfig). Prefer `#/*`.
+- `#/*` → `./src/*` (Node subpath `imports` in each app's `package.json` — canonical) and `@/*` → `./src/*` (tsconfig). Present in `webapp`, `manage-webapp`, `website`. Prefer `#/*`.
+- `documentation` has **no `#/*`** — use `@/*` → `./src/*` and `collections/*` → `./source/*` (the codegen output).
 
 ## TypeScript
 
-- `verbatimModuleSyntax: true` — use `import type` for type-only imports.
-- `noUncheckedIndexedAccess: true` (root) — indexed access returns `T | undefined`.
+- `verbatimModuleSyntax: true` — use `import type` for type-only imports. Set in root + `webapp`/`manage-webapp`/`website`; **not** in `documentation`.
+- `noUncheckedIndexedAccess: true` is set **only at root**. Root `check:types` applies it everywhere, but per-app `check:types` / `types:check` use each app's standalone tsconfig, which does **not** set it (apps enable `noUnusedLocals` / `noUnusedParameters` instead).
 - App `tsconfig.json` files are standalone; they do **not** extend the root.
 
-## Env & intended stack
+## Env
 
-Each app has a `.env` with `DATABASE_URL` (Postgres `localhost:5432/dms`, user `dms`), `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL=http://localhost:3000`. Drizzle + Postgres + Better Auth are the intended stack; no source consumes these env vars yet.
+Env lives in `.env.local` (gitignored), per app:
+
+- `apps/webapp/.env.local`, `apps/manage-webapp/.env.local`: `DATABASE_URL` (Postgres `localhost:5432/dms`, user `dms`), `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL=http://localhost:3000`. No source consumes these yet.
+- `apps/documentation/.env.local`: `OPENROUTER_API_KEY` (used by the `api.chat` route).
+- `apps/website`: no `.env` — Cloudflare bindings via `wrangler.jsonc`.
+- `apps/infra`: none.
 
 ## Gotchas
 
-- Both dev servers default to `--port 3000`; pass a different `--port` to run them at the same time.
-- Biome config: tab indent, double quotes. `**/styles.css` and `**/routeTree.gen.ts` are excluded from lint/format.
+- Four dev servers (`manage-webapp`, `webapp`, `website`, `documentation`) all default to port 3000. Pass a different `--port` to run concurrently — for `documentation`, port is hardcoded in `vite.config.ts` (`server.port: 3000`), not the CLI.
+- Biome `includes` is `**/src/**/*`, `**/.vscode/**/*`, `**/index.html`, `**/vite.config.ts`. Files outside `src/` (e.g. `scripts/seed/**`, root `package.json`) are **not** linted. Excludes: `**/routeTree.gen.ts` and `**/src/styles.css`. Style: tab indent, double quotes.
 - `codedb.snapshot` at root is the codedb index — a tool artifact, not source.

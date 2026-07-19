@@ -1,4 +1,5 @@
-import { createOpenRouter } from '@openrouter/ai-sdk-provider';
+import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+import { createFileRoute } from "@tanstack/react-router";
 import {
   convertToModelMessages,
   createUIMessageStreamResponse,
@@ -6,40 +7,39 @@ import {
   streamText,
   tool,
   toUIMessageStream,
-} from 'ai';
-import { z } from 'zod';
-import { source } from '@/lib/source';
-import { Document, type DocumentData } from 'flexsearch';
-import { ChatUIMessage, SearchTool } from '../components/ai/search';
-import { createFileRoute } from '@tanstack/react-router';
+} from "ai";
+import { Document, type DocumentData } from "flexsearch";
+import { z } from "zod";
 
+import { source } from "@/lib/source";
+import type { ChatUIMessage, SearchTool } from "../components/ai/search";
 
 interface CustomDocument extends DocumentData {
-  url: string;
-  title: string;
-  description: string;
   content: string;
+  description: string;
+  title: string;
+  url: string;
 }
 const searchServer = createSearchServer();
 
 async function createSearchServer() {
   const search = new Document<CustomDocument>({
     document: {
-      id: 'url',
-      index: ['title', 'description', 'content'],
+      id: "url",
+      index: ["title", "description", "content"],
       store: true,
     },
   });
 
   const docs = await chunkedAll(
     source.getPages().map(async (page) => {
-      if (!('getText' in page.data)) return null;
+      if (!("getText" in page.data)) return null;
 
       return {
-        title: page.data.title,
+        content: await page.data.getText("processed"),
         description: page.data.description,
+        title: page.data.title,
         url: page.url,
-        content: await page.data.getText('processed'),
       } as CustomDocument;
     }),
   );
@@ -66,11 +66,11 @@ const openrouter = createOpenRouter({
 
 /** System prompt, you can update it to provide more specific information */
 const systemPrompt = [
-  'You are an AI assistant for a documentation site.',
-  'Use the `search` tool to retrieve relevant docs context before answering when needed.',
-  'The `search` tool returns raw JSON results from documentation. Use those results to ground your answer and cite sources as markdown links using the document `url` field when available.',
-  'If you cannot find the answer in search results, say you do not know and suggest a better search query.',
-].join('\n');
+  "You are an AI assistant for a documentation site.",
+  "Use the `search` tool to retrieve relevant docs context before answering when needed.",
+  "The `search` tool returns raw JSON results from documentation. Use those results to ground your answer and cite sources as markdown links using the document `url` field when available.",
+  "If you cannot find the answer in search results, say you do not know and suggest a better search query.",
+].join("\n");
 
 export const Route = createFileRoute("/api/chat")({
   server: {
@@ -80,24 +80,29 @@ export const Route = createFileRoute("/api/chat")({
         const reqJson = await req.json();
 
         const result = streamText({
-          model: openrouter.chat(process.env.OPENROUTER_MODEL ?? 'anthropic/claude-3.5-sonnet'),
+          messages: [
+            { content: systemPrompt, role: "system" },
+            ...(await convertToModelMessages<ChatUIMessage>(
+              reqJson.messages ?? [],
+              {
+                convertDataPart(part) {
+                  if (part.type === "data-client")
+                    return {
+                      text: `[Client Context: ${JSON.stringify(part.data)}]`,
+                      type: "text",
+                    };
+                },
+              },
+            )),
+          ],
+          model: openrouter.chat(
+            process.env.OPENROUTER_MODEL ?? "anthropic/claude-3.5-sonnet",
+          ),
           stopWhen: stepCountIs(5),
+          toolChoice: "auto",
           tools: {
             search: searchTool,
           },
-          messages: [
-            { role: 'system', content: systemPrompt },
-            ...(await convertToModelMessages<ChatUIMessage>(reqJson.messages ?? [], {
-              convertDataPart(part) {
-                if (part.type === 'data-client')
-                  return {
-                    type: 'text',
-                    text: `[Client Context: ${JSON.stringify(part.data)}]`,
-                  };
-              },
-            })),
-          ],
-          toolChoice: 'auto',
         });
 
         return createUIMessageStreamResponse({
@@ -108,15 +113,18 @@ export const Route = createFileRoute("/api/chat")({
   },
 });
 
-
 const searchTool = tool({
-  description: 'Search the docs content and return raw JSON results.',
-  inputSchema: z.object({
-    query: z.string(),
-    limit: z.number().int().min(1).max(100).default(10),
-  }),
+  description: "Search the docs content and return raw JSON results.",
   async execute({ query, limit }) {
     const search = await searchServer;
-    return await search.searchAsync(query, { limit, merge: true, enrich: true });
+    return await search.searchAsync(query, {
+      enrich: true,
+      limit,
+      merge: true,
+    });
   },
+  inputSchema: z.object({
+    limit: z.number().int().min(1).max(100).default(10),
+    query: z.string(),
+  }),
 }) satisfies SearchTool;

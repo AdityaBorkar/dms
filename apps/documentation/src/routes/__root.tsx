@@ -5,25 +5,17 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { RootProvider } from "fumadocs-ui/provider/tanstack";
-import * as React from "react";
 
-import appCss from "@/styles/app.css?url";
+import css from "@/styles/app.css?url";
 
 export const Route = createRootRoute({
   component: RootComponent,
   head: () => ({
-    links: [{ href: appCss, rel: "stylesheet" }],
+    links: [{ href: css, rel: "stylesheet" }],
     meta: [
-      {
-        charSet: "utf-8",
-      },
-      {
-        content: "width=device-width, initial-scale=1",
-        name: "viewport",
-      },
-      {
-        title: "Fumadocs on TanStack Start",
-      },
+      { charSet: "utf-8" },
+      { content: "width=device-width, initial-scale=1", name: "viewport" },
+      { title: "Fumadocs on TanStack Start" },
     ],
   }),
 });

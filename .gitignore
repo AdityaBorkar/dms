@@ -1,10 +1,27 @@
 # dependencies (bun install)
 node_modules
 
-# output
+# build output
 out
 dist
+dist-ssr
 *.tgz
+.output
+.nitro
+.vinxi
+.vercel
+.wrangler
+.tanstack
+.source
+*.gen.ts
+
+# dotenv environment variable files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.local
 
 # code coverage
 coverage
@@ -12,20 +29,19 @@ coverage
 
 # logs
 logs
-_.log
-report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
-
-# dotenv environment variable files
-.env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
+*.log
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # caches
 .eslintcache
 .cache
 *.tsbuildinfo
+playwright/.cache/
+
+# test artifacts
+test-results/
+playwright-report/
+blob-report/
 
 # IntelliJ based IDEs
 .idea
@@ -33,52 +49,6 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 # Finder (MacOS) folder config
 .DS_Store
 
-node_modules
-.DS_Store
-dist
-dist-ssr
-*.local
-.env
-.nitro
-.tanstack
-.wrangler
-.output
-.vinxi
+# misc
 __unconfig*
 todos.json
-
-node_modules
-.DS_Store
-dist
-dist-ssr
-*.local
-.env
-.nitro
-.tanstack
-.wrangler
-.output
-.vinxi
-__unconfig*
-todos.json
-
-
-node_modules
-
-.DS_Store
-.cache
-.vercel
-.output
-.nitro
-# build/
-# api/
-# server/build
-# public/build
-test-results/
-playwright-report/
-blob-report/
-playwright/.cache/
-.tanstack
-
-.source
-
-*.gen.ts

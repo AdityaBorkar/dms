@@ -75,6 +75,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
           />
         </div>
         <DocsBody>
+          {/* biome-ignore lint/correctness/useHookAtTopLevel: Exception */}
           <MDX components={useMDXComponents()} />
         </DocsBody>
       </DocsPage>

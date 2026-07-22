@@ -81,6 +81,7 @@ export function AISearchPanelHeader({
         )}
         onClick={() => setOpen(false)}
         tabIndex={-1}
+        type="button"
       >
         <X />
       </button>

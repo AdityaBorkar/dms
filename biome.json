@@ -81,7 +81,20 @@
       "preset": "recommended"
     }
   },
-  "overrides": [],
+  "overrides": [
+    {
+      "includes": ["**/src/components/ui/**"],
+      "linter": {
+        "enabled": false
+      }
+    },
+    {
+      "includes": ["./apps/documentation/src/components/**"],
+      "linter": {
+        "enabled": false
+      }
+    }
+  ],
   "vcs": {
     "clientKind": "git",
     "enabled": true,

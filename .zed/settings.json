@@ -20,11 +20,12 @@
     }
   },
   "language_servers": [
-    "!eslint",
     "!typescript-language-server",
-    "!tsgo",
     "!markdownlint",
-    "vtsls",
+    "!eslint",
+    "!vtsls",
+    "typescript-ls",
+    "biome",
     "..."
   ],
   "lsp": {

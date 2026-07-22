@@ -7,6 +7,8 @@ html {
 }
 
 html > body[data-scroll-locked] {
+  /* biome-ignore lint/complexity/noImportantStyles: Exception */
   --removed-body-scroll-bar-size: 0px !important;
+  /* biome-ignore lint/complexity/noImportantStyles: Exception */
   margin-right: 0px !important;
 }

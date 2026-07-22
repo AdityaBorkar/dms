@@ -1,23 +1,23 @@
 {
   "dependencies": {
-    "@tailwindcss/vite": "^4.3.2",
+    "@tailwindcss/vite": "^4.3.3",
     "@tanstack/react-devtools": "latest",
     "@tanstack/react-router": "latest",
     "@tanstack/react-router-devtools": "latest",
     "@tanstack/react-router-ssr-query": "latest",
     "@tanstack/react-start": "latest",
-    "@tanstack/router-plugin": "^1.168.20",
+    "@tanstack/router-plugin": "^1.168.23",
     "lucide-react": "^0.545.0",
-    "nitro": "npm:nitro-nightly@latest",
+    "nitro": "^3.0.260610-beta",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "tailwindcss": "^4.3.2"
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.5",
+    "@biomejs/biome": "2.5.1",
     "@tailwindcss/typography": "^0.5.20",
     "@tanstack/devtools-vite": "latest",
-    "@tanstack/router-cli": "^1.167.19",
+    "@tanstack/router-cli": "^1.167.21",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/react": "^16.3.2",
     "@types/node": "^22.20.1",
@@ -25,7 +25,7 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",
     "jsdom": "^28.1.0",
-    "typescript": "^6.0.3",
+    "typescript": "^7.0.2",
     "vite": "^8.1.5",
     "vitest": "^4.1.10"
   },
@@ -39,11 +39,10 @@
   "private": true,
   "scripts": {
     "build": "vite build",
-    "check": "biome check",
+    "check:lint": "biome check --fix .",
+    "check:types": "tsc --noEmit",
     "dev": "vite dev --port 3000",
-    "format": "biome format",
-    "generate-routes": "tsr generate",
-    "lint": "biome lint",
+    "gen:routes": "tsr generate",
     "preview": "vite preview",
     "test": "vitest run"
   },

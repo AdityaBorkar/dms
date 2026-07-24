@@ -5,7 +5,6 @@ declare const window: Window & typeof globalThis;
 
 export const env = createEnv({
   client: {
-    PUBLIC_APP_URL: z.string().min(1),
     PUBLIC_WEB_DOMAIN: z.string().min(1),
     PUBLIC_WEB_PORT: z.coerce.number(),
     PUBLIC_WEB_SSL: z.stringbool(),

@@ -1,6 +1,6 @@
 import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
-import { Devtools } from "@/components/devtools.tsx";
+// import { Devtools } from "@/components/devtools.tsx";
 import css from "../styles.css?url";
 
 export const Route = createRootRoute({
@@ -23,7 +23,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
-        <Devtools />
+        {/*<Devtools />*/}
         <Scripts />
       </body>
     </html>

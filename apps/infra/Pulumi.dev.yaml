@@ -1,7 +1,6 @@
 encryptionsalt: v1:bqmx/68vrK8=:v1:vZ0uN+VQMQ4zPAuX:OocHAeHndZuC4ZJgT98F+q6iHV5wAA==
 config:
   # Public env vars
-  dms:PUBLIC_APP_URL: http://localhost:3000
   dms:PUBLIC_WEB_DOMAIN: localhost
   dms:PUBLIC_WEB_PORT: "3000"
   dms:PUBLIC_WEB_SSL: "false"

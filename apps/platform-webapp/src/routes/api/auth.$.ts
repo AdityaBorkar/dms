@@ -1,0 +1,15 @@
+import { createFileRoute } from "@tanstack/react-router";
+
+import { p } from "@/aspen/server";
+
+export const Route = createFileRoute("/api/auth/$")({
+  server: {
+    handlers: {
+      ANY: async ({ request }) => {
+        return p.run("global", () => {
+          return p.auth.auth.handler(request);
+        });
+      },
+    },
+  },
+});

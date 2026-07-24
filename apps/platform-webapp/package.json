@@ -1,6 +1,8 @@
 {
   "dependencies": {
-    "@aspen-os/framework": "^0.1.0",
+    "@aspen-os/management-plane": "link:@aspen-os/management-plane",
+    "@aspen-os/organization": "link:@aspen-os/organization",
+    "@aspen-os/platform": "link:@aspen-os/platform",
     "@t3-oss/env-core": "^0.13.11",
     "@tailwindcss/vite": "^4.3.3",
     "@tanstack/react-devtools": "latest",

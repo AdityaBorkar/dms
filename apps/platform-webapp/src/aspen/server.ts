@@ -1,23 +1,25 @@
-import type {
-  AuthConfig,
-  IsolatedTenantConfig,
-} from "@aspen-os/framework/server";
-import { IsolatedTenantPlatform } from "@aspen-os/framework/server";
+import { ManagementPlane } from "@aspen-os/management-plane";
+import { Organization } from "@aspen-os/organization";
+import type { IsolatedTenantConfig } from "@aspen-os/platform/server";
+import { IsolatedTenantPlatform } from "@aspen-os/platform/server";
 
 import { env } from "../env";
-import { access_control, roles } from "./auth";
+
+// Common
+
+const BASE_URL = `${env.PUBLIC_WEB_SSL ? "https" : "http"}://${env.PUBLIC_WEB_DOMAIN}:${env.PUBLIC_WEB_PORT}`;
+
+// Units
 
 const auth = {
-  access_control,
-  baseURL: env.BETTER_AUTH_URL,
-  roles,
-  secret: env.BETTER_AUTH_SECRET,
+  baseURL: BASE_URL,
+  secret: env.AUTH_SECRET,
   session: { expiresIn: 60 * 60 * 24 * 7 },
-} satisfies AuthConfig;
+} satisfies IsolatedTenantConfig["auth"];
 
 const kvStore = {} satisfies IsolatedTenantConfig["kvStore"];
 
-const logs = {} satisfies IsolatedTenantConfig["log"];
+const logs = {} satisfies IsolatedTenantConfig["logs"];
 
 const pubsub = {} satisfies IsolatedTenantConfig["pubsub"];
 
@@ -39,21 +41,33 @@ const storage = {
 
 const db = {
   connection: {
-    host: env.DATABASE_HOST,
-    password: env.DATABASE_PASSWORD,
-    port: Number(env.DATABASE_PORT),
-    ssl: env.DATABASE_SSL,
-    user: env.DATABASE_USER,
+    host: env.DB_HOST,
+    password: env.DB_PASSWORD,
+    port: Number(env.DB_PORT),
+    ssl: env.DB_SSL,
+    user: env.DB_USER,
   },
   controlDbName: "control_plane",
   tenantDbPrefix: "tenant_",
 } satisfies IsolatedTenantConfig["db"];
 
-export const platform = IsolatedTenantPlatform.create(
+// Modules
+
+const management_plane = ManagementPlane.create(undefined);
+
+const organization = Organization.create({ country: "INDIA" });
+
+// const hr = HumanResources.create();
+
+// const inventory = Inventory.create({
+//   service_name: "Pharmacy"
+// });
+
+// Platform
+
+export const p = IsolatedTenantPlatform.create(
   { auth, db, kvStore, logs, pubsub, rpc, storage },
-  [organization, hr],
+  [management_plane, organization],
 );
 
-// platform.$prepare()
-
-// platform.$initialize()
+// p.management_plane.

@@ -51,8 +51,8 @@ Don't assume implementation exists in `packages/database`, `scripts/seed/*`, see
 
 ## Path aliases
 
-- `#/*` → `./src/*` (Node subpath `imports` in each app's `package.json` — canonical) and `@/*` → `./src/*` (tsconfig). Present in `tenant-webapp`, `platform-webapp`, `website`. Prefer `#/*`.
-- `documentation` has **no `#/*`** — use `@/*` → `./src/*` and `collections/*` → `./.source/*` (the codegen output).
+- `@/*` → `./src/*` (Node subpath `imports` in each app's `package.json` — canonical) and `@/*` → `./src/*` (tsconfig). Present in `tenant-webapp`, `platform-webapp`, `website`. Prefer `@/*`.
+- `documentation` has **no `@/*`** — use `@/*` → `./src/*` and `collections/*` → `./.source/*` (the codegen output).
 
 ## TypeScript
 

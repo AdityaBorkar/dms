@@ -35,7 +35,7 @@
     "vitest": "^4.1.10"
   },
   "imports": {
-    "#/*": "./src/*"
+    "@/*": "./src/*"
   },
   "name": "@dms/manage-webapp",
   "pnpm": {

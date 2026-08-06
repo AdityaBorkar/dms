@@ -25,7 +25,7 @@ export const Route = createFileRoute("/(app)")({
 
 function AppLayout() {
   const navigate = useNavigate();
-  const { user } = Route.useLoaderData();
+  const { user } = Route.useRouteContext();
 
   const handleSignOut = useCallback(async () => {
     await p.auth.client.signOut();

@@ -6,6 +6,11 @@ import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 
 export default defineConfig({
+  build: {
+    rollupOptions: {
+      external: ["env", "wasi_snapshot_preview1"],
+    },
+  },
   plugins: [
     mdx(),
     tailwindcss(),
@@ -15,18 +20,16 @@ export default defineConfig({
       },
     }),
     react(),
-    // please see https://tanstack.com/start/latest/docs/framework/react/guide/hosting#nitro for guides on hosting
-    nitro({
-      preset: "vercel",
-    }),
+    nitro(),
   ],
   resolve: {
-    alias: {
-      tslib: "tslib/tslib.es6.js",
-    },
+    alias: { tslib: "tslib/tslib.es6.js" },
     tsconfigPaths: true,
   },
   server: {
     port: 3000,
+  },
+  ssr: {
+    noExternal: ["shiki"],
   },
 });

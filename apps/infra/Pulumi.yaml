@@ -1,2 +1,6 @@
 name: dms
-runtime: nodejs
+runtime: bun
+website: docs.dms.adityab.tech
+options:
+  refresh: always
+config:

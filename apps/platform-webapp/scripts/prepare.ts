@@ -15,8 +15,8 @@ await p
     console.log("Infra prepared successfully");
     process.exit(0);
   })
-  .catch((e) => {
-    console.error(e);
+  .catch((err) => {
+    console.error(err);
     process.exit(1);
   });
 
@@ -26,7 +26,7 @@ await p
     console.log("HEALTHY", result);
     process.exit(0);
   })
-  .catch((e) => {
-    console.error(e);
+  .catch((err) => {
+    console.error(err);
     process.exit(1);
   });

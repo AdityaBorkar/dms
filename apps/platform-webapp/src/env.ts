@@ -13,6 +13,7 @@ export const env = createEnv({
   emptyStringAsUndefined: true,
   runtimeEnv: typeof window === "undefined" ? process.env : import.meta.env,
   server: {
+    AUTH_MOCK: z.stringbool().default(false),
     AUTH_SECRET: z.string().min(1),
     DB_HOST: z.string().min(1),
     DB_PASSWORD: z.string().min(1),

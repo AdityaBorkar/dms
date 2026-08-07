@@ -1,3 +1,4 @@
+import { IconFolder } from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
 import {
   BadgeCheck,
@@ -42,12 +43,12 @@ type NavSection = {
 const navSections: NavSection[] = [
   {
     items: [
+      { href: "/organizations", icon: Building2, title: "Organizations" },
       {
         href: "/service-providers",
         icon: Handshake,
         title: "Service Providers",
       },
-      { href: "/organizations", icon: Building2, title: "Organizations" },
     ],
     label: "Stakeholders",
   },
@@ -60,12 +61,11 @@ const navSections: NavSection[] = [
   },
   {
     items: [
-      { href: "/logger-logs", icon: ScrollText, title: "Logger Logs" },
-      { href: "/workflow-logs", icon: LayoutList, title: "Workflow Logs" },
-      { href: "/storage-explorer", icon: Database, title: "Storage Explorer" },
-      { href: "/pubsub-pipelines", icon: Sheet, title: "Pubsub Pipelines" },
-      { href: "/auth-users", icon: Shield, title: "Auth Users" },
-      { href: "/db-cdc", icon: BadgeCheck, title: "DB CDC" },
+      { href: "/logs", icon: ScrollText, title: "Logs" },
+      { href: "/workflows", icon: LayoutList, title: "Workflow" },
+      { href: "/database", icon: Database, title: "Database" },
+      { href: "/storage", icon: IconFolder, title: "Storage" },
+      { href: "/pubsub", icon: Sheet, title: "Pubsub" },
     ],
     label: "Debugging",
   },

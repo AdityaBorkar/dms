@@ -1,8 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Building2 } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Handshake, Plus } from "lucide-react";
 
 import { PageHeader } from "@/components/page-header";
 import { EntityAvatar, StatusBadge } from "@/components/status-badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
@@ -14,35 +15,45 @@ import {
 } from "@/components/ui/table";
 import { orpc } from "@/lib/orpc";
 
-export const Route = createFileRoute("/(app)/organizations")({
-  component: OrganizationsPage,
+export const Route = createFileRoute("/(app)/service-providers/")({
+  component: ServiceProvidersPage,
   loader: async () => {
     try {
-      return await orpc.management.tenants.list();
+      return await orpc.management.serviceProviders.list();
     } catch (error) {
-      console.error("Failed to load organizations", error);
+      console.error("Failed to load service providers", error);
       return null;
     }
   },
 });
 
-function OrganizationsPage() {
-  const tenants = Route.useLoaderData();
-  const count = tenants?.length ?? 0;
+function ServiceProvidersPage() {
+  const providers = Route.useLoaderData();
+  const count = providers?.length ?? 0;
 
   return (
     <div className="space-y-6">
       <PageHeader
-        actions={<Building2 className="size-5 text-muted-foreground" />}
-        description="Organizations (tenants) hosted on the platform."
-        title="Organizations"
+        actions={
+          <div className="flex items-center gap-2">
+            <Button
+              render={<Link to="/service-providers/new" />}
+              variant="default"
+            >
+              <Plus /> New provider
+            </Button>
+            <Handshake className="size-5 text-muted-foreground" />
+          </div>
+        }
+        description="Service providers provisioned on the platform."
+        title="Service Providers"
       />
       <Card className="border-slate-200 shadow-sm">
         <CardHeader className="border-b">
           <div className="flex items-center justify-between">
-            <CardTitle>All organizations</CardTitle>
+            <CardTitle>All providers</CardTitle>
             <span className="rounded-full bg-muted px-2 py-0.5 font-medium text-muted-foreground text-xs">
-              {count} {count === 1 ? "organization" : "organizations"}
+              {count} {count === 1 ? "provider" : "providers"}
             </span>
           </div>
         </CardHeader>
@@ -53,48 +64,42 @@ function OrganizationsPage() {
                 <TableHead className="px-4">Name</TableHead>
                 <TableHead>Slug</TableHead>
                 <TableHead>Status</TableHead>
-                <TableHead>Plan</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {!tenants || tenants.length === 0 ? (
+              {!providers || providers.length === 0 ? (
                 <TableRow>
                   <TableCell
                     className="py-12 text-center text-muted-foreground"
-                    colSpan={4}
+                    colSpan={3}
                   >
                     <div className="mx-auto max-w-xs space-y-1">
                       <p className="font-medium text-foreground">
-                        No organizations
+                        No service providers
                       </p>
                       <p className="text-xs">
-                        Organizations will appear here once they are hosted on
+                        Providers will appear here once they are provisioned on
                         the platform.
                       </p>
                     </div>
                   </TableCell>
                 </TableRow>
               ) : (
-                tenants.map((t) => (
-                  <TableRow className="hover:bg-muted/30" key={t.id}>
+                providers.map((sp) => (
+                  <TableRow className="hover:bg-muted/30" key={sp.id}>
                     <TableCell className="px-4">
                       <div className="flex items-center gap-3">
-                        <EntityAvatar name={t.name} />
+                        <EntityAvatar name={sp.name} />
                         <span className="font-medium text-foreground">
-                          {t.name ?? "—"}
+                          {sp.name}
                         </span>
                       </div>
                     </TableCell>
                     <TableCell className="font-mono text-muted-foreground text-xs">
-                      {t.slug}
+                      {sp.slug}
                     </TableCell>
                     <TableCell>
-                      <StatusBadge status={t.status} />
-                    </TableCell>
-                    <TableCell>
-                      <span className="rounded-md bg-primary/5 px-2 py-0.5 font-medium text-primary text-xs">
-                        {t.plan}
-                      </span>
+                      <StatusBadge status={sp.status} />
                     </TableCell>
                   </TableRow>
                 ))

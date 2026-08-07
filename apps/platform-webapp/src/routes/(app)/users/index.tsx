@@ -1,8 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { UsersRound } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Plus, UsersRound } from "lucide-react";
 
 import { PageHeader } from "@/components/page-header";
 import { EntityAvatar, StatusBadge } from "@/components/status-badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
@@ -14,7 +15,7 @@ import {
 } from "@/components/ui/table";
 import { orpc } from "@/lib/orpc";
 
-export const Route = createFileRoute("/(app)/users")({
+export const Route = createFileRoute("/(app)/users/")({
   component: UsersPage,
   loader: async () => {
     try {
@@ -33,7 +34,14 @@ function UsersPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        actions={<UsersRound className="size-5 text-muted-foreground" />}
+        actions={
+          <div className="flex items-center gap-2">
+            <Button render={<Link to="/users/new" />} variant="default">
+              <Plus /> New user
+            </Button>
+            <UsersRound className="size-5 text-muted-foreground" />
+          </div>
+        }
         description="Platform users and their roles."
         title="Users"
       />

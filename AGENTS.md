@@ -1,87 +1,115 @@
-# AGENTS.md
+# Repository Guidelines
 
-Bun workspace monorepo (`bun.lockb` binary lockfile — `bunfig.toml` sets `saveTextLockfile=false`). Install with `bun install` — not pnpm/npm. `bunfig.toml` sets `ignore-scripts=true` (lifecycle scripts skipped on install) and `minimumReleaseAge=259200` (3 days — freshly published packages are unavailable until 3 days old). The `pnpm.onlyBuiltDependencies` field in `apps/{tenant-webapp,platform-webapp,website}/package.json` is a scaffold leftover; ignore it.
+Monorepo for the DMS platform. Bun workspace (lockfile `bun.lockb` binary — `bunfig.toml` sets `saveTextLockfile=false`). Install with `bun install` — never pnpm/npm. `bunfig.toml` sets `ignore-scripts=true` (lifecycle scripts skipped on install); `minimumReleaseAge` and `publicHoistPattern` are commented out. The `pnpm.onlyBuiltDependencies` fields in app `package.json` files are scaffold leftovers; ignore them.
 
-## Commands
+## Project Overview
+
+Five apps, one of which is load-bearing (the admin console); the rest are scaffolds or light apps.
+
+- `apps/platform-webapp` (`@dms/manage-webapp`) — **primary, most developed**. Admin/management console: Better Auth login, an oRPC type-safe API layer bridged to `@aspen-os` platform workflows, shadcn/ui + Tailwind v4 UI, sidebar layout. Three real data pages (users, service providers, organizations) plus six stub routes.
+- `apps/tenant-webapp` (`@dms/webapp`) — public-facing app; still the TanStack Start base-template starter landing page (home + about).
+- `apps/website` (`website`, unscoped) — marketing site; minimal homepage, deployed to **Cloudflare** (`@cloudflare/vite-plugin` + `wrangler.jsonc`), no `.env`.
+- `apps/documentation` (`documentation`) — **Fumadocs MDX** docs app (TanStack Start + `fumadocs-mdx`) with AI chat (`@ai-sdk/react` + OpenRouter). Prerendered, nitro `vercel` preset. Requires `OPENROUTER_API_KEY`.
+- `apps/infra` (`@dms/infra`) — **real** Pulumi (TypeScript): provisions a Postgres 18 docker container (`docker/postgres.ts`). Not a placeholder.
+
+`packages/` holds only empty directories `packages/dms/` and `packages/rms/` (no code, no `package.json`). There is **no** `packages/database` and no shared database package anywhere — DB access goes through `@aspen-os` platform workflows instead.
+
+## Architecture & Data Flow
+
+All web apps are TanStack Start (file-based routing via `tsr.config.json`; `src/routeTree.gen.ts` is generated). The interesting flow is in `platform-webapp`, which bridges three layers:
+
+```mermaid
+flowchart LR
+  B[Browser React UI] -->|createServerFn| SF[RPC server fns  src/rpc/*]
+  B -->|isomorphic oRPC client| ORPC[oRPC layer  src/orpc/*]
+  ORPC -->|direct router call server-side / HTTP /api/rpc client-side| ROUTER[orpcRouter]
+  SF -->|p.run '$global'| ASPEN[@aspen-os platform  src/aspen/server.ts]
+  ROUTER -->|authed middleware + p.run '$global'| ASPEN
+  ASPEN -->|management workflows .run input| PG[(control_plane / tenant_* Postgres)]
+  B -->|/api/auth via p.auth| AUTH[Better Auth fetchHandler]
+```
+
+- **Server functions** (`src/rpc/*.ts`): `createServerFn({method:"GET"})` handlers that dynamically `import("@/aspen/server")` and run a workflow, e.g. `p.run("$global", () => p.management.users.list.run({}))`.
+- **oRPC layer** (`src/orpc/*`): the typed router is the single source of truth for client-callable procedures. `src/orpc/client.ts` uses `createIsomorphicFn()` — direct `createRouterClient` call server-side (no HTTP hop during SSR), `RPCLink` to `/api/rpc` in the browser. Procedures build on an `authed` middleware (see Conventions) and call the same `p.run("$global", ...)` workflows.
+- **aspen platform** (`src/aspen/server.ts`): `IsolatedTenantPlatform.create(...)` wires env config (auth, db `control_plane`, s3 storage) with module instances (`ManagementPlane.create`, `Organization.create({country:"INDIA"})`) and exports `p`. **Workflow getters return objects exposing `.run(input)`**, not callable functions. `p.run(tenantId, fn)` provides the AsyncLocalStorage context (db/audit/pubsub); use `"$global"` for control-plane/management workflows. Client `p` (`src/aspen/client.ts`) only exposes auth/logs/rpc — module workflows are **not** reachable client-side; bridge them via `createServerFn` or oRPC.
+
+Data pages query Postgres via aspen workflows. Without a live DB they render empty states.
+
+## Key Directories
+
+- `apps/platform-webapp/src/routes/` — file-based routes. `(app)/route.tsx` = authenticated layout (sidebar + header + `Outlet`). `(app)/{dashboard,users,service-providers,organizations}.tsx` real; six others (`auth-users`, `db-cdc`, `logger-logs`, `pubsub-pipelines`, `reports`, `storage-explorer`, `workflow-logs`) are stubs rendering `TodoPage`. `api/auth.$.ts` (Better Auth handler) and `api/rpc.$.ts` (oRPC HTTP endpoint).
+- `apps/platform-webapp/src/{aspen,orpc,rpc}/` — platform wiring, oRPC router/procedures/middleware/client, `createServerFn` bridges. `src/env.ts` — zod-validated env (`@t3-oss/env-core`).
+- `apps/platform-webapp/src/components/` — `app-sidebar.tsx`, `page-header.tsx`, `status-badge.tsx`, `pages/{todo,error,loading,unauthorized}.tsx`, shadcn `ui/*`.
+- `apps/platform-webapp/src/styles.css` — Tailwind v4 `@theme` tokens (+ dark navy sidebar tokens), Zalando Sans Variable font import.
+- `apps/documentation/content/docs/*.mdx` — Fumadocs source content. `src/routes/api.chat.ts` — OpenRouter streaming chat with flexsearch `search` tool. `src/lib/source.ts` — Fumadocs loader from `collections/*` codegen.
+- `apps/infra/` — Pulumi: `index.ts` (docker provider + network + `Postgres()`), `docker/{postgres,utils}.ts`.
+- `docs/` — `TODO.md` only; `adr/`, `plans/`, `sow/` are empty. `scripts/seed/` — all files are empty placeholders.
+
+## Development Commands
 
 Root (run from repo root):
 
-- `bun run check:lint` — Biome `check --fix` across the repo.
-- `bun run check:types` — `tsc --noEmit` over the whole workspace (root `tsconfig.json` has no `include`, so it typechecks every `.ts`/`.tsx`).
-- `bun run update:deps` — `taze -rw --maturity-period 3`.
+- `bun run check:lint` — Biome `check --fix` for the whole repo.
+- `bun run clean` — remove `node_modules`, `.output`, `.local`, `.tanstack`, `bun.lockb`.
+- `bun run update:deps` — `taze -rw --maturity-period 0`.
+- `bun run prepare` — husky install.
 
-Per-app script names differ across apps — **don't assume one name works in another**. Directory names ≠ package names: `tenant-webapp` is `@dms/webapp`, `platform-webapp` is `@dms/manage-webapp`.
+**There is no root `check:types` script and no root `tsconfig.json`** — typecheck per app below. Per-app script names differ by app and directory names ≠ package names (`tenant-webapp`=`@dms/webapp`, `platform-webapp`=`@dms/manage-webapp`).
 
-| Task          | `platform-webapp`          | `tenant-webapp`                       | `website`            | `documentation`                |
-| ------------- | -------------------------- | ------------------------------------- | -------------------- | ------------------------------ |
-| Lint/format   | `check:lint` (`--fix .`)   | `lint` / `format` / `check` (split, no `--write`) | — (use root) | `lint` / `format` (`--write`)  |
-| Typecheck     | `check:types`              | — (use root)                          | — (use root)         | `types:check` (codegen + tsc)  |
-| Test          | `test` (vitest run)        | `test` (vitest run)                   | `test` (vitest run) | —                              |
-| Route codegen | `gen:routes`               | `generate-routes`                     | `generate-routes`   | — (fumadocs-mdx, see below)    |
-| Dev server    | `dev` (`--port 3000`)      | `dev` (`--port 3000`)                 | `dev` (`--port 3000`) | `dev` (port 3000 via `vite.config.ts`) |
-| Deploy        | —                          | —                                     | `deploy` (build + `wrangler deploy`) | —                  |
+|Task|`platform-webapp`|`tenant-webapp`|`website`|`documentation`|`infra`|
+|---|---|---|---|---|---|
+|Lint/format|`check:lint` (`biome check --fix .`)|`check:lint`|`check:lint`|`check:lint`|—|
+|Typecheck|`check:types` (`tsc --noEmit`)|`check:types`|`check:types`|`check:types` (`fumadocs-mdx && tsc --noEmit`)|—|
+|Route codegen|`gen:routes` (`tsr generate`)|`gen:routes`|`gen:routes`|— (fumadocs-mdx, see below)|—|
+|Test|`test` (`vitest run`)|`test`|`test`|—|—|
+|Dev server|`dev` (`vite dev --port 3000`)|`dev` (`vite dev --port 3000`)|`dev` (`vite dev --port 3000`)|`dev` (`vite dev`, port 3000 via vite.config)|—|
+|Build|`build` (`vite build`)|`build`|`build`|`build`|`preview` (pulumi)|
+|Deploy|—|—|`deploy` (`bun run build && wrangler deploy`)|—|`infra:up` / `infra:down` / `preview` (`pulumi … --stack`)|
 
-Recommended order after edits: `check:lint` → `check:types` → `test`. No test files exist yet (vitest is wired but finds nothing). No CI is configured; no README.
+`documentation` runs `fumadocs-mdx` on `postinstall`; with `ignore-scripts=true` that is skipped on install, so after install run `bun run postinstall` (or `check:types`) in `apps/documentation` to generate `.source/`, or `dev` fails to resolve `collections/*`.
 
-## Layout
+All four dev servers default to port 3000 — pass a different `--port` (e.g. `bun run dev --port 3001`) to run concurrently.
 
-Apps (each is a TanStack Start app unless noted):
+## Code Conventions & Common Patterns
 
-- `apps/tenant-webapp` (`@dms/webapp`) — public-facing app. (Was `apps/webapp`.)
-- `apps/platform-webapp` (`@dms/manage-webapp`) — admin/management app. (Was `apps/manage-webapp`.)
-- `apps/website` (`website`, unscoped) — marketing site; deployed to **Cloudflare** (`@cloudflare/vite-plugin` in `vite.config.ts`, `wrangler.jsonc`). No `.env` — uses Cloudflare bindings.
-- `apps/documentation` (`documentation`, unscoped) — **Fumadocs MDX** docs app (TanStack Start + `fumadocs-mdx`) with AI chat (`@ai-sdk/react` + OpenRouter). Prerendered, nitro `vercel` preset. Needs `OPENROUTER_API_KEY`.
-- `apps/infra` (`@dms/infra`) — empty placeholder (`package.json` has only `name`).
+- **TypeScript:** `verbatimModuleSyntax: true` — use `import type` for type-only imports. Apps set `strict`, `noUnusedLocals`, `noUnusedParameters`, `noUncheckedSideEffectImports`, JSX `react-jsx`, `moduleResolution: bundler`, `target ES2022`, `noEmit`. `noUncheckedIndexedAccess` is set only in `tsconfig.base.json` (bare apps do **not** enable it). App `tsconfig.json` files are standalone — do **not** extend the (nonexistent) root.
+- **Biome** (root `biome.json`, only config): 2-space indent, double quotes, `arrowParentheses: "always"`, `jsxQuoteStyle: "double"`, `lineWidth 80`. `organizeImports` assist on (groups: URL → node/bun/protocol → packages → aliases/paths). `useSortedClasses` (nursery, error, safe fix) auto-sorts Tailwind classes in `class`, `classList`, and `clsx`/`cva`/`tw*` calls — don't hand-order them. Lint domains `react`, `tailwind`, `types` all enabled. Gitignore-aware via `vcs.useIgnoreFile` — `*.gen.ts`, `.tanstack/`, `.source/`, `node_modules/`, `*.local` are excluded through `.gitignore`. Linting is disabled in `**/src/components/ui/**` and `apps/documentation/src/components/**` via `overrides`.
+- **Routing:** kebab-case route files under `src/routes/`; route-path `(group)` for layout groups; `route.tsx` = layout with `Outlet`; `__root.tsx` = root shell; `api/name.$.ts` for API routes. Never hand-edit `routeTree.gen.ts` (generated, gitignored).
+- **Auth (platform-webapp):** the only gate is the `getSession` `createServerFn`. `(app)/route.tsx` `beforeLoad` calls `getSession()` and `redirect`s to `/` when null; `index.tsx` (login) redirects authed users into the app. Sign-in is `p.auth.client.signIn.email`; sign-out `p.auth.client.signOut()`. `AUTH_MOCK` is declared in `src/env.ts` (`z.stringbool()`) but is **currently unused** — no mock-auth module exists; auth flows through real Better Auth.
+- **oRPC procedures:** build on an `authed` base middleware = `base.use(async ({context,next}) => …)` that resolves the session via `p.auth.service.api.getSession({headers: context.headers})` and throws `new Error("Unauthorized")` when absent. Keep aspen/platform imports behind dynamic `import("@/aspen/server")` so server-only modules never enter the browser bundle.
+- **Env:** `src/env.ts` uses `@t3-oss/env-core` `createEnv` with zod. Server vars (`DB_*`, `AUTH_SECRET`, `STORAGE_*`) validated with `z.string().min(1)`, ports `z.coerce.number()`, booleans `z.stringbool()`. Client vars use `PUBLIC_` prefix; set via `envPrefix: ["PUBLIC_"]` in `vite.config.ts`.
+- **Styling / composition:** Tailwind v4 with CSS custom properties in `@theme`; shadcn/ui built on `@base-ui/react`'s `useRender`, so slot composition uses the `render={<Link … />}` prop — **not** radix-style `asChild` (unused, causes type errors). Example: `SidebarMenuButton render={<Link to={item.href} />}`.
+- **Data fetching:** routes use `loader` + `Route.useLoaderData()`; loaders `try/catch` and return `null` on failure, and pages render empty-state tables ("No users", etc.). Workflow calls go through `p.run("$global", () => workflow.getter.list.run({}))`.
+- **Error handling:** oRPC has an `onError` console.error interceptor (`api/rpc.$.ts`); the `authed` middleware throws on anonymous requests. Shell components (`pages/{error,loading,unauthorized}.tsx`) render failure states.
 
-Packages:
+## Important Files
 
-- `packages/database` (`@dms/database`) — Drizzle + Postgres client; submodules `src/management/index.tsx`, `src/webapp/index.tsx`, `src/client.ts`. **All empty 0-byte placeholders**, including `drizzle.config.ts`. Intended stack (Drizzle + Postgres + Better Auth) is not wired up yet. (The `src/webapp/` dir name predates the `tenant-webapp` rename.) Only package under `packages/`.
+|Path|Purpose|
+|---|---|
+|`apps/platform-webapp/src/routes/(app)/route.tsx`|Authenticated layout + auth `beforeLoad` gate|
+|`apps/platform-webapp/src/aspen/server.ts`|`IsolatedTenantPlatform` wiring, exports `p`|
+|`apps/platform-webapp/src/orpc/{router,procedures,middleware,client,context}.ts`|Typed RPC API layer|
+|`apps/platform-webapp/src/rpc/get-session.ts`|Auth gate server fn|
+|`apps/platform-webapp/src/env.ts`|Zod-validated env schema|
+|`apps/platform-webapp/src/components/app-sidebar.tsx`|Nav (render-prop polymorphism example)|
+|`apps/platform-webapp/src/components/pages/todo.tsx`|Stub page used by 6 unimplemented routes|
+|`apps/documentation/src/routes/api.chat.ts`|OpenRouter AI chat + flexsearch tool|
+|`apps/documentation/source.config.ts`|Fumadocs `defineDocs` (dir `content/docs`)|
+|`apps/infra/index.ts` / `apps/infra/docker/postgres.ts`|Pulumi Postgres provisioning|
+|`biome.json`, `bunfig.toml`, `tsconfig.base.json`, `package.json`|Root tooling config|
 
-Scripts: `scripts/seed/` has `index.ts`, `data/{aries,cpcb,mtdc}/`, `management/onboard.ts`, `organization/{nuke.ts,onboard.ts}` — all empty placeholders.
+## Runtime & Tooling Preferences
 
-Docs: `docs/` has `adr/`, `plans/`, `sow/` (used by the `domain-modeling` and `grill-with-docs` skills). All empty placeholders.
+- **Runtime:** Bun (all dev/build/scripts run via `bun`). Package manager: bun.
+- **TypeScript:** `~7.0.2` (`typescript` in root + apps).
+- **Linter/formatter:** Biome `2.5.x` (root `bun run check:lint`).
+- **Build tool:** Vite `8.2.1` + `@tanstack/react-start` + `nitro` (each app's `vite.config.ts`; `website` uses `@cloudflare/vite-plugin`).
+- **CSS:** Tailwind v4 + shadcn/ui (`components.json`: style `base-mira`, baseColor `neutral`, icon lib `tabler`).
+- **DB / backend:** Postgres via `@aspen-os` platform workflows (no raw drizzle/orm in-app code). **No CI is configured;** commit hooks are husky/lint-staged scaffolds (no active custom hooks) with `commitlint` (`@commitlint/config-conventional`, custom type-enum including `wip`).
+- **Env files:** `.env.local` per app (gitignored via `*.local`). `platform-webapp` needs `DB_*`, `AUTH_SECRET`, `STORAGE_*`, `PUBLIC_WEB_*`; `documentation` needs `OPENROUTER_API_KEY` (+ optional `OPENROUTER_MODEL`, default `anthropic/claude-3.5-sonnet`); `tenant-webapp` `DATABASE_URL`/`BETTER_AUTH_*` intended but unconsumed. `website` and `infra` have no `.env`.
 
-Don't assume implementation exists in `packages/database`, `scripts/seed/*`, seed data, `apps/infra`, or `docs/*` — they're scaffolds.
+## Testing & QA
 
-## Routing codegen
-
-`tenant-webapp`, `platform-webapp`, `website` use TanStack file-based routing (`tsr.config.json` in each). `src/routeTree.gen.ts` is **generated** by `tsr generate` (`gen:routes` / `generate-routes`). Never hand-edit it — it's gitignored (`*.gen.ts`) and regenerates when routes change. Edit files under `src/routes/` instead. (`.tanstack/` is also gitignored.)
-
-`documentation` uses **Fumadocs MDX**, not TanStack Router codegen: content lives in `content/docs/*.mdx`; `fumadocs-mdx` codegens `.source/` (gitignored). It runs on `postinstall` and again inside `types:check` (`fumadocs-mdx && tsc --noEmit`).
-
-## Path aliases
-
-- `@/*` → `./src/*` (Node subpath `imports` in each app's `package.json` — canonical) and `@/*` → `./src/*` (tsconfig). Present in `tenant-webapp`, `platform-webapp`, `website`. Prefer `@/*`.
-- `documentation` has **no `@/*`** — use `@/*` → `./src/*` and `collections/*` → `./.source/*` (the codegen output).
-
-## TypeScript
-
-- `verbatimModuleSyntax: true` — use `import type` for type-only imports. Set in root + `tenant-webapp`/`platform-webapp`/`website`; **not** in `documentation`.
-- `noUncheckedIndexedAccess: true` is set **only at root**. Root `check:types` applies it everywhere, but per-app `check:types` / `types:check` use each app's standalone tsconfig, which does **not** set it (apps enable `noUnusedLocals` / `noUnusedParameters` instead).
-- App `tsconfig.json` files are standalone; they do **not** extend the root.
-
-## Env
-
-Env lives in `.env.local` (gitignored via `*.local`), per app:
-
-- `apps/tenant-webapp/.env.local`, `apps/platform-webapp/.env.local`: intended for `DATABASE_URL` (Postgres `localhost:5432/dms`, user `dms`), `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL=http://localhost:3000`. **No source consumes these yet** (database package is an empty placeholder).
-- `apps/documentation/.env.local`: `OPENROUTER_API_KEY` (required, consumed in `src/routes/api.chat.ts`); `OPENROUTER_MODEL` optional (defaults to `anthropic/claude-3.5-sonnet`).
-- `apps/website`: no `.env` — Cloudflare bindings via `wrangler.jsonc`.
-- `apps/infra`: none.
-
-## Biome
-
-Root `biome.json` is the only Biome config (no nested configs). Key facts:
-
-- `files.includes: ["**"]` with `vcs.useIgnoreFile: true` — lints everything **except** gitignored files. So `*.gen.ts` (routeTree.gen), `.tanstack/`, `.source/`, `node_modules/`, `*.local` are excluded via `.gitignore`, not via Biome excludes.
-- **2-space indent, double quotes** (not tabs). `jsxQuoteStyle: "double"`, `arrowParentheses: "always"`.
-- `useSortedClasses` (nursery, error, safe fix) auto-sorts Tailwind classes in `class`, `classList`, and `clsx`/`cva`/`tw*` calls — don't hand-order Tailwind classes.
-- `organizeImports` assist is on, with import grouping (URL → node/bun/protocol packages → packages → aliases/paths).
-- `linter.domains`: `react`, `tailwind`, `types` all enabled.
-
-## Gotchas
-
-- `bunfig.toml` `ignore-scripts=true` skips lifecycle scripts on `bun install` — including `documentation`'s `postinstall: fumadocs-mdx`. After install, run `bun run postinstall` (or `types:check`) in `apps/documentation` to generate `.source/`, or `bun run dev` will fail to resolve `collections/*`.
-- Four dev servers (`platform-webapp`, `tenant-webapp`, `website`, `documentation`) all default to port 3000. Pass a different `--port` (e.g. `bun run dev --port 3001`) to run concurrently.
-- Directory names ≠ package names (see Layout). `grep`/`glob` by directory; `import` by package name.
-- `codedb.snapshot` at root is the codedb index — a tool artifact, not source.
+- **Framework:** Vitest `^4.1.10` wired as a devDependency of `platform-webapp`, `tenant-webapp`, `website` (with `@testing-library/react`, `@testing-library/dom`, `jsdom`). `documentation` and `infra` have no test setup.
+- **Commands:** `bun run test` (i.e. `vitest run`) inside those three apps.
+- **Current state (honest):** testing is wired but **finds nothing** — there are zero test files, no `vitest.config.ts`, no `test` block in any `vite.config.ts`, no setup file, and no coverage config anywhere. `package.json` `test` scripts would discover zero tests. No CI, no coverage expectations. `.gitignore` has leftover Playwright artifact entries (`test-results/`, `playwright-report/`, `blob-report/`) but Playwright is not configured.

@@ -12,13 +12,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { listUsers } from "@/rpc/list-users";
+import { orpc } from "@/lib/orpc";
 
 export const Route = createFileRoute("/(app)/users")({
   component: UsersPage,
   loader: async () => {
     try {
-      return await listUsers();
+      return await orpc.management.users.list();
     } catch (error) {
       console.error("Failed to load users", error);
       return null;

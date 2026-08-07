@@ -5,22 +5,19 @@ import { createRouterClient } from "@orpc/server";
 import { createIsomorphicFn } from "@tanstack/react-start";
 import { getRequestHeaders } from "@tanstack/react-start/server";
 
-import { type OrpcRouter, orpcRouter } from "./router";
+import { router } from "@/rpc/router";
 
 const getOrpcClient = createIsomorphicFn()
-  // Server-side: call the router directly, no HTTP hop. Keeps DB/tenant access
-  // scoped to the request and avoids a network round trip during SSR.
   .server(() =>
-    createRouterClient(orpcRouter, {
+    createRouterClient(router, {
       context: async () => ({ headers: getRequestHeaders() }),
     }),
   )
-  // Browser-side: reach the router through the `/api/rpc` HTTP endpoint.
-  .client((): RouterClient<OrpcRouter> => {
+  .client((): RouterClient<typeof router> => {
     const link = new RPCLink({
       url: `${window.location.origin}/api/rpc`,
     });
     return createORPCClient(link);
   });
 
-export const orpc: RouterClient<OrpcRouter> = getOrpcClient();
+export const orpc: RouterClient<typeof router> = getOrpcClient();

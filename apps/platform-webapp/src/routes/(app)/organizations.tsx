@@ -12,13 +12,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { listTenants } from "@/rpc/list-tenants";
+import { orpc } from "@/lib/orpc";
 
 export const Route = createFileRoute("/(app)/organizations")({
   component: OrganizationsPage,
   loader: async () => {
     try {
-      return await listTenants();
+      return await orpc.management.tenants.list();
     } catch (error) {
       console.error("Failed to load organizations", error);
       return null;

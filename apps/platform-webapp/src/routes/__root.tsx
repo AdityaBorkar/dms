@@ -22,7 +22,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="bg-yellow-500!">
+      <body className="bg-background font-sans text-foreground text-sm antialiased">
         <TooltipProvider>{children}</TooltipProvider>
         <Devtools />
         <Scripts />

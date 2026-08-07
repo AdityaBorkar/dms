@@ -1,6 +1,9 @@
 # TODO
 
 - Different Favicons for each environment
+- Tables
+- Forms & Schemas
+- ORPC
 
 After PLATFORM-WEBAPP is done:
 
@@ -10,3 +13,5 @@ After PLATFORM-WEBAPP is done:
   - RMS
 - Write down individual requirements
 - Write down the UI taste and create/update skill accordingly
+
+Create pages and integrate them to the @__root.tsx

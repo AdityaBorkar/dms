@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { TodoPage } from "@/components/todo-page";
+import { TodoPage } from "@/components/pages/todo";
 
 export const Route = createFileRoute("/(app)/auth-users")({
   component: AuthUsers,

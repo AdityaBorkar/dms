@@ -4,10 +4,12 @@ import {
   redirect,
   useNavigate,
 } from "@tanstack/react-router";
+import { LogOut } from "lucide-react";
 import { useCallback } from "react";
 
 import { p } from "@/aspen/client";
 import { AppSidebar } from "@/components/app-sidebar";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
@@ -43,26 +45,36 @@ function AppLayout() {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="border-b bg-white">
-          <div className="flex h-14 items-center gap-4 px-4 sm:px-6">
+        <header className="sticky top-0 z-10 border-b bg-card/80 backdrop-blur-md">
+          <div className="flex h-14 items-center gap-3 px-4 sm:px-6">
             <SidebarTrigger />
-            <Separator className="h-6" orientation="vertical" />
-            <span className="font-bold text-gray-900">Platform</span>
-            <div className="ml-auto flex items-center gap-4">
-              <span className="text-gray-600 text-sm">
-                {user.name ?? user.email}
+            <Separator className="h-5" orientation="vertical" />
+            <div className="flex items-center gap-2">
+              <span className="rounded-md bg-primary/10 px-1.5 py-0.5 font-semibold text-[10px] text-primary uppercase">
+                Console
               </span>
-              <button
-                className="rounded-md bg-gray-100 px-3 py-1.5 text-gray-700 text-sm hover:bg-gray-200"
-                onClick={handleSignOut}
-                type="button"
-              >
-                Sign out
-              </button>
+              <span className="font-semibold text-foreground">Platform</span>
+            </div>
+            <div className="ml-auto flex items-center gap-3">
+              <div className="hidden flex-col items-end sm:flex">
+                <span className="font-medium text-foreground text-xs">
+                  {user.name ?? "User"}
+                </span>
+                <span className="text-[11px] text-muted-foreground">
+                  {user.email}
+                </span>
+              </div>
+              <div className="flex size-8 items-center justify-center rounded-full bg-primary/10 font-semibold text-primary text-xs">
+                {(user.name ?? user.email ?? "U").charAt(0).toUpperCase()}
+              </div>
+              <Button onClick={handleSignOut} size="icon-sm" variant="ghost">
+                <LogOut />
+                <span className="sr-only">Sign out</span>
+              </Button>
             </div>
           </div>
         </header>
-        <main className="flex-1 p-4 sm:p-6">
+        <main className="flex-1 bg-slate-50/50 p-4 sm:p-6">
           <Outlet />
         </main>
       </SidebarInset>

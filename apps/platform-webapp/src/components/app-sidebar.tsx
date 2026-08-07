@@ -7,6 +7,7 @@ import {
   Handshake,
   LayoutList,
   ScrollText,
+  Settings,
   Sheet,
   Shield,
   UserRound,
@@ -15,9 +16,12 @@ import {
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
+  SidebarMenuBadge,
   SidebarMenuButton,
   SidebarRail,
 } from "@/components/ui/sidebar";
@@ -44,42 +48,24 @@ const navSections: NavSection[] = [
         title: "Service Providers",
       },
       { href: "/organizations", icon: Building2, title: "Organizations" },
-      { href: "/users", icon: UserRound, title: "Users" },
     ],
     label: "Stakeholders",
   },
   {
-    items: [{ href: "/reports", icon: FileText, stub: true, title: "Reports" }],
+    items: [
+      { href: "/reports", icon: FileText, title: "Reports" },
+      { href: "/users", icon: UserRound, title: "Users" },
+    ],
     label: "Administration",
   },
   {
     items: [
-      {
-        href: "/logger-logs",
-        icon: ScrollText,
-        stub: true,
-        title: "Logger Logs",
-      },
-      {
-        href: "/workflow-logs",
-        icon: LayoutList,
-        stub: true,
-        title: "Workflow Logs",
-      },
-      {
-        href: "/storage-explorer",
-        icon: Database,
-        stub: true,
-        title: "Storage Explorer",
-      },
-      {
-        href: "/pubsub-pipelines",
-        icon: Sheet,
-        stub: true,
-        title: "Pubsub Pipelines",
-      },
-      { href: "/auth-users", icon: Shield, stub: true, title: "Auth Users" },
-      { href: "/db-cdc", icon: BadgeCheck, stub: true, title: "DB CDC" },
+      { href: "/logger-logs", icon: ScrollText, title: "Logger Logs" },
+      { href: "/workflow-logs", icon: LayoutList, title: "Workflow Logs" },
+      { href: "/storage-explorer", icon: Database, title: "Storage Explorer" },
+      { href: "/pubsub-pipelines", icon: Sheet, title: "Pubsub Pipelines" },
+      { href: "/auth-users", icon: Shield, title: "Auth Users" },
+      { href: "/db-cdc", icon: BadgeCheck, title: "DB CDC" },
     ],
     label: "Debugging",
   },
@@ -88,10 +74,30 @@ const navSections: NavSection[] = [
 export function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarContent>
+      <SidebarHeader className="px-3 py-4">
+        <Link
+          className="flex items-center gap-2.5 rounded-md px-2 outline-hidden focus-visible:ring-2 focus-visible:ring-sidebar-ring"
+          to="/dashboard"
+        >
+          <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-linear-to-br from-indigo-500 to-violet-600 font-bold text-white shadow-sm">
+            P
+          </span>
+          <div className="min-w-0">
+            <p className="truncate font-semibold text-sidebar-foreground">
+              DMS Platform
+            </p>
+            <p className="truncate text-[11px] text-sidebar-foreground/60">
+              Management Console
+            </p>
+          </div>
+        </Link>
+      </SidebarHeader>
+      <SidebarContent className="px-3">
         {navSections.map((section) => (
           <SidebarGroup key={section.label}>
-            <SidebarGroupLabel>{section.label}</SidebarGroupLabel>
+            <SidebarGroupLabel className="px-2 font-semibold text-[11px] text-sidebar-foreground/50 uppercase tracking-wider">
+              {section.label}
+            </SidebarGroupLabel>
             <SidebarMenu>
               {section.items.map((item) => (
                 <NavItemLink item={item} key={item.href} />
@@ -100,6 +106,18 @@ export function AppSidebar() {
           </SidebarGroup>
         ))}
       </SidebarContent>
+      <SidebarFooter className="px-3 pb-4">
+        <SidebarMenu>
+          <SidebarMenuButton
+            className="px-2 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+            render={<Link to="/reports" />}
+            tooltip={"Settings"}
+          >
+            <Settings />
+            <span>Settings</span>
+          </SidebarMenuButton>
+        </SidebarMenu>
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );
@@ -109,19 +127,19 @@ function NavItemLink({ item }: { item: NavItem }) {
   const Icon = item.icon;
   return (
     <SidebarMenuButton
-      // asChild
-      className={cn(item.stub && "italic opacity-70")}
+      className={cn(
+        "gap-3 rounded-md px-2.5 data-active:bg-sidebar-accent data-active:text-sidebar-primary-foreground",
+      )}
+      render={<Link to={item.href} />}
       tooltip={item.title}
     >
-      <Link to={item.href}>
-        <Icon />
-        <span>{item.title}</span>
-        {item.stub ? (
-          <span className="ml-auto text-[10px] text-muted-foreground uppercase">
-            TODO
-          </span>
-        ) : null}
-      </Link>
+      <Icon className="size-4 shrink-0" />
+      <span className="truncate">{item.title}</span>
+      {item.stub ? (
+        <SidebarMenuBadge className="ml-auto rounded-full bg-sidebar-primary/15 px-1.5 font-semibold text-[9px] text-sidebar-primary uppercase">
+          Soon
+        </SidebarMenuBadge>
+      ) : null}
     </SidebarMenuButton>
   );
 }

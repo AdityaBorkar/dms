@@ -109,7 +109,7 @@ function NavItemLink({ item }: { item: NavItem }) {
   const Icon = item.icon;
   return (
     <SidebarMenuButton
-      asChild
+      // asChild
       className={cn(item.stub && "italic opacity-70")}
       tooltip={item.title}
     >

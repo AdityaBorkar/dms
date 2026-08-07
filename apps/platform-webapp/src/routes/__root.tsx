@@ -1,7 +1,7 @@
 import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
+import { Devtools } from "@/components/devtools.tsx";
 import { TooltipProvider } from "@/components/ui/tooltip";
-// import { Devtools } from "@/components/devtools.tsx";
 import css from "../styles.css?url";
 
 export const Route = createRootRoute({
@@ -22,9 +22,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body className="bg-yellow-500!">
         <TooltipProvider>{children}</TooltipProvider>
-        {/*<Devtools />*/}
+        <Devtools />
         <Scripts />
       </body>
     </html>

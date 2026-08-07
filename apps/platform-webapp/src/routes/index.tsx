@@ -8,7 +8,6 @@ import { getSession } from "@/rpc/get-session";
 export const Route = createFileRoute("/")({
   beforeLoad: async () => {
     const data = await getSession();
-    console.log({ data });
     if (data?.session && data?.user) {
       throw redirect({ to: "/dashboard" });
     }

@@ -54,7 +54,10 @@
   },
   "name": "@dms/manage-webapp",
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "lightningcss"]
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "lightningcss"
+    ]
   },
   "private": true,
   "scripts": {

@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "@pulumi/docker": "^5.1.0",
-    "@pulumi/pulumi": "^3.255.0"
+    "@pulumi/pulumi": "^3.256.0"
   },
   "devDependencies": {
     "typescript": "^7.0.2"

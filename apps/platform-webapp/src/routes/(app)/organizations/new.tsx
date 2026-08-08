@@ -9,7 +9,7 @@ import { NewEntityPage } from "@/components/pages/new-entity";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { orpc } from "@/lib/orpc";
-import { ProvisionTenantSchema } from "@/rpc/schemas/tenants";
+import { ProvisionTenantSchema } from "@/schemas/tenants";
 
 export const Route = createFileRoute("/(app)/organizations/new")({
   component: NewOrganizationPage,
@@ -99,6 +99,7 @@ function NewOrganizationPage() {
         {error ? <p className="text-destructive text-xs">{error}</p> : null}
         <div className="flex justify-end gap-2 border-t pt-4">
           <Button
+            nativeButton={false}
             render={<Link to="/organizations" />}
             type="button"
             variant="outline"

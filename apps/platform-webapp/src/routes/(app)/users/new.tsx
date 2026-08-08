@@ -9,7 +9,7 @@ import { NewEntityPage } from "@/components/pages/new-entity";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { orpc } from "@/lib/orpc";
-import { CreatePlatformUserSchema } from "@/rpc/schemas/users";
+import { CreatePlatformUserSchema } from "@/schemas/users";
 
 export const Route = createFileRoute("/(app)/users/new")({
   component: NewUserPage,
@@ -157,7 +157,12 @@ function NewUserPage() {
         ) : null}
         {error ? <p className="text-destructive text-xs">{error}</p> : null}
         <div className="flex justify-end gap-2 border-t pt-4">
-          <Button render={<Link to="/users" />} type="button" variant="outline">
+          <Button
+            nativeButton={false}
+            render={<Link to="/users" />}
+            type="button"
+            variant="outline"
+          >
             Cancel
           </Button>
           <Button disabled={isSubmitting} type="submit">

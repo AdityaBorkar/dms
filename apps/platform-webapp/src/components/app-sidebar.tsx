@@ -1,7 +1,6 @@
 import { IconFolder } from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
 import {
-  BadgeCheck,
   Building2,
   Database,
   FileText,
@@ -10,7 +9,6 @@ import {
   ScrollText,
   Settings,
   Sheet,
-  Shield,
   UserRound,
 } from "lucide-react";
 
@@ -75,10 +73,7 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader className="px-3 py-4">
-        <Link
-          className="flex items-center gap-2.5 rounded-md px-2 outline-hidden focus-visible:ring-2 focus-visible:ring-sidebar-ring"
-          to="/dashboard"
-        >
+        <div className="flex items-center gap-2.5 rounded-md px-2 outline-hidden focus-visible:ring-2 focus-visible:ring-sidebar-ring">
           <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-linear-to-br from-indigo-500 to-violet-600 font-bold text-white shadow-sm">
             P
           </span>
@@ -90,7 +85,7 @@ export function AppSidebar() {
               Management Console
             </p>
           </div>
-        </Link>
+        </div>
       </SidebarHeader>
       <SidebarContent className="px-3">
         {navSections.map((section) => (

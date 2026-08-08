@@ -36,7 +36,11 @@ function OrganizationsPage() {
       <PageHeader
         actions={
           <div className="flex items-center gap-2">
-            <Button render={<Link to="/organizations/new" />} variant="default">
+            <Button
+              nativeButton={false}
+              render={<Link to="/organizations/new" />}
+              variant="default"
+            >
               <Plus /> New organization
             </Button>
             <Building2 className="size-5 text-muted-foreground" />

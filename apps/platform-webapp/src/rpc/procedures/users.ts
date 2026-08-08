@@ -1,5 +1,5 @@
+import { CreatePlatformUserSchema } from "@/schemas/users";
 import { authed } from "../middlewares/auth";
-import { CreatePlatformUserSchema } from "../schemas/users";
 
 export const listUsers = authed.handler(async () => {
   const { p } = await import("@/aspen/server");

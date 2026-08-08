@@ -16,11 +16,11 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { orpc } from "@/lib/orpc";
+import { getSession } from "@/rpc/get-session";
 
 export const Route = createFileRoute("/(app)")({
   beforeLoad: async ({ location }) => {
-    const data = await orpc.getSession();
+    const data = await getSession();
     if (!data) {
       throw redirect({
         search: { redirect: location.href },

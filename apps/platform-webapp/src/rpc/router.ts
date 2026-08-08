@@ -1,4 +1,3 @@
-import { getSession } from "./procedures/auth";
 import {
   createServiceProvider,
   listServiceProviders,
@@ -7,7 +6,6 @@ import { listTenants, onboardTenant } from "./procedures/tenants";
 import { createUser, listUsers } from "./procedures/users";
 
 export const router = {
-  getSession,
   management: {
     serviceProviders: {
       create: createServiceProvider,

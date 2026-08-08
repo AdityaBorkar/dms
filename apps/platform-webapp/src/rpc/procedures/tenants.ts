@@ -1,9 +1,11 @@
+import { ProvisionTenantSchema } from "@/schemas/tenants";
 import { authed } from "../middlewares/auth";
-import { ProvisionTenantSchema } from "../schemas/tenants";
 
 export const listTenants = authed.handler(async () => {
   const { p } = await import("@/aspen/server");
-  return p.run("$global", () => p.management.tenants.list.run({}));
+  const list = await p.run("$global", () => p.management.tenants.list.run({}));
+  console.log({ list });
+  return list;
 });
 
 export const onboardTenant = authed

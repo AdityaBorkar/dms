@@ -37,6 +37,7 @@ function ServiceProvidersPage() {
         actions={
           <div className="flex items-center gap-2">
             <Button
+              nativeButton={false}
               render={<Link to="/service-providers/new" />}
               variant="default"
             >

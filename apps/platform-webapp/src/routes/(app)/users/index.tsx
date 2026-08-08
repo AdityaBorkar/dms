@@ -36,7 +36,11 @@ function UsersPage() {
       <PageHeader
         actions={
           <div className="flex items-center gap-2">
-            <Button render={<Link to="/users/new" />} variant="default">
+            <Button
+              nativeButton={false}
+              render={<Link to="/users/new" />}
+              variant="default"
+            >
               <Plus /> New user
             </Button>
             <UsersRound className="size-5 text-muted-foreground" />

@@ -7,7 +7,7 @@ import {
   useId,
   useState,
 } from "react";
-import { z } from "zod/v4";
+import { object, optional, string } from "valibot";
 
 import { p } from "@/aspen/client";
 import { Button } from "@/components/ui/button";
@@ -19,20 +19,18 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { orpc } from "@/lib/orpc";
+import { getSession } from "@/rpc/get-session";
 
 export const Route = createFileRoute("/")({
   beforeLoad: async () => {
-    const data = await orpc.getSession();
+    const data = await getSession();
     if (data?.session && data?.user) {
       throw redirect({ to: "/dashboard" });
     }
     return data;
   },
   component: LoginPage,
-  validateSearch: z.object({
-    redirect: z.string().optional(),
-  }),
+  validateSearch: object({ redirect: optional(string()) }),
 });
 
 function LoginPage() {

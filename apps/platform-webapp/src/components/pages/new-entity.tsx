@@ -26,7 +26,11 @@ export function NewEntityPage({
     <div className="mx-auto max-w-2xl space-y-6">
       <PageHeader
         actions={
-          <Button render={<Link to={backHref} />} variant="outline">
+          <Button
+            nativeButton={false}
+            render={<Link to={backHref} />}
+            variant="outline"
+          >
             <ArrowLeft /> Back
           </Button>
         }

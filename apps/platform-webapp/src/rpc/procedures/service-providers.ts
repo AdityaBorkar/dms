@@ -1,5 +1,5 @@
+import { CreateServiceProviderSchema } from "@/schemas/service-providers";
 import { authed } from "../middlewares/auth";
-import { CreateServiceProviderSchema } from "../schemas/service-providers";
 
 export const listServiceProviders = authed.handler(async () => {
   const { p } = await import("@/aspen/server");

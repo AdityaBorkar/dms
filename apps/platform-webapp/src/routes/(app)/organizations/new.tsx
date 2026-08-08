@@ -39,7 +39,7 @@ function NewOrganizationPage() {
   async function onSubmit(values: FormValues) {
     setError(null);
     try {
-      await orpc.management.tenants.onboard({
+      await orpc.tenants.onboard({
         name: values.name,
         plan: values.plan || null,
         slug: values.slug,

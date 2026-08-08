@@ -19,7 +19,7 @@ export const Route = createFileRoute("/(app)/organizations/")({
   component: OrganizationsPage,
   loader: async () => {
     try {
-      return await orpc.management.tenants.list();
+      return await orpc.tenants.list();
     } catch (error) {
       console.error("Failed to load organizations", error);
       return null;

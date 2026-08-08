@@ -47,7 +47,7 @@ function NewServiceProviderPage() {
   async function onSubmit(values: FormValues) {
     setError(null);
     try {
-      await orpc.management.serviceProviders.create({
+      await orpc.serviceProviders.create({
         address: values.address || null,
         description: values.description || null,
         email: values.email,

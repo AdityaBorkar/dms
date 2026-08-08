@@ -3,9 +3,7 @@ import { authed } from "../middlewares/auth";
 
 export const listTenants = authed.handler(async () => {
   const { p } = await import("@/aspen/server");
-  const list = await p.run("$global", () => p.management.tenants.list.run({}));
-  console.log({ list });
-  return list;
+  return p.run("$global", () => p.management.tenants.list.run({}));
 });
 
 export const onboardTenant = authed

@@ -19,7 +19,7 @@ export const Route = createFileRoute("/(app)/service-providers/")({
   component: ServiceProvidersPage,
   loader: async () => {
     try {
-      return await orpc.management.serviceProviders.list();
+      return await orpc.serviceProviders.list();
     } catch (error) {
       console.error("Failed to load service providers", error);
       return null;

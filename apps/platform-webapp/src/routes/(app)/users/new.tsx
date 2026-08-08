@@ -56,7 +56,7 @@ function NewUserPage() {
   async function onSubmit(values: FormValues) {
     setError(null);
     try {
-      await orpc.management.users.create({
+      await orpc.users.create({
         email: values.email,
         name: values.name,
         password: values.password,

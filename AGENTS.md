@@ -29,7 +29,7 @@ flowchart LR
   B -->|/api/auth via p.auth| AUTH[Better Auth fetchHandler]
 ```
 
-- **Server functions** (`src/rpc/*.ts`): `createServerFn({method:"GET"})` handlers that dynamically `import("@/aspen/server")` and run a workflow, e.g. `p.run("$global", () => p.management.users.list.run({}))`.
+- **Server functions** (`src/rpc/*.ts`): `createServerFn({method:"GET"})` handlers that dynamically `import("@/aspen/server")` and run a workflow, e.g. `p.run("$global", () => p.users.list.run({}))`.
 - **oRPC layer** (`src/orpc/*`): the typed router is the single source of truth for client-callable procedures. `src/orpc/client.ts` uses `createIsomorphicFn()` — direct `createRouterClient` call server-side (no HTTP hop during SSR), `RPCLink` to `/api/rpc` in the browser. Procedures build on an `authed` middleware (see Conventions) and call the same `p.run("$global", ...)` workflows.
 - **aspen platform** (`src/aspen/server.ts`): `IsolatedTenantPlatform.create(...)` wires env config (auth, db `control_plane`, s3 storage) with module instances (`ManagementPlane.create`, `Organization.create({country:"INDIA"})`) and exports `p`. **Workflow getters return objects exposing `.run(input)`**, not callable functions. `p.run(tenantId, fn)` provides the AsyncLocalStorage context (db/audit/pubsub); use `"$global"` for control-plane/management workflows. Client `p` (`src/aspen/client.ts`) only exposes auth/logs/rpc — module workflows are **not** reachable client-side; bridge them via `createServerFn` or oRPC.
 

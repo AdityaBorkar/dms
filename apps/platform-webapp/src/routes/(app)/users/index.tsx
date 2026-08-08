@@ -19,7 +19,7 @@ export const Route = createFileRoute("/(app)/users/")({
   component: UsersPage,
   loader: async () => {
     try {
-      return await orpc.management.users.list();
+      return await orpc.users.list();
     } catch (error) {
       console.error("Failed to load users", error);
       return null;

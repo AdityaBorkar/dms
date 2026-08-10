@@ -6,6 +6,10 @@ import viteReact from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 const config = defineConfig({
+  build: {
+    outDir: ".output",
+  },
+  envPrefix: ["PUBLIC_"],
   plugins: [
     devtools(),
     cloudflare({ viteEnvironment: { name: "ssr" } }),
@@ -13,7 +17,9 @@ const config = defineConfig({
     tanstackStart(),
     viteReact(),
   ],
-  resolve: { tsconfigPaths: true },
+  resolve: {
+    tsconfigPaths: true,
+  },
 });
 
 export default config;

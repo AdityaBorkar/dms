@@ -7,10 +7,12 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   build: {
+    outDir: ".output",
     rollupOptions: {
       external: ["env", "wasi_snapshot_preview1"],
     },
   },
+  envPrefix: ["PUBLIC_"],
   plugins: [
     mdx(),
     tailwindcss(),

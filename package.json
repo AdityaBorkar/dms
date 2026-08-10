@@ -17,7 +17,7 @@
     "check:lint": "biome check --fix",
     "clean": "bunx rimraf --glob \"**/{node_modules,.output,.local,.tanstack,bun.lockb}\"",
     "prepare": "husky",
-    "update:deps": "taze -rw --maturity-period 0"
+    "update:deps": "taze -rw --maturity-period 3"
   },
   "workspaces": ["packages/*", "apps/*"]
 }

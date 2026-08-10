@@ -2,53 +2,23 @@
 node_modules
 
 # build output
-out
-dist
-dist-ssr
 *.tgz
 .output
 .nitro
-.vinxi
-.vercel
 .wrangler
 .tanstack
 .source
 *.gen.ts
 
 # dotenv environment variable files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env*
 *.local
-
-# code coverage
-coverage
 *.lcov
-
-# logs
-logs
 *.log
+coverage
+logs
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # caches
-.eslintcache
 .cache
 *.tsbuildinfo
-playwright/.cache/
-
-# test artifacts
-test-results/
-playwright-report/
-blob-report/
-
-# IntelliJ based IDEs
-.idea
-
-# Finder (MacOS) folder config
-.DS_Store
-
-# misc
-__unconfig*
-todos.json

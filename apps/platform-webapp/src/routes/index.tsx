@@ -19,11 +19,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { getSession } from "@/rpc/get-session";
+import { orpc } from "@/lib/orpc";
 
 export const Route = createFileRoute("/")({
   beforeLoad: async () => {
-    const data = await getSession();
+    const data = await orpc.auth.getSession();
     if (data?.session && data?.user) {
       throw redirect({ to: "/dashboard" });
     }

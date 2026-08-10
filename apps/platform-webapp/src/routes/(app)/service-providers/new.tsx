@@ -1,6 +1,7 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { Handshake } from "lucide-react";
+import type { ChangeEvent } from "react";
 import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import type { InferInput } from "valibot";
@@ -9,6 +10,7 @@ import { NewEntityPage } from "@/components/pages/new-entity";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { orpc } from "@/lib/orpc";
+import { slugify } from "@/lib/utils";
 import { CreateServiceProviderSchema } from "@/schemas/service-providers";
 
 export const Route = createFileRoute("/(app)/service-providers/new")({
@@ -30,6 +32,7 @@ function NewServiceProviderPage() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     defaultValues: {
@@ -43,6 +46,14 @@ function NewServiceProviderPage() {
     },
     resolver: valibotResolver(CreateServiceProviderSchema),
   });
+
+  const [slugTouched, setSlugTouched] = useState(false);
+
+  function handleNameChange(event: ChangeEvent<HTMLInputElement>) {
+    if (!slugTouched) {
+      setValue("slug", slugify(event.target.value), { shouldValidate: true });
+    }
+  }
 
   async function onSubmit(values: FormValues) {
     setError(null);
@@ -82,7 +93,7 @@ function NewServiceProviderPage() {
             aria-invalid={!!errors.name}
             id={nameId}
             placeholder="Acme Shared Services"
-            {...register("name")}
+            {...register("name", { onChange: handleNameChange })}
           />
           {errors.name ? (
             <p className="text-destructive text-xs">{errors.name.message}</p>
@@ -96,7 +107,9 @@ function NewServiceProviderPage() {
             aria-invalid={!!errors.slug}
             id={slugId}
             placeholder="acme-shared"
-            {...register("slug")}
+            {...register("slug", {
+              onChange: () => setSlugTouched(true),
+            })}
           />
           {errors.slug ? (
             <p className="text-destructive text-xs">{errors.slug.message}</p>

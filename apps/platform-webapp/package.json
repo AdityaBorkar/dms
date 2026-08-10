@@ -65,7 +65,7 @@
     "check:lint": "biome check --fix .",
     "check:types": "tsc --noEmit",
     "db:studio": "aspen db-studio --config=src/aspen/server.ts",
-    "dev": "vite dev --port 3000",
+    "dev": "vite dev --port 4010",
     "gen:routes": "tsr generate",
     "preview": "vite preview",
     "test": "vitest run"

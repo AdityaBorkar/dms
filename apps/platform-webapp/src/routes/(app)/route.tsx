@@ -21,7 +21,6 @@ import { orpc } from "@/lib/orpc";
 export const Route = createFileRoute("/(app)")({
   beforeLoad: async ({ location }) => {
     const data = await orpc.auth.getSession();
-    // const data = await getSession();
     if (!data) {
       throw redirect({
         search: { redirect: location.href },

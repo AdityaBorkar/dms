@@ -6,6 +6,9 @@ import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 
 const config = defineConfig({
+  build: {
+    outDir: ".output",
+  },
   envPrefix: ["PUBLIC_"],
   plugins: [
     devtools(),

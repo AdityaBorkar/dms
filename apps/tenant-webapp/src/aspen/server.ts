@@ -6,6 +6,7 @@ import { IsolatedTenantPlatform } from "@aspen-os/platform/server";
 import { env } from "../env";
 
 // Common
+
 const hostname = env.PUBLIC_WEB_DOMAIN;
 const protocol = env.PUBLIC_WEB_SSL ? "https" : "http";
 const port = env.PUBLIC_WEB_PORT ? `${env.PUBLIC_WEB_PORT}` : "";
@@ -29,8 +30,8 @@ export function isTrustedWebOrigin(origin: string): boolean {
 const auth = {
   advanced: {
     crossSubDomainCookies: {
-      // domain: `.${hostname}${port ? `:${port}` : ""}`,
-      enabled: true,
+      domain: hostname === "localhost" ? undefined : `.${hostname}`,
+      enabled: hostname !== "localhost",
     },
   },
   baseURL: {
@@ -40,10 +41,6 @@ const auth = {
   },
   secret: env.AUTH_SECRET,
   session: { expiresIn: 60 * 60 * 24 * 7 },
-  // trustedOrigins: [
-  //   hostname,
-  //   `${protocol}://*.${hostname}${port ? `:${port}` : ""}`,
-  // ],
 } satisfies IsolatedTenantConfig["auth"];
 
 const kvStore = {} satisfies IsolatedTenantConfig["kvStore"];
@@ -101,4 +98,4 @@ export const p = IsolatedTenantPlatform.create(
 
 // p.organization.
 
-// p.management_plane.
+// p.management.

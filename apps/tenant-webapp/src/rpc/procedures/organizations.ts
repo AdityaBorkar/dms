@@ -65,3 +65,24 @@ export const getOrganizationBySubdomain = base.handler(async ({ context }) => {
     };
   });
 });
+
+export const listOrganizations = base.handler(async () => {
+  const { p } = await import("@/aspen/server");
+
+  return p.run("$global", async () => {
+    const result = await p.db.pool.query<{
+      id: string;
+      logo: string | null;
+      name: string;
+      slug: string;
+    }>(
+      `SELECT id, name, slug, logo
+         FROM organization
+         ORDER BY name ASC`,
+    );
+
+    return {
+      organizations: result.rows,
+    };
+  });
+});

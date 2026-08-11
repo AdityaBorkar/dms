@@ -23,12 +23,22 @@ export const Route = createFileRoute("/")({
     return data;
   },
   component: LoginPage,
-  loader: async () => {
-    try {
-      return await orpc.organizations.bySubdomain();
-    } catch {
-      return { organization: null, subdomain: null };
+  loader: async ({ location }) => {
+    const redirectTo = new URL(
+      location.href,
+      "http://tenant-application.local",
+    ).searchParams.get("redirect");
+    const data = await orpc.organizations.bySubdomain().catch(() => ({
+      organization: null,
+      subdomain: null,
+    }));
+    if (!data.subdomain) {
+      throw redirect({
+        search: redirectTo ? { redirect: redirectTo } : {},
+        to: "/account/organizations",
+      });
     }
+    return data;
   },
   validateSearch: object({ redirect: optional(string()) }),
 });

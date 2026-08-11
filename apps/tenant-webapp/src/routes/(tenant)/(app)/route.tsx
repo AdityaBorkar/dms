@@ -19,7 +19,7 @@ function RouteComponent() {
   }, [navigate]);
 
   return (
-    <div className="flex min-h-svh flex-col bg-background md:flex-row">
+    <div className="flex min-h-svh flex-col bg-paper-white text-iron md:flex-row">
       <TenantSidebar
         onSignOut={handleSignOut}
         organization={organization}

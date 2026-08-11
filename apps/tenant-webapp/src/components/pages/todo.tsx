@@ -27,7 +27,7 @@ export function TodoPage({
   }, []);
 
   return (
-    <main className="bg-background p-4 sm:p-8">
+    <main className="bg-paper-white p-4 sm:p-8">
       <div className="mx-auto max-w-5xl space-y-6">
         <PageHeader title={title} />
         {tabs && tabs.length > 0 ? (
@@ -43,7 +43,7 @@ export function TodoPage({
                 <button
                   aria-controls={`${pageId}-panel`}
                   aria-selected={activeTab === tab}
-                  className="-mb-px shrink-0 border-transparent border-b-2 px-1 pb-3 font-medium text-muted-foreground text-sm transition-colors hover:border-primary/40 hover:text-foreground aria-selected:border-primary aria-selected:text-primary"
+                  className="-mb-px shrink-0 border-transparent border-b-2 px-1 pb-3 font-medium text-sm text-smoke transition-colors hover:border-violet-pulse/40 hover:text-graphite aria-selected:border-violet-pulse aria-selected:text-violet-pulse"
                   id={tabId}
                   key={tab}
                   onClick={handleTabClick}
@@ -58,18 +58,19 @@ export function TodoPage({
         ) : null}
         <Card
           aria-labelledby={activeTabId}
-          className="border-slate-300 border-dashed bg-slate-50/50 shadow-none"
+          className="border-dashed bg-bone/40 shadow-none"
           id={activeTabId ? `${pageId}-panel` : undefined}
           role={activeTabId ? "tabpanel" : undefined}
         >
           <CardHeader className="flex flex-col items-center justify-center gap-4 py-12 text-center">
-            <span className="mb-3 flex size-12 items-center justify-center rounded-xl bg-muted">
-              <Construction className="size-6 text-muted-foreground" />
+            <span className="mb-3 flex size-12 items-center justify-center rounded-full bg-lavender-wash">
+              <Construction className="size-6 text-violet-pulse" />
             </span>
             <CardTitle className="text-lg">Coming Soon</CardTitle>
             <CardDescription className="max-w-sm text-sm">
-              <span className="font-medium">{title}</span> is not available yet.
-              We are actively building this module — check back soon.
+              <span className="font-medium text-graphite">{title}</span> is not
+              available yet. We are actively building this module — check back
+              soon.
             </CardDescription>
           </CardHeader>
         </Card>

@@ -57,7 +57,7 @@ function UserDetailsPage() {
 
   if (!user) {
     return (
-      <main className="bg-background p-4 sm:p-8">
+      <main className="bg-paper-white p-4 sm:p-8">
         <div className="mx-auto max-w-4xl space-y-6">
           <PageHeader
             actions={
@@ -75,10 +75,10 @@ function UserDetailsPage() {
           />
           <Card>
             <CardContent className="py-16 text-center">
-              <p className="font-medium text-foreground text-sm">
+              <p className="font-medium text-graphite text-sm">
                 We could not find this user
               </p>
-              <p className="mt-2 text-muted-foreground text-xs">
+              <p className="mt-2 text-smoke text-xs">
                 Return to the users list to see the current workspace members.
               </p>
             </CardContent>
@@ -89,7 +89,7 @@ function UserDetailsPage() {
   }
 
   return (
-    <main className="bg-background p-4 sm:p-8">
+    <main className="bg-paper-white p-4 sm:p-8">
       <div className="mx-auto max-w-4xl space-y-6">
         <PageHeader
           actions={
@@ -125,20 +125,20 @@ function UserDetailsPage() {
               <UserAvatar name={user.name} />
               <div className="min-w-0 space-y-3">
                 <div>
-                  <p className="font-semibold text-base text-foreground">
+                  <p className="font-medium text-base text-graphite">
                     {user.name}
                   </p>
-                  <p className="mt-1 flex items-center gap-1.5 break-all text-muted-foreground text-sm">
+                  <p className="mt-1 flex items-center gap-1.5 break-all text-sm text-steel">
                     <Mail className="size-3.5 shrink-0" />
                     {user.email}
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-1 font-medium text-primary text-xs">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-lavender-wash px-2.5 py-1 font-medium text-indigo-ink text-xs">
                     <ShieldCheck className="size-3.5" />
                     {roleLabels[user.role] ?? user.role}
                   </span>
-                  <span className="rounded-full bg-muted px-2.5 py-1 text-muted-foreground text-xs">
+                  <span className="rounded-full bg-bone px-2.5 py-1 text-steel text-xs">
                     Added {formatDate(user.createdAt)}
                   </span>
                 </div>
@@ -175,8 +175,10 @@ function UserDetailsPage() {
 
         <Card>
           <CardContent className="grid gap-2 px-6 py-4 text-xs sm:grid-cols-[auto_1fr]">
-            <span className="font-medium text-muted-foreground">User ID</span>
-            <code className="break-all text-foreground">{user.userId}</code>
+            <span className="font-medium text-steel">User ID</span>
+            <code className="break-all font-mono text-graphite">
+              {user.userId}
+            </code>
           </CardContent>
         </Card>
       </div>
@@ -194,7 +196,7 @@ function UserAvatar({ name }: { name: string }) {
     .join("");
 
   return (
-    <span className="flex size-16 shrink-0 items-center justify-center rounded-2xl bg-primary/10 font-semibold text-primary text-xl">
+    <span className="flex size-16 shrink-0 items-center justify-center rounded-2xl bg-lavender-wash font-medium text-indigo-ink text-xl">
       {initials || "?"}
     </span>
   );

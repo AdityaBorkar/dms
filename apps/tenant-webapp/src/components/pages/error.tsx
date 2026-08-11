@@ -2,6 +2,7 @@ import { CircleAlert } from "lucide-react";
 import { useCallback } from "react";
 
 import { PageHeader } from "@/components/page-header";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -16,9 +17,9 @@ export function ErrorPage() {
   return (
     <div className="space-y-6">
       <PageHeader description="Something went wrong." title="Error" />
-      <Card className="border-destructive/20 shadow-sm">
+      <Card className="shadow-subtle">
         <CardHeader className="items-center pt-10 pb-2 text-center">
-          <span className="mb-3 flex size-12 items-center justify-center rounded-xl bg-destructive/10">
+          <span className="mb-3 flex size-12 items-center justify-center rounded-full bg-destructive/10">
             <CircleAlert className="size-6 text-destructive" />
           </span>
           <CardTitle className="text-lg">Something went wrong</CardTitle>
@@ -28,13 +29,9 @@ export function ErrorPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="flex justify-center pb-10">
-          <button
-            className="rounded-md bg-primary px-3.5 py-1.5 font-medium text-primary-foreground text-sm hover:bg-primary/90"
-            onClick={reload}
-            type="button"
-          >
+          <Button onClick={reload} type="button">
             Reload page
-          </button>
+          </Button>
         </CardContent>
       </Card>
     </div>

@@ -77,7 +77,7 @@ export function OrganizationForm({
     <form className="grid gap-4" onSubmit={handleSubmit}>
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="grid gap-1.5">
-          <label className="font-medium text-xs" htmlFor={nameId}>
+          <label className="font-medium text-slate text-xs" htmlFor={nameId}>
             Organization name
           </label>
           <Input
@@ -90,7 +90,7 @@ export function OrganizationForm({
         </div>
 
         <div className="grid gap-1.5">
-          <label className="font-medium text-xs" htmlFor={slugId}>
+          <label className="font-medium text-slate text-xs" htmlFor={slugId}>
             Slug
           </label>
           <Input
@@ -100,7 +100,7 @@ export function OrganizationForm({
             required
             value={values.slug}
           />
-          <p className="text-[11px] text-muted-foreground">
+          <p className="text-[11px] text-steel">
             Used for this workspace's subdomain. Changing it changes your URL.
           </p>
         </div>
@@ -151,7 +151,10 @@ export function OrganizationForm({
           value={values.taxId}
         />
         <div className="grid gap-1.5">
-          <label className="font-medium text-xs" htmlFor={foundedDateId}>
+          <label
+            className="font-medium text-slate text-xs"
+            htmlFor={foundedDateId}
+          >
             Founded date
           </label>
           <Input
@@ -175,7 +178,10 @@ export function OrganizationForm({
         />
 
         <div className="grid gap-1.5">
-          <label className="font-medium text-xs" htmlFor={accentColorId}>
+          <label
+            className="font-medium text-slate text-xs"
+            htmlFor={accentColorId}
+          >
             Accent color
           </label>
           <Input
@@ -193,7 +199,7 @@ export function OrganizationForm({
         </p>
       ) : null}
 
-      <div className="flex flex-col-reverse justify-end gap-2 border-t pt-4 sm:flex-row">
+      <div className="flex flex-col-reverse justify-end gap-2 border-ash border-t pt-4 sm:flex-row">
         <Button onClick={onCancel} type="button" variant="outline">
           Cancel
         </Button>
@@ -221,7 +227,7 @@ function TextField({
   const id = useId();
   return (
     <div className="grid gap-1.5">
-      <label className="font-medium text-xs" htmlFor={id}>
+      <label className="font-medium text-slate text-xs" htmlFor={id}>
         {label}
       </label>
       <Input

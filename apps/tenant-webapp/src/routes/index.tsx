@@ -10,6 +10,7 @@ import {
 import { object, optional, string } from "valibot";
 
 import { p } from "@/aspen/client";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { env } from "@/env";
 import { orpc } from "@/lib/orpc";
@@ -115,34 +116,36 @@ function LoginPage() {
     const apexUrl = `${env.PUBLIC_WEB_SSL ? "https" : "http"}://${env.PUBLIC_WEB_DOMAIN}${env.PUBLIC_WEB_PORT ? `:${env.PUBLIC_WEB_PORT}` : ""}`;
 
     return (
-      <div className="flex min-h-svh items-center justify-center bg-[#0d0d0d] p-4 text-[#e7e7e7]">
-        <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#151515] p-6 text-center shadow-2xl shadow-black/40">
-          <span className="mx-auto mb-5 flex size-10 items-center justify-center rounded-full bg-[#e5e5e7] text-[#151515]">
+      <main className="flex min-h-svh items-center justify-center bg-paper-white px-4 py-12 font-sans text-iron">
+        <div className="w-full max-w-sm rounded-lg border border-ash bg-paper-white p-6 text-center shadow-[var(--shadow-subtle-8)]">
+          <span className="mx-auto mb-5 flex size-10 items-center justify-center rounded-full bg-bone text-graphite">
             <Building2 className="size-5" />
           </span>
-          <h1 className="font-medium text-lg tracking-tight">
+          <h1 className="font-medium text-graphite text-lg tracking-[-0.048px]">
             Organization: {subdomain}
           </h1>
-          <p className="mt-2 text-[#a1a1a1] text-sm">
+          <p className="mt-2 text-sm text-steel">
             This organization does not exist or is no longer active.
           </p>
           <a
-            className="mt-6 flex h-11 w-full items-center justify-center rounded-full bg-[#6269d8] px-4 font-medium text-sm transition-colors hover:bg-[#7077e4]"
+            className="mt-6 inline-flex h-10 items-center justify-center rounded-full bg-violet-pulse px-5 font-medium text-sm text-white shadow-[var(--shadow-subtle),rgba(224,201,255,0.25)_0_0_16px_2px] transition-colors hover:bg-violet-pulse/90"
             href={apexUrl}
           >
             Return to Global Sign-In Page
           </a>
         </div>
-      </div>
+      </main>
     );
   }
 
   return (
-    <main className="flex min-h-svh items-center justify-center bg-[#0d0d0d] px-4 py-12 font-sans text-[#e7e7e7]">
+    <main className="flex min-h-svh items-center justify-center bg-paper-white px-4 py-12 font-sans text-iron">
       <div className="w-full max-w-72">
         <div className="flex flex-col items-center">
-          <span className="flex size-10 items-center justify-center overflow-hidden rounded-full bg-[#e5e5e7] bg-[repeating-linear-gradient(45deg,transparent_0_5px,#151515_5px_7px)]" />
-          <h1 className="mt-9 font-medium text-lg tracking-tight">
+          <span className="flex size-10 items-center justify-center overflow-hidden rounded-full bg-graphite text-paper-white">
+            <Building2 className="size-5" />
+          </span>
+          <h1 className="mt-9 font-medium text-graphite text-lg tracking-[-0.048px]">
             Log in to {organization?.name ?? "Tenant Application"}
           </h1>
         </div>
@@ -150,7 +153,7 @@ function LoginPage() {
         {showEmailForm ? (
           <form className="mt-5 space-y-4" onSubmit={onSubmit}>
             {!!error && (
-              <div className="flex items-center gap-2 rounded-lg border border-red-400/20 bg-red-400/10 px-3 py-2 font-medium text-red-200 text-xs">
+              <div className="flex items-center gap-2 rounded-md border border-destructive/20 bg-destructive/10 px-3 py-2 font-medium text-destructive text-xs">
                 <AlertCircle className="size-4 shrink-0" />
                 {error}
               </div>
@@ -159,14 +162,14 @@ function LoginPage() {
             <div className="space-y-3">
               <div>
                 <label
-                  className="mb-1.5 block font-medium text-[#c9c9c9] text-xs"
+                  className="mb-1.5 block font-medium text-slate text-xs"
                   htmlFor={emailId}
                 >
                   Email
                 </label>
                 <Input
                   autoComplete="email"
-                  className="h-11 rounded-xl border-white/10 bg-[#1b1b1b] px-3 text-[#e7e7e7] placeholder:text-[#777] focus-visible:border-[#6269d8] focus-visible:ring-[#6269d8]/30"
+                  className="h-11"
                   id={emailId}
                   name="email"
                   onChange={handleEmailChange}
@@ -179,14 +182,14 @@ function LoginPage() {
 
               <div>
                 <label
-                  className="mb-1.5 block font-medium text-[#c9c9c9] text-xs"
+                  className="mb-1.5 block font-medium text-slate text-xs"
                   htmlFor={passwordId}
                 >
                   Password
                 </label>
                 <Input
                   autoComplete="current-password"
-                  className="h-11 rounded-xl border-white/10 bg-[#1b1b1b] px-3 text-[#e7e7e7] focus-visible:border-[#6269d8] focus-visible:ring-[#6269d8]/30"
+                  className="h-11"
                   id={passwordId}
                   name="password"
                   onChange={handlePasswordChange}
@@ -197,9 +200,10 @@ function LoginPage() {
               </div>
             </div>
 
-            <button
-              className="flex h-11 w-full items-center justify-center rounded-full bg-[#6269d8] px-4 font-medium text-sm transition-colors hover:bg-[#7077e4] disabled:cursor-not-allowed disabled:opacity-60"
+            <Button
+              className="w-full"
               disabled={loading}
+              size="lg"
               type="submit"
             >
               {loading ? (
@@ -210,9 +214,9 @@ function LoginPage() {
               ) : (
                 "Continue"
               )}
-            </button>
+            </Button>
             <button
-              className="block w-full py-1 text-center text-[#a1a1a1] text-xs transition-colors hover:text-white"
+              className="block w-full py-1 text-center text-smoke text-xs transition-colors hover:text-graphite"
               onClick={handleBackToOptions}
               type="button"
             >
@@ -222,39 +226,46 @@ function LoginPage() {
         ) : (
           <div className="mt-5 space-y-4">
             {!!error && (
-              <div className="flex items-center gap-2 rounded-lg border border-red-400/20 bg-red-400/10 px-3 py-2 font-medium text-red-200 text-xs">
+              <div className="flex items-center gap-2 rounded-md border border-destructive/20 bg-destructive/10 px-3 py-2 font-medium text-destructive text-xs">
                 <AlertCircle className="size-4 shrink-0" />
                 {error}
               </div>
             )}
-            <button
-              className="flex h-11 w-full items-center justify-center rounded-full bg-[#6269d8] px-4 font-medium text-sm transition-colors hover:bg-[#7077e4]"
+            <Button
+              className="w-full"
               onClick={handleGoogleOption}
+              size="lg"
               type="button"
             >
               Continue with Google
-            </button>
-            <button
-              className="flex h-11 w-full items-center justify-center rounded-full bg-[#1b1b1b] px-4 font-medium text-[#e7e7e7] text-sm transition-colors hover:bg-[#242424]"
+            </Button>
+            <Button
+              className="w-full"
               onClick={handleEmailOption}
+              size="lg"
               type="button"
+              variant="secondary"
             >
               Continue with email
-            </button>
-            <button
-              className="flex h-11 w-full items-center justify-center rounded-full bg-[#1b1b1b] px-4 font-medium text-[#e7e7e7] text-sm transition-colors hover:bg-[#242424]"
+            </Button>
+            <Button
+              className="w-full"
               onClick={handleSamlOption}
+              size="lg"
               type="button"
+              variant="outline"
             >
               Continue with SAML SSO
-            </button>
-            <button
-              className="flex h-11 w-full items-center justify-center rounded-full bg-[#1b1b1b] px-4 font-medium text-[#e7e7e7] text-sm transition-colors hover:bg-[#242424]"
+            </Button>
+            <Button
+              className="w-full"
               onClick={handlePasskeyOption}
+              size="lg"
               type="button"
+              variant="outline"
             >
               Log in with passkey
-            </button>
+            </Button>
           </div>
         )}
       </div>

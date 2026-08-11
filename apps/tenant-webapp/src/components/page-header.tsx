@@ -10,11 +10,11 @@ export function PageHeader({ title, description, actions }: PageHeaderProps) {
   return (
     <div className="flex flex-wrap items-center justify-between gap-3">
       <div className="min-w-0">
-        <h1 className="font-semibold text-2xl text-foreground tracking-tight">
+        <h1 className="font-medium text-2xl text-graphite tracking-[-0.048px]">
           {title}
         </h1>
         {description ? (
-          <p className="mt-1 text-muted-foreground text-sm">{description}</p>
+          <p className="mt-1 text-sm text-steel">{description}</p>
         ) : null}
       </div>
       {actions ? (

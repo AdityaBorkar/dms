@@ -37,11 +37,11 @@ export function NewEntityPage({
         description={description}
         title={title}
       />
-      <Card className="border-slate-200 shadow-sm">
+      <Card className="shadow-subtle">
         <CardContent className="p-6">
           <div className="mb-4 flex items-center gap-2">
-            <Icon className="size-5 text-muted-foreground" />
-            <span className="rounded-md bg-primary/10 px-2 py-0.5 font-semibold text-[10px] text-primary uppercase">
+            <Icon className="size-5 text-steel" />
+            <span className="rounded-full bg-lavender-wash px-2.5 py-0.5 font-medium text-[11px] text-indigo-ink uppercase">
               {domain}
             </span>
           </div>

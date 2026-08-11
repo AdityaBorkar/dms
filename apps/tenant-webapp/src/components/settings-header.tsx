@@ -69,9 +69,9 @@ export function SettingsHeader() {
   insertUsersCrumb(breadcrumbs);
 
   return (
-    <header className="sticky top-0 z-10 border-border border-b bg-card/80 backdrop-blur-md">
+    <header className="sticky top-0 z-10 border-ash border-b bg-paper-white/80 backdrop-blur-md">
       <div className="flex h-14 items-center gap-2 px-4 sm:px-6">
-        <Settings2 className="size-4 shrink-0 text-muted-foreground" />
+        <Settings2 className="size-4 shrink-0 text-indigo-ink" />
         <nav aria-label="Breadcrumb" className="min-w-0 flex-1">
           <ol className="flex min-w-0 items-center gap-1.5">
             {breadcrumbs.map((crumb, index) => {
@@ -84,20 +84,20 @@ export function SettingsHeader() {
                       aria-hidden="true"
                       className="flex shrink-0 items-center"
                     >
-                      <ChevronRight className="size-4 text-muted-foreground" />
+                      <ChevronRight className="size-4 text-smoke" />
                     </li>
                   ) : null}
                   <li className={isLast ? "min-w-0" : "shrink-0"}>
                     {isLast ? (
                       <span
                         aria-current="page"
-                        className="block truncate font-medium text-foreground"
+                        className="block truncate font-medium text-graphite"
                       >
                         {crumb.label}
                       </span>
                     ) : (
                       <Link
-                        className="block truncate rounded px-1 py-0.5 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                        className="block truncate rounded px-1 py-0.5 text-smoke transition-colors hover:text-graphite focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-pulse/30"
                         to={crumb.href}
                       >
                         {crumb.label}

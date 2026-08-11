@@ -11,10 +11,10 @@ import {
 export function UnauthorizedPage() {
   return (
     <div className="flex min-h-[60vh] items-center justify-center">
-      <Card className="w-full max-w-md border-slate-200 text-center shadow-sm">
+      <Card className="w-full max-w-md text-center shadow-subtle">
         <CardHeader className="items-center pt-10 pb-2 text-center">
-          <span className="mb-3 flex size-12 items-center justify-center rounded-xl bg-amber-500/10">
-            <ShieldX className="size-6 text-amber-600" />
+          <span className="mb-3 flex size-12 items-center justify-center rounded-full bg-lavender-wash">
+            <ShieldX className="size-6 text-violet-pulse" />
           </span>
           <CardTitle className="text-lg">Access denied</CardTitle>
           <CardDescription className="max-w-sm text-sm">

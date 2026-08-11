@@ -53,7 +53,7 @@ function EditUserPage() {
 
   if (!user) {
     return (
-      <main className="bg-background p-4 sm:p-8">
+      <main className="bg-paper-white p-4 sm:p-8">
         <div className="mx-auto max-w-2xl space-y-6">
           <Button
             nativeButton={false}
@@ -65,10 +65,10 @@ function EditUserPage() {
           </Button>
           <Card>
             <CardContent className="py-16 text-center">
-              <p className="font-medium text-foreground text-sm">
+              <p className="font-medium text-graphite text-sm">
                 We could not find this user
               </p>
-              <p className="mt-2 text-muted-foreground text-xs">
+              <p className="mt-2 text-smoke text-xs">
                 The user may have been removed from this workspace.
               </p>
             </CardContent>
@@ -81,7 +81,7 @@ function EditUserPage() {
   const currentUser = user;
 
   return (
-    <main className="bg-background p-4 sm:p-8">
+    <main className="bg-paper-white p-4 sm:p-8">
       <NewEntityPage
         backHref={`/settings/users/${currentUser.id}`}
         description="Update this user's name or workspace access level."

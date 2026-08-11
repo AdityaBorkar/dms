@@ -63,7 +63,7 @@ function GeneralPage() {
 
   if (organization === null) {
     return (
-      <main className="bg-background p-4 sm:p-8">
+      <main className="bg-paper-white p-4 sm:p-8">
         <div className="mx-auto max-w-4xl space-y-6">
           <PageHeader
             description="Organization profile and workspace details."
@@ -71,13 +71,13 @@ function GeneralPage() {
           />
           <Card>
             <CardContent className="py-16 text-center">
-              <span className="mx-auto mb-3 flex size-12 items-center justify-center rounded-xl bg-muted">
-                <Building2 className="size-6 text-muted-foreground" />
+              <span className="mx-auto mb-3 flex size-12 items-center justify-center rounded-full bg-bone">
+                <Building2 className="size-6 text-steel" />
               </span>
-              <p className="font-medium text-foreground text-sm">
+              <p className="font-medium text-graphite text-sm">
                 Organization information is unavailable
               </p>
-              <p className="mx-auto mt-2 max-w-sm text-muted-foreground text-xs">
+              <p className="mx-auto mt-2 max-w-sm text-steel text-xs">
                 We could not load your organization's profile. Try refreshing
                 the page.
               </p>
@@ -90,7 +90,7 @@ function GeneralPage() {
 
   if (isEditing) {
     return (
-      <main className="bg-background p-4 sm:p-8">
+      <main className="bg-paper-white p-4 sm:p-8">
         <div className="mx-auto max-w-3xl space-y-6">
           <PageHeader
             description="Update your organization's information."
@@ -111,7 +111,7 @@ function GeneralPage() {
   }
 
   return (
-    <main className="bg-background p-4 sm:p-8">
+    <main className="bg-paper-white p-4 sm:p-8">
       <div className="mx-auto max-w-4xl space-y-6">
         <PageHeader
           actions={
@@ -165,10 +165,8 @@ function GeneralPage() {
               <Detail label="Locale" value={organization.locale} />
               <Detail label="Timezone" value={organization.timezone} />
               <div>
-                <dt className="font-medium text-muted-foreground text-xs">
-                  Accent color
-                </dt>
-                <dd className="mt-1.5 flex items-center gap-2 text-foreground text-sm">
+                <dt className="font-medium text-steel text-xs">Accent color</dt>
+                <dd className="mt-1.5 flex items-center gap-2 text-graphite text-sm">
                   <span
                     className="size-4 rounded-full ring-1 ring-foreground/15 ring-inset"
                     style={{ backgroundColor: organization.accentColor }}
@@ -190,9 +188,7 @@ function GeneralPage() {
           <CardContent className="p-6">
             <dl className="grid gap-x-8 gap-y-5 sm:grid-cols-2">
               <div>
-                <dt className="font-medium text-muted-foreground text-xs">
-                  Status
-                </dt>
+                <dt className="font-medium text-steel text-xs">Status</dt>
                 <dd className="mt-1.5">
                   <StatusBadge status={organization.status} />
                 </dd>
@@ -245,10 +241,8 @@ function toFormValues(
 function Detail({ label, value }: { label: string; value: ReactNode }) {
   return (
     <div>
-      <dt className="font-medium text-muted-foreground text-xs">{label}</dt>
-      <dd className="mt-1 break-words text-foreground text-sm">
-        {value ?? "—"}
-      </dd>
+      <dt className="font-medium text-steel text-xs">{label}</dt>
+      <dd className="mt-1 break-words text-graphite text-sm">{value ?? "—"}</dd>
     </div>
   );
 }
@@ -257,14 +251,14 @@ function Detail({ label, value }: { label: string; value: ReactNode }) {
 function StatusBadge({ status }: { status: string }) {
   const tone =
     status === "active"
-      ? "bg-emerald-500/10 text-emerald-700 ring-emerald-600/20 dark:text-emerald-400"
+      ? "bg-bone text-ledger-green"
       : status === "suspended"
-        ? "bg-red-500/10 text-red-700 ring-red-600/20 dark:text-red-400"
-        : "bg-amber-500/10 text-amber-700 ring-amber-600/20 dark:text-amber-400";
+        ? "bg-destructive/10 text-destructive"
+        : "bg-bone text-slate";
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 font-medium text-[11px] ring-1 ring-inset ${tone}`}
+      className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 font-medium text-[11px] ${tone}`}
     >
       <span className="size-1.5 rounded-full bg-current opacity-70" />
       {status}

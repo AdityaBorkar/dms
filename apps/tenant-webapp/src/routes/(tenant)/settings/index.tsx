@@ -113,7 +113,7 @@ type Service = (typeof sections)[number]["items"][number];
 
 function SettingsPage() {
   return (
-    <main className="bg-background p-4 sm:p-8">
+    <main className="bg-paper-white p-4 sm:p-8">
       <div className="mx-auto max-w-6xl space-y-8">
         <PageHeader
           description="Manage your workspace services and configuration."
@@ -123,7 +123,7 @@ function SettingsPage() {
         <div className="space-y-8">
           {sections.map((section) => (
             <section key={section.label}>
-              <h2 className="mb-3 font-semibold text-[10px] text-muted-foreground uppercase tracking-[0.14em]">
+              <h2 className="mb-3 font-semibold text-[10px] text-steel uppercase tracking-[0.14em]">
                 {section.label}
               </h2>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -145,15 +145,15 @@ function ServiceCard({ item }: { item: Service }) {
 
   return (
     <Link className="group/card block rounded-lg" to={item.href}>
-      <Card className="h-full transition-colors hover:bg-muted/40">
+      <Card className="h-full transition-colors hover:bg-bone/60">
         <CardHeader>
-          <span className="flex size-10 items-center justify-center rounded-lg bg-muted">
-            <Icon className="size-5 text-primary" />
+          <span className="flex size-10 items-center justify-center rounded-lg bg-lavender-wash text-indigo-ink">
+            <Icon className="size-5 text-violet-pulse" />
           </span>
           <CardTitle>{item.label}</CardTitle>
           <CardDescription>{item.description}</CardDescription>
           <CardAction>
-            <ChevronRight className="size-4 text-muted-foreground transition-transform group-hover/card:translate-x-0.5" />
+            <ChevronRight className="size-4 text-smoke transition-transform group-hover/card:translate-x-0.5" />
           </CardAction>
         </CardHeader>
       </Card>

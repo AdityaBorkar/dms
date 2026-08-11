@@ -26,7 +26,7 @@ export function WorkspaceSelector({
 
   return (
     <Popover.Root>
-      <Popover.Trigger className="flex w-full items-center gap-3 rounded-lg px-2 py-1.5 text-left transition-colors hover:bg-sidebar-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring">
+      <Popover.Trigger className="flex w-full items-center gap-3 rounded-md px-2 py-1.5 text-left transition-colors hover:bg-bone focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-pulse/30">
         {organization?.logo ? (
           <img
             alt={`${organizationName} logo`}
@@ -34,61 +34,61 @@ export function WorkspaceSelector({
             src={organization.logo}
           />
         ) : (
-          <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-sidebar-primary font-semibold text-sidebar-primary-foreground text-sm uppercase shadow-sm">
+          <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-violet-pulse font-semibold text-sm text-white uppercase shadow-[var(--shadow-subtle),rgba(224,201,255,0.25)_0_0_16px_2px]">
             {organizationName.slice(0, 1)}
           </span>
         )}
         <span className="min-w-0 flex-1">
-          <span className="block truncate font-semibold text-sm">
+          <span className="block truncate font-medium text-graphite text-sm">
             {organizationName}
           </span>
-          <span className="mt-0.5 block truncate text-sidebar-foreground/55 text-xs">
+          <span className="mt-0.5 block truncate text-smoke text-xs">
             Workspace
           </span>
         </span>
-        <ChevronDown className="size-4 shrink-0 text-sidebar-foreground/55" />
+        <ChevronDown className="size-4 shrink-0 text-smoke" />
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Positioner className="z-50" sideOffset={8}>
-          <Popover.Popup className="w-64 rounded-xl border border-border bg-popover p-2 text-popover-foreground shadow-xl outline-none">
+          <Popover.Popup className="w-64 rounded-lg border border-ash bg-paper-white p-2 text-graphite shadow-[var(--shadow-subtle-9)] outline-none">
             <div className="space-y-0.5">
               <Link
                 aria-label="Organization Settings"
-                className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-accent"
+                className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-bone"
                 to="/settings"
               >
-                <span className="flex size-6 shrink-0 items-center justify-center rounded bg-muted text-muted-foreground">
+                <span className="flex size-6 shrink-0 items-center justify-center rounded bg-lavender-wash text-indigo-ink">
                   <Settings className="size-3.5" />
                 </span>
                 <span className="flex-1">Organization Settings</span>
               </Link>
               <Link
                 aria-label="Account Settings (opens in a new tab)"
-                className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-accent"
+                className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-bone"
                 rel="noreferrer"
                 target="_blank"
                 // @ts-expect-error URL Override
                 to={`${BASE_URL}/account/settings`}
               >
-                <span className="flex size-6 shrink-0 items-center justify-center rounded bg-muted text-muted-foreground">
+                <span className="flex size-6 shrink-0 items-center justify-center rounded bg-lavender-wash text-indigo-ink">
                   <UserRound className="size-3.5" />
                 </span>
                 <span className="flex-1">Account Settings</span>
-                <ExternalLink className="size-3 text-muted-foreground" />
+                <ExternalLink className="size-3 text-smoke" />
               </Link>
               <Link
                 aria-label="All Organizations (opens in a new tab)"
-                className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-accent"
+                className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-bone"
                 rel="noreferrer"
                 target="_blank"
                 // @ts-expect-error URL Override
                 to={`${BASE_URL}/account/organizations`}
               >
-                <span className="flex size-6 shrink-0 items-center justify-center rounded bg-muted text-muted-foreground">
+                <span className="flex size-6 shrink-0 items-center justify-center rounded bg-lavender-wash text-indigo-ink">
                   <Building2 className="size-3.5" />
                 </span>
                 <span className="flex-1">All Organizations</span>
-                <ExternalLink className="size-3 text-muted-foreground" />
+                <ExternalLink className="size-3 text-smoke" />
               </Link>
             </div>
           </Popover.Popup>

@@ -8,6 +8,19 @@
 
 ---
 
+/domain-modelling
+
+Print protection for all pages by default. They are wrapped in a NotPrintable component, which disables printing for the content inside it. It shows a warning - "This content is protected to prevent unauthorized printing.
+
+Make the sidebar hover state moveable up-down as per the hover to make the UI more interactively appealing.
+Motion.dev backed sidebar that is aesthetic and usable.
+
+Ensure maximal use of ShadCN components throughout the pages. Follow the design guidelines and use the components as per the documentation.
+Compact and appealing User Interface
+
+
+---
+
 Start creating the module and orpc endpoints for the "users" page
 
 Proper Forms (using skills)
@@ -21,16 +34,26 @@ Branches
 Addresses
 Bank Accounts
 
----
-
-Ensure maximal use of ShadCN components throughout the pages.
-
----
-
-Make the sidebar hover state moveable up-down as per the hover to make the UI more interactively appealing.
-
-GLM-5.2
-
-Compact and appealing User Interface
+/domain-modelling
+/init
 
 ---
+
+/domain-modelling
+
+---
+
+Manage Contacts - Create, Read, Delete, Update
+
+Fields: First Name, Last Name, Email, Phone, Company Name, Designation, Reason for Deletion
+All fields are mandatory, except for Reason for Deletion. It is mandatory only when a contact is being removed.
+
+Contacts are used to share files. Once a contact is removed, all sharing access is also revoked.
+
+---
+
+Recycle Bin shows a list of deleted or expired documents. There is an option to restore or permanently delete the document. Only the administrator can permanently delete the documents.
+
+---
+
+Settings/connections

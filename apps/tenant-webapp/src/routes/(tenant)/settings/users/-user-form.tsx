@@ -27,7 +27,7 @@ type UserFormProps = {
 };
 
 const selectClass =
-  "h-7 w-full min-w-0 rounded-md border border-input bg-input/20 px-2 py-0.5 text-sm transition-colors outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 md:text-xs/relaxed";
+  "h-9 w-full min-w-0 rounded-md border border-mist bg-paper-white px-3 py-1.5 text-sm text-graphite transition-colors outline-none focus-visible:border-violet-pulse focus-visible:ring-2 focus-visible:ring-iris-glow md:text-xs/relaxed";
 
 export function UserForm({
   initialValues,
@@ -95,7 +95,7 @@ export function UserForm({
   return (
     <form className="grid gap-4" onSubmit={handleSubmit}>
       <div className="grid gap-1.5">
-        <label className="font-medium text-xs" htmlFor={nameId}>
+        <label className="font-medium text-slate text-xs" htmlFor={nameId}>
           Full name
         </label>
         <Input
@@ -109,7 +109,7 @@ export function UserForm({
       </div>
 
       <div className="grid gap-1.5">
-        <label className="font-medium text-xs" htmlFor={emailId}>
+        <label className="font-medium text-slate text-xs" htmlFor={emailId}>
           Email address
         </label>
         <Input
@@ -123,7 +123,7 @@ export function UserForm({
           value={values.email}
         />
         {isEditing ? (
-          <p className="text-[11px] text-muted-foreground">
+          <p className="text-[11px] text-steel">
             Email addresses cannot be changed here.
           </p>
         ) : null}
@@ -131,7 +131,10 @@ export function UserForm({
 
       {!isEditing ? (
         <div className="grid gap-1.5">
-          <label className="font-medium text-xs" htmlFor={passwordId}>
+          <label
+            className="font-medium text-slate text-xs"
+            htmlFor={passwordId}
+          >
             Temporary password
           </label>
           <Input
@@ -145,22 +148,19 @@ export function UserForm({
             type="password"
             value={values.password}
           />
-          <p
-            className="text-[11px] text-muted-foreground"
-            id={`${passwordId}-hint`}
-          >
+          <p className="text-[11px] text-steel" id={`${passwordId}-hint`}>
             Share this securely with the user so they can sign in.
           </p>
         </div>
       ) : null}
 
       <div className="grid gap-1.5">
-        <label className="font-medium text-xs" htmlFor={roleId}>
+        <label className="font-medium text-slate text-xs" htmlFor={roleId}>
           Workspace role
         </label>
         {isOwner ? (
           <div
-            className="flex h-7 items-center rounded-md border border-input bg-muted/40 px-2 text-muted-foreground text-xs"
+            className="flex h-9 items-center rounded-md border border-mist bg-bone px-3 text-sm text-steel"
             id={roleId}
           >
             Owner
@@ -176,7 +176,7 @@ export function UserForm({
             <option value="admin">Administrator</option>
           </select>
         )}
-        <p className="text-[11px] text-muted-foreground">
+        <p className="text-[11px] text-steel">
           Administrators can manage workspace settings and users.
         </p>
       </div>
@@ -187,7 +187,7 @@ export function UserForm({
         </p>
       ) : null}
 
-      <div className="flex flex-col-reverse justify-end gap-2 border-t pt-4 sm:flex-row">
+      <div className="flex flex-col-reverse justify-end gap-2 border-ash border-t pt-4 sm:flex-row">
         <Button onClick={onCancel} type="button" variant="outline">
           Cancel
         </Button>

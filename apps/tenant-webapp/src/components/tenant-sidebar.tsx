@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 import type { LucideIcon } from "lucide-react";
 import {
   Bell,
-  ChevronDown,
   ContactRound,
   Files,
   LayoutList,
@@ -16,6 +15,8 @@ import {
   Trash2,
   Workflow,
 } from "lucide-react";
+
+import { WorkspaceSelector } from "@/components/workspace-selector";
 
 type Organization = {
   logo: string | null;
@@ -42,38 +43,10 @@ export function TenantSidebar({
   organization: Organization | null;
   user: User;
 }) {
-  const organizationName = organization
-    ? organization.name
-    : "Your organization";
-
   return (
     <aside className="flex w-full shrink-0 flex-col border-border border-b bg-sidebar text-sidebar-foreground md:sticky md:top-0 md:h-svh md:w-64 md:border-r md:border-b-0">
       <div className="border-sidebar-border border-b px-4 py-4">
-        <button
-          className="flex w-full items-center gap-3 rounded-lg px-2 py-1.5 text-left transition-colors hover:bg-sidebar-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
-          type="button"
-        >
-          {organization?.logo ? (
-            <img
-              alt={`${organizationName} logo`}
-              className="size-9 rounded-lg object-cover"
-              src={organization.logo}
-            />
-          ) : (
-            <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-sidebar-primary font-semibold text-sidebar-primary-foreground text-sm uppercase shadow-sm">
-              {organizationName.slice(0, 1)}
-            </span>
-          )}
-          <span className="min-w-0 flex-1">
-            <span className="block truncate font-semibold text-sm">
-              {organizationName}
-            </span>
-            <span className="mt-0.5 block truncate text-sidebar-foreground/55 text-xs">
-              Workspace
-            </span>
-          </span>
-          <ChevronDown className="size-4 shrink-0 text-sidebar-foreground/55" />
-        </button>
+        <WorkspaceSelector organization={organization} />
       </div>
 
       <div className="space-y-2 px-4 py-4">

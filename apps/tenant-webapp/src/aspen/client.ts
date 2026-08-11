@@ -2,12 +2,13 @@ import { Platform } from "@aspen-os/platform/client";
 
 import { env } from "../env";
 
-const BASE_URL = `${env.PUBLIC_WEB_SSL ? "https" : "http"}://${env.PUBLIC_WEB_DOMAIN}:${env.PUBLIC_WEB_PORT}`;
-
 export const p = Platform.create(
   {
     auth: {
-      baseURL: BASE_URL,
+      baseURL:
+        typeof window === "undefined"
+          ? `${env.PUBLIC_WEB_SSL ? "https" : "http"}://${env.PUBLIC_WEB_DOMAIN}:${env.PUBLIC_WEB_PORT}`
+          : window.location.origin,
       fetchOptions: {
         credentials: "include",
       },

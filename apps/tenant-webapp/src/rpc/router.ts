@@ -1,5 +1,8 @@
 import { getSession } from "./procedures/auth";
-import { getOrganizationBySubdomain } from "./procedures/organizations";
+import {
+  getOrganizationBySubdomain,
+  listOrganizations,
+} from "./procedures/organizations";
 import {
   createServiceProvider,
   listServiceProviders,
@@ -13,6 +16,7 @@ export const router = {
   },
   organizations: {
     bySubdomain: getOrganizationBySubdomain,
+    list: listOrganizations,
   },
   serviceProviders: {
     create: createServiceProvider,

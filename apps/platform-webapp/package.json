@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@aspen-os/management-plane": "link:@aspen-os/management-plane",
+    "@aspen-os/management": "link:@aspen-os/management",
     "@aspen-os/organization": "link:@aspen-os/organization",
     "@aspen-os/platform": "link:@aspen-os/platform",
     "@base-ui/react": "^1.7.0",

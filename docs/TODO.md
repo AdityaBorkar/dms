@@ -1,20 +1,5 @@
 # TODO
 
-- Different Favicons for each environment
-- Forms & Schemas
-- Tables
+- Remember to always use methods instead of direct database access.
 
-Auto-derieve Slug from the SP name
-
-/organizations
-/service-providers
-/users (all external as well as internal)
-
-After PLATFORM-WEBAPP is done:
-
-- Create a basic user management inerface and settings interface in the DMS
-- Work on two modules
-  - DMS
-  - RMS
-- Write down individual requirements
-- Write down the UI taste and create/update skill accordingly
+@org show a list of Organizations the user is a member of. On click of an Organization, redirect to the Organization's subdomain and dashboard.

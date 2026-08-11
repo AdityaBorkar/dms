@@ -1,4 +1,4 @@
-import { ManagementPlane } from "@aspen-os/management-plane";
+import { ManagementPlane } from "@aspen-os/management";
 import { Organization } from "@aspen-os/organization";
 import type { IsolatedTenantConfig } from "@aspen-os/platform/server";
 import { IsolatedTenantPlatform } from "@aspen-os/platform/server";
@@ -6,15 +6,44 @@ import { IsolatedTenantPlatform } from "@aspen-os/platform/server";
 import { env } from "../env";
 
 // Common
+const hostname = env.PUBLIC_WEB_DOMAIN;
+const protocol = env.PUBLIC_WEB_SSL ? "https" : "http";
+const port = env.PUBLIC_WEB_PORT ? `${env.PUBLIC_WEB_PORT}` : "";
 
-const BASE_URL = `${env.PUBLIC_WEB_SSL ? "https" : "http"}://${env.PUBLIC_WEB_DOMAIN}:${env.PUBLIC_WEB_PORT}`;
+export function isTrustedWebOrigin(origin: string): boolean {
+  try {
+    const candidate = new URL(origin);
+    return (
+      candidate.protocol === `${protocol}:` &&
+      candidate.port === port &&
+      (candidate.hostname === hostname ||
+        candidate.hostname.endsWith(`.${hostname}`))
+    );
+  } catch {
+    return false;
+  }
+}
 
 // Units
 
 const auth = {
-  baseURL: BASE_URL,
+  advanced: {
+    crossSubDomainCookies: {
+      // domain: `.${hostname}${port ? `:${port}` : ""}`,
+      enabled: true,
+    },
+  },
+  baseURL: {
+    allowedHosts: [`${protocol}://*.${hostname}${port ? `:${port}` : ""}`],
+    fallback: `${protocol}://${hostname}${port ? `:${port}` : ""}`,
+    protocol,
+  },
   secret: env.AUTH_SECRET,
   session: { expiresIn: 60 * 60 * 24 * 7 },
+  // trustedOrigins: [
+  //   hostname,
+  //   `${protocol}://*.${hostname}${port ? `:${port}` : ""}`,
+  // ],
 } satisfies IsolatedTenantConfig["auth"];
 
 const kvStore = {} satisfies IsolatedTenantConfig["kvStore"];

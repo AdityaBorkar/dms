@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "@aspen-os/management": "link:@aspen-os/management",
+    "@aspen-os/organization": "link:@aspen-os/organization",
+    "@aspen-os/platform": "link:@aspen-os/platform",
     "@base-ui/react": "^1.7.0",
     "@fontsource-variable/google-sans": "^5.3.1",
     "@orpc/client": "^1.15.0",

@@ -5,6 +5,7 @@
 ## Bugs
 
 - Auth subdomain does not work properly in production.
+<<<<<<< HEAD
 
 ---
 
@@ -15,3 +16,5 @@ Implement the settings sidebar with the following sections and items:
 - Support: Tickets, Knowledge Base
 
 Make stub pages for each path.
+=======
+>>>>>>> d9760d34f1d7e8f35c22547b7dd251dad1b7f4ad

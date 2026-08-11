@@ -1,6 +1,7 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import type { LucideIcon } from "lucide-react";
 import {
+  ArrowLeft,
   BookOpen,
   ClipboardList,
   FileBarChart,
@@ -34,6 +35,7 @@ const sections = [
         icon: SlidersHorizontal,
         label: "Preferences",
       },
+      { href: "/settings/branches", icon: Settings2, label: "Branches" },
     ],
     label: "Organization",
   },
@@ -41,11 +43,6 @@ const sections = [
     items: [
       { href: "/settings/users", icon: Users, label: "Users" },
       { href: "/settings/roles", icon: Shield, label: "Roles" },
-      {
-        href: "/settings/user-groups",
-        icon: UsersRound,
-        label: "User Groups",
-      },
     ],
     label: "Human Resources",
   },
@@ -89,14 +86,14 @@ export function SettingsSidebar({
         <WorkspaceSelector organization={organization} />
       </div>
 
-      <div className="border-sidebar-border border-b px-6 py-4">
-        <div className="flex items-center gap-2 text-sidebar-foreground">
-          <Settings2 className="size-4 text-sidebar-primary" />
-          <span className="font-semibold text-sm">Settings</span>
-        </div>
-        <p className="mt-1 text-sidebar-foreground/50 text-xs">
-          Workspace administration
-        </p>
+      <div className="border-sidebar-border border-b px-4 py-3">
+        <Link
+          className="flex h-9 w-full items-center gap-3 rounded-lg px-3 text-sidebar-foreground/75 text-sm transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
+          to="/dashboard"
+        >
+          <ArrowLeft className="size-4 shrink-0" />
+          <span className="truncate">Back</span>
+        </Link>
       </div>
 
       <nav

@@ -187,7 +187,6 @@ function SidebarItem({
     | "/recycle-bin"
     | "/settings"
     | "/tasks"
-    | "/users"
     | "/workflows";
   icon: LucideIcon;
   label: string;

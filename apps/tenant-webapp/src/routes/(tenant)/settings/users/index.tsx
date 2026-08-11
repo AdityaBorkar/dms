@@ -1,11 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { UserPlus, UsersRound } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Plus, UserPlus, UsersRound } from "lucide-react";
 
 import { PageHeader } from "@/components/page-header";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { orpc } from "@/lib/orpc";
 
-export const Route = createFileRoute("/(tenant)/(app)/users")({
+export const Route = createFileRoute("/(tenant)/settings/users/")({
   component: UsersPage,
   loader: async () => {
     try {
@@ -18,10 +19,9 @@ export const Route = createFileRoute("/(tenant)/(app)/users")({
 });
 
 const roleLabels: Record<string, string> = {
-  platform_admin: "Platform admin",
-  sp_user: "Service provider user",
-  tenant_admin: "Tenant admin",
-  tenant_user: "Tenant user",
+  admin: "Administrator",
+  member: "Member",
+  owner: "Owner",
 };
 
 function UsersPage() {
@@ -29,16 +29,25 @@ function UsersPage() {
   const count = users?.length ?? 0;
 
   return (
-    <main className="min-h-svh bg-background p-4 sm:p-8">
+    <main className="bg-background p-4 sm:p-8">
       <div className="mx-auto max-w-6xl space-y-6">
         <PageHeader
           actions={
-            <div className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2 text-muted-foreground text-xs">
-              <UsersRound className="size-4" />
-              {count} {count === 1 ? "user" : "users"}
+            <div className="flex items-center gap-2">
+              <span className="hidden items-center gap-2 rounded-lg border border-border bg-card px-3 py-2 text-muted-foreground text-xs sm:flex">
+                <UsersRound className="size-4" />
+                {count} {count === 1 ? "user" : "users"}
+              </span>
+              <Button
+                nativeButton={false}
+                render={<Link to="/settings/users/new" />}
+              >
+                <Plus />
+                Add user
+              </Button>
             </div>
           }
-          description="People with access to this Aspen workspace."
+          description="Manage the people who can access this workspace."
           title="Users"
         />
 
@@ -72,10 +81,8 @@ function UsersPage() {
                     <tr>
                       <th className="px-5 py-3 font-medium">User</th>
                       <th className="px-5 py-3 font-medium">Role</th>
-                      <th className="px-5 py-3 font-medium">
-                        Service provider
-                      </th>
                       <th className="px-5 py-3 font-medium">Added</th>
+                      <th className="px-5 py-3 text-right font-medium" />
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-border">
@@ -104,11 +111,17 @@ function UsersPage() {
                               "Unassigned"}
                           </span>
                         </td>
-                        <td className="px-5 py-4 font-mono text-muted-foreground text-xs">
-                          {user.spId ?? "—"}
-                        </td>
                         <td className="whitespace-nowrap px-5 py-4 text-muted-foreground text-xs">
                           {formatDate(user.createdAt)}
+                        </td>
+                        <td className="px-5 py-4 text-right">
+                          <Link
+                            className="font-medium text-primary text-xs hover:underline"
+                            params={{ id: user.id }}
+                            to="/settings/users/$id"
+                          >
+                            View
+                          </Link>
                         </td>
                       </tr>
                     ))}

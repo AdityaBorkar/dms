@@ -27,7 +27,7 @@ export function TodoPage({
   }, []);
 
   return (
-    <main className="min-h-svh bg-background p-4 sm:p-8">
+    <main className="bg-background p-4 sm:p-8">
       <div className="mx-auto max-w-5xl space-y-6">
         <PageHeader title={title} />
         {tabs && tabs.length > 0 ? (

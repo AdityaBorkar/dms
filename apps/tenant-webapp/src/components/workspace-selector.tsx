@@ -1,6 +1,14 @@
 import { Popover } from "@base-ui/react/popover";
 import { Link } from "@tanstack/react-router";
-import { Building2, Check, ChevronDown, Settings } from "lucide-react";
+import {
+  Building2,
+  ChevronDown,
+  ExternalLink,
+  Settings,
+  UserRound,
+} from "lucide-react";
+
+import { BASE_URL } from "@/lib/utils";
 
 type Organization = {
   logo: string | null;
@@ -43,44 +51,46 @@ export function WorkspaceSelector({
       <Popover.Portal>
         <Popover.Positioner className="z-50" sideOffset={8}>
           <Popover.Popup className="w-64 rounded-xl border border-border bg-popover p-2 text-popover-foreground shadow-xl outline-none">
-            <Popover.Title className="px-2 py-1.5 font-semibold text-muted-foreground text-xs">
-              Switch workspace
-            </Popover.Title>
-            <div className="space-y-1">
+            <div className="space-y-0.5">
               <Link
-                className="flex items-center gap-3 rounded-lg bg-accent px-2.5 py-2 text-sm"
-                to="/dashboard"
+                aria-label="Organization Settings"
+                className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-accent"
+                to="/settings"
               >
-                {organization?.logo ? (
-                  <img
-                    alt=""
-                    className="size-8 rounded-md object-cover"
-                    src={organization.logo}
-                  />
-                ) : (
-                  <span className="flex size-8 items-center justify-center rounded-md bg-primary/10 font-semibold text-primary text-xs uppercase">
-                    {organizationName.slice(0, 1)}
-                  </span>
-                )}
-                <span className="min-w-0 flex-1 truncate font-medium">
-                  {organizationName}
+                <span className="flex size-6 shrink-0 items-center justify-center rounded bg-muted text-muted-foreground">
+                  <Settings className="size-3.5" />
                 </span>
-                <Check className="size-4 text-primary" />
+                <span className="flex-1">Organization Settings</span>
               </Link>
               <Link
-                className="flex items-center gap-3 rounded-lg px-2.5 py-2 text-sm transition-colors hover:bg-accent"
-                to="/settings/general"
+                aria-label="Account Settings (opens in a new tab)"
+                className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-accent"
+                rel="noreferrer"
+                target="_blank"
+                // @ts-expect-error URL Override
+                to={`${BASE_URL}/account/settings`}
               >
-                <span className="flex size-8 items-center justify-center rounded-md bg-muted text-muted-foreground">
-                  <Settings className="size-4" />
+                <span className="flex size-6 shrink-0 items-center justify-center rounded bg-muted text-muted-foreground">
+                  <UserRound className="size-3.5" />
                 </span>
-                <span className="flex-1 font-medium">Settings</span>
+                <span className="flex-1">Account Settings</span>
+                <ExternalLink className="size-3 text-muted-foreground" />
+              </Link>
+              <Link
+                aria-label="All Organizations (opens in a new tab)"
+                className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-accent"
+                rel="noreferrer"
+                target="_blank"
+                // @ts-expect-error URL Override
+                to={`${BASE_URL}/account/organizations`}
+              >
+                <span className="flex size-6 shrink-0 items-center justify-center rounded bg-muted text-muted-foreground">
+                  <Building2 className="size-3.5" />
+                </span>
+                <span className="flex-1">All Organizations</span>
+                <ExternalLink className="size-3 text-muted-foreground" />
               </Link>
             </div>
-            <Popover.Description className="mt-2 flex items-center gap-1.5 px-2 text-[11px] text-muted-foreground">
-              <Building2 className="size-3.5" />
-              Manage this workspace
-            </Popover.Description>
           </Popover.Popup>
         </Popover.Positioner>
       </Popover.Portal>

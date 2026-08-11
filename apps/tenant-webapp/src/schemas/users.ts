@@ -1,18 +1,39 @@
-import { nullable, object, optional, picklist, string } from "valibot";
+import {
+  email,
+  minLength,
+  object,
+  optional,
+  picklist,
+  pipe,
+  string,
+} from "valibot";
 
 import { NameSchema } from "./common";
 
-const ROLE_VALUES = [
-  "platform_admin",
-  "sp_user",
-  "tenant_admin",
-  "tenant_user",
-] as const;
+export const OrganizationUserRoleSchema = picklist(["admin", "member"]);
 
-export const CreatePlatformUserSchema = object({
-  email: string(),
+const PasswordSchema = pipe(
+  string(),
+  minLength(8, "Password must be at least 8 characters"),
+);
+
+export const CreateTenantUserSchema = object({
+  email: pipe(string(), email("Enter a valid email address")),
   name: NameSchema,
-  password: string(),
-  role: picklist(ROLE_VALUES),
-  spId: optional(nullable(string())),
+  password: PasswordSchema,
+  role: OrganizationUserRoleSchema,
+});
+
+export const UpdateTenantUserSchema = object({
+  name: optional(NameSchema),
+  role: optional(OrganizationUserRoleSchema),
+});
+
+export const TenantUserIdSchema = object({
+  id: pipe(string(), minLength(1, "User ID is required")),
+});
+
+export const UpdateTenantUserInputSchema = object({
+  id: pipe(string(), minLength(1, "User ID is required")),
+  patch: UpdateTenantUserSchema,
 });

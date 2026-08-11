@@ -2,6 +2,7 @@ import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
 import { useCallback } from "react";
 
 import { p } from "@/aspen/client";
+import { SettingsHeader } from "@/components/settings-header";
 import { SettingsSidebar } from "@/components/settings-sidebar";
 import { Route as BaseRoute } from "../route";
 
@@ -25,9 +26,12 @@ function RouteComponent() {
         organization={organization}
         user={user}
       />
-      <main className="min-w-0 flex-1">
-        <Outlet />
-      </main>
+      <div className="flex min-w-0 flex-1 flex-col">
+        <SettingsHeader />
+        <main className="min-w-0 flex-1">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 }

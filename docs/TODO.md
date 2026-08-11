@@ -8,16 +8,10 @@
 
 ---
 
-/domain-modelling
-
-Print protection for all pages by default. They are wrapped in a NotPrintable component, which disables printing for the content inside it. It shows a warning - "This content is protected to prevent unauthorized printing.
-
 Make the sidebar hover state moveable up-down as per the hover to make the UI more interactively appealing.
 Motion.dev backed sidebar that is aesthetic and usable.
 
-Ensure maximal use of ShadCN components throughout the pages. Follow the design guidelines and use the components as per the documentation.
 Compact and appealing User Interface
-
 
 ---
 
@@ -39,10 +33,6 @@ Bank Accounts
 
 ---
 
-/domain-modelling
-
----
-
 Manage Contacts - Create, Read, Delete, Update
 
 Fields: First Name, Last Name, Email, Phone, Company Name, Designation, Reason for Deletion
@@ -57,3 +47,26 @@ Recycle Bin shows a list of deleted or expired documents. There is an option to 
 ---
 
 Settings/connections
+
+---
+
+Domain Terms:
+
+File Categories
+  Indexes
+  File Naming Schema
+  <!-- Upload Metadata File (as Excel / CSV / Paper) -->
+  <!-- Flag inconsistencies?? -->
+  Compression Options
+  OCR / Deepsearch
+  AI / Deepsearch
+
++ Upload Files
+
+<!-- Folders and Subfolders -->
+
+Create Folders using a filter view / Live Folders
+
+- Sharing
+
+All Files

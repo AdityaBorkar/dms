@@ -1,24 +1,32 @@
 import { Link, useMatches } from "@tanstack/react-router";
-import { ChevronRight, Settings2 } from "lucide-react";
-import { Fragment } from "react";
+import { Settings2 } from "lucide-react";
+
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 const breadcrumbLabels: Record<string, string> = {
   "/(tenant)/settings": "Settings",
   "/(tenant)/settings/access-history": "Access History",
   "/(tenant)/settings/audit-log": "Audit Log",
+  "/(tenant)/settings/branches": "Branches",
   "/(tenant)/settings/general": "General",
   "/(tenant)/settings/knowledge-base": "Knowledge Base",
   "/(tenant)/settings/preferences": "Preferences",
   "/(tenant)/settings/reports": "Reports",
   "/(tenant)/settings/roles": "Roles",
-  "/(tenant)/settings/structure": "Organization Structure",
   "/(tenant)/settings/tickets": "Tickets",
   "/(tenant)/settings/users/": "Users",
   "/(tenant)/settings/users/$id/edit": "Edit",
   "/(tenant)/settings/users/new": "New user",
 };
 
-type Breadcrumb = {
+type Breadcrumbs = {
   href: string;
   label: string;
 };
@@ -39,7 +47,7 @@ function resolveBreadcrumbLabel(match: SettingsMatch): string | null {
   return null;
 }
 
-function insertUsersCrumb(breadcrumbs: Breadcrumb[]) {
+function insertUsersCrumb(breadcrumbs: Breadcrumbs[]) {
   if (breadcrumbs.some((crumb) => crumb.href === "/settings/users")) return;
 
   const needsUsers = breadcrumbs.some(
@@ -53,7 +61,7 @@ function insertUsersCrumb(breadcrumbs: Breadcrumb[]) {
 export function SettingsHeader() {
   const matches = useMatches();
 
-  const breadcrumbs: Breadcrumb[] = [];
+  const breadcrumbs: Breadcrumbs[] = [];
 
   for (const match of matches) {
     const label = resolveBreadcrumbLabel(match);
@@ -72,43 +80,35 @@ export function SettingsHeader() {
     <header className="sticky top-0 z-10 border-ash border-b bg-paper-white/80 backdrop-blur-md">
       <div className="flex h-14 items-center gap-2 px-4 sm:px-6">
         <Settings2 className="size-4 shrink-0 text-indigo-ink" />
-        <nav aria-label="Breadcrumb" className="min-w-0 flex-1">
-          <ol className="flex min-w-0 items-center gap-1.5">
+        <Breadcrumb aria-label="Breadcrumb" className="min-w-0 flex-1">
+          <BreadcrumbList className="flex-nowrap">
             {breadcrumbs.map((crumb, index) => {
               const isLast = index === breadcrumbs.length - 1;
 
               return (
-                <Fragment key={crumb.href}>
-                  {index > 0 ? (
-                    <li
-                      aria-hidden="true"
-                      className="flex shrink-0 items-center"
+                <BreadcrumbItem className="min-w-0" key={crumb.href}>
+                  {index > 0 ? <BreadcrumbSeparator /> : null}
+                  {isLast ? (
+                    <BreadcrumbPage className="min-w-0 truncate font-medium text-graphite text-sm">
+                      {crumb.label}
+                    </BreadcrumbPage>
+                  ) : (
+                    <BreadcrumbLink
+                      render={
+                        <Link
+                          className="block truncate rounded px-1 py-0.5 text-smoke transition-colors hover:text-graphite focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-pulse/30"
+                          to={crumb.href}
+                        />
+                      }
                     >
-                      <ChevronRight className="size-4 text-smoke" />
-                    </li>
-                  ) : null}
-                  <li className={isLast ? "min-w-0" : "shrink-0"}>
-                    {isLast ? (
-                      <span
-                        aria-current="page"
-                        className="block truncate font-medium text-graphite"
-                      >
-                        {crumb.label}
-                      </span>
-                    ) : (
-                      <Link
-                        className="block truncate rounded px-1 py-0.5 text-smoke transition-colors hover:text-graphite focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-pulse/30"
-                        to={crumb.href}
-                      >
-                        {crumb.label}
-                      </Link>
-                    )}
-                  </li>
-                </Fragment>
+                      {crumb.label}
+                    </BreadcrumbLink>
+                  )}
+                </BreadcrumbItem>
               );
             })}
-          </ol>
-        </nav>
+          </BreadcrumbList>
+        </Breadcrumb>
       </div>
     </header>
   );

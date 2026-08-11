@@ -6,8 +6,10 @@ import {
   useState,
 } from "react";
 
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export type OrganizationFormValues = {
   accentColor: string;
@@ -77,9 +79,9 @@ export function OrganizationForm({
     <form className="grid gap-4" onSubmit={handleSubmit}>
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="grid gap-1.5">
-          <label className="font-medium text-slate text-xs" htmlFor={nameId}>
+          <Label className="text-slate text-xs" htmlFor={nameId}>
             Organization name
-          </label>
+          </Label>
           <Input
             id={nameId}
             onChange={handleChange("name")}
@@ -90,9 +92,9 @@ export function OrganizationForm({
         </div>
 
         <div className="grid gap-1.5">
-          <label className="font-medium text-slate text-xs" htmlFor={slugId}>
+          <Label className="text-slate text-xs" htmlFor={slugId}>
             Slug
-          </label>
+          </Label>
           <Input
             id={slugId}
             onChange={handleChange("slug")}
@@ -151,12 +153,9 @@ export function OrganizationForm({
           value={values.taxId}
         />
         <div className="grid gap-1.5">
-          <label
-            className="font-medium text-slate text-xs"
-            htmlFor={foundedDateId}
-          >
+          <Label className="text-slate text-xs" htmlFor={foundedDateId}>
             Founded date
-          </label>
+          </Label>
           <Input
             id={foundedDateId}
             onChange={handleChange("foundedDate")}
@@ -178,12 +177,9 @@ export function OrganizationForm({
         />
 
         <div className="grid gap-1.5">
-          <label
-            className="font-medium text-slate text-xs"
-            htmlFor={accentColorId}
-          >
+          <Label className="text-slate text-xs" htmlFor={accentColorId}>
             Accent color
-          </label>
+          </Label>
           <Input
             id={accentColorId}
             onChange={handleChange("accentColor")}
@@ -194,9 +190,11 @@ export function OrganizationForm({
       </div>
 
       {error ? (
-        <p className="rounded-md border border-destructive/20 bg-destructive/10 px-3 py-2 text-destructive text-xs">
-          {error}
-        </p>
+        <Alert variant="destructive">
+          <AlertDescription className="text-destructive">
+            {error}
+          </AlertDescription>
+        </Alert>
       ) : null}
 
       <div className="flex flex-col-reverse justify-end gap-2 border-ash border-t pt-4 sm:flex-row">
@@ -227,9 +225,9 @@ function TextField({
   const id = useId();
   return (
     <div className="grid gap-1.5">
-      <label className="font-medium text-slate text-xs" htmlFor={id}>
+      <Label className="text-slate text-xs" htmlFor={id}>
         {label}
-      </label>
+      </Label>
       <Input
         id={id}
         onChange={onChange}

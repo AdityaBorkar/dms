@@ -2,6 +2,7 @@ import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
 import { useCallback } from "react";
 
 import { p } from "@/aspen/client";
+import { NotPrintable } from "@/components/not-printable";
 import { SettingsHeader } from "@/components/settings-header";
 import { SettingsSidebar } from "@/components/settings-sidebar";
 import { Route as BaseRoute } from "../route";
@@ -20,18 +21,20 @@ function RouteComponent() {
   }, [navigate]);
 
   return (
-    <div className="flex min-h-svh flex-col bg-paper-white text-iron md:flex-row">
-      <SettingsSidebar
-        onSignOut={handleSignOut}
-        organization={organization}
-        user={user}
-      />
-      <div className="flex min-w-0 flex-1 flex-col">
-        <SettingsHeader />
-        <main className="min-w-0 flex-1">
-          <Outlet />
-        </main>
+    <NotPrintable>
+      <div className="flex min-h-svh flex-col bg-paper-white text-iron md:flex-row">
+        <SettingsSidebar
+          onSignOut={handleSignOut}
+          organization={organization}
+          user={user}
+        />
+        <div className="flex min-w-0 flex-1 flex-col">
+          <SettingsHeader />
+          <main className="min-w-0 flex-1">
+            <Outlet />
+          </main>
+        </div>
       </div>
-    </div>
+    </NotPrintable>
   );
 }

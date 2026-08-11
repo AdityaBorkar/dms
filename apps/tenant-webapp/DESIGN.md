@@ -3,13 +3,13 @@
 
 **Theme:** light
 
-Sequence reads like an editorial finance publication rendered in product form: a near-white canvas, a humanist sans (TWK Lausanne) carrying almost all interface text, and a light-weight serif (Moderat Serif) used sparingly on large display headlines to inject editorial gravity. Depth comes from hairline borders and thin layered shadows, not heavy panels or colored fills. A single vivid violet (#a565ff) is the only chromatic accent in the system — it functions as a precise annotation, appearing on primary CTAs, active icons, and subtle brand glows, while the rest of the interface stays in cool grays. Soft blue-violet radial washes in hero and section backgrounds create atmospheric depth without committing to color, and the overall density is compact and precise rather than spacious or airy.
+Sequence reads like an editorial finance publication rendered in product form: a near-white canvas, a humanist sans (TWK Lausanne) carrying almost all interface text, and a light-weight serif (Moderat Serif) used sparingly on large display headlines to inject editorial gravity. Depth comes from hairline borders and thin layered shadows, not heavy panels or colored fills. A single vivid violet (#7c3aed) is the only chromatic accent in the system — it functions as a precise annotation, appearing on primary CTAs, active icons, and subtle brand glows, while the rest of the interface stays in cool grays. Soft blue-violet radial washes in hero and section backgrounds create atmospheric depth without committing to color, and the overall density is compact and precise rather than spacious or airy.
 
 ## Tokens — Colors
 
 | Name | Value | Token | Role |
 |------|-------|-------|------|
-| Violet Pulse | `#a565ff` | `--color-violet-pulse` | Primary CTAs, active icons, brand glow accents — the single chromatic accent in the system; everything else defers to it |
+| Violet Pulse | `#7c3aed` | `--color-violet-pulse` | Primary CTAs, active icons, brand glow accents — the single chromatic accent in the system; everything else defers to it. Darkened from `#a565ff` so white text meets WCAG AA contrast (≈5.7:1) on filled actions |
 | Indigo Ink | `#5e5cff` | `--color-indigo-ink` | Link text, secondary text emphasis, and accent strokes where violet would be too loud |
 | Lavender Wash | `#ebebff` | `--color-lavender-wash` | Soft tinted backgrounds for highlighted callouts and subtle surface differentiation |
 | Iris Glow | `#e0c9ff` | `--color-iris-glow` | Violet supporting accent for decorative details and low-frequency emphasis. Do not promote it to the primary CTA color |
@@ -74,26 +74,30 @@ Sequence reads like an editorial finance publication rendered in product form: a
 
 ### Spacing Scale
 
+> **Naming:** the design's spacing tokens are `--ds-*` (not `--spacing-*`). `--spacing-*` is reserved for the Tailwind default spacing system, which sizing utilities (`w-64`, `p-4`, `gap-2`, …) resolve against. Using `--ds-*` keeps the Scale available without shrinking Tailwind utilities like `w-64` (256px).
+
 | Name | Value | Token |
 |------|-------|-------|
-| 4 | 4px | `--spacing-4` |
-| 8 | 8px | `--spacing-8` |
-| 12 | 12px | `--spacing-12` |
-| 16 | 16px | `--spacing-16` |
-| 20 | 20px | `--spacing-20` |
-| 24 | 24px | `--spacing-24` |
-| 28 | 28px | `--spacing-28` |
-| 32 | 32px | `--spacing-32` |
-| 40 | 40px | `--spacing-40` |
-| 48 | 48px | `--spacing-48` |
-| 52 | 52px | `--spacing-52` |
-| 56 | 56px | `--spacing-56` |
-| 64 | 64px | `--spacing-64` |
-| 80 | 80px | `--spacing-80` |
-| 96 | 96px | `--spacing-96` |
-| 160 | 160px | `--spacing-160` |
+| 4 | 4px | `--ds-4` |
+| 8 | 8px | `--ds-8` |
+| 12 | 12px | `--ds-12` |
+| 16 | 16px | `--ds-16` |
+| 20 | 20px | `--ds-20` |
+| 24 | 24px | `--ds-24` |
+| 28 | 28px | `--ds-28` |
+| 32 | 32px | `--ds-32` |
+| 40 | 40px | `--ds-40` |
+| 48 | 48px | `--ds-48` |
+| 52 | 52px | `--ds-52` |
+| 56 | 56px | `--ds-56` |
+| 64 | 64px | `--ds-64` |
+| 80 | 80px | `--ds-80` |
+| 96 | 96px | `--ds-96` |
+| 160 | 160px | `--ds-160` |
 
 ### Border Radius
+
+> Tailwind radii (`--radius-sm/md/lg/xl/2xl`) are pinned to the design scale so `rounded-sm`/`rounded-md`/`rounded-lg` resolve to 4/4/8px.
 
 | Element | Value |
 |---------|-------|
@@ -110,7 +114,7 @@ Sequence reads like an editorial finance publication rendered in product form: a
 | subtle | `rgba(58, 58, 64, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1)...` | `--shadow-subtle` |
 | subtle-2 | `rgba(29, 29, 32, 0.08) 0px 0px 0px 1px` | `--shadow-subtle-2` |
 | subtle-3 | `rgb(239, 239, 239) 0px 0px 0px 2px, rgba(0, 0, 0, 0.01) 0...` | `--shadow-subtle-3` |
-| sm | `rgba(99, 102, 241, 0.4) 0px 0px 8px 2px` | `--shadow-sm` |
+| sm | `--shadow-subtle` stack + `rgba(224, 201, 255, 0.2) 0px 0px 8px 2px` + `rgba(99, 102, 241, 0.4) 0px 0px 8px 2px` | `--shadow-sm` |
 | subtle-4 | `rgba(0, 0, 0, 0.05) 0px 0px 0px 1px` | `--shadow-subtle-4` |
 | subtle-5 | `rgba(117, 117, 117, 0.2) 0px 0px 0px 1px, rgba(0, 0, 0, 0...` | `--shadow-subtle-5` |
 | subtle-6 | `rgba(255, 255, 255, 0.14) 0px 1px 0px 0px inset, rgba(13,...` | `--shadow-subtle-6` |
@@ -121,7 +125,7 @@ Sequence reads like an editorial finance publication rendered in product form: a
 | subtle-10 | `rgba(0, 0, 0, 0.05) 0px 1px 2px 0px` | `--shadow-subtle-10` |
 | subtle-11 | `rgba(117, 117, 117, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0...` | `--shadow-subtle-11` |
 | subtle-12 | `rgba(0, 0, 0, 0.1) 0px 1px 1px 0px inset` | `--shadow-subtle-12` |
-| subtle-13 | `rgb(165, 101, 255) 0px 0px 0px 1px` | `--shadow-subtle-13` |
+| subtle-13 | `rgb(124, 58, 237) 0px 0px 0px 1px` | `--shadow-subtle-13` |
 
 ### Layout
 
@@ -135,7 +139,7 @@ Sequence reads like an editorial finance publication rendered in product form: a
 ### Primary Action Button
 **Role:** Filled CTA for the single most important action on any screen
 
-Background #a565ff, text #ffffff, border-radius 9999px (pill), padding 10px 20px. TWK Lausanne 14px weight 500. Gains a violet halo via box-shadow using #e0c9ff at low opacity. This is the only filled chromatic button in the system.
+Background #7c3aed, text #ffffff, border-radius 9999px (pill), padding 10px 20px. TWK Lausanne 14px weight 500. Gains a violet halo via box-shadow using #e0c9ff at low opacity. This is the only filled chromatic button in the system.
 
 ### Secondary Action Button
 **Role:** Outlined or ghost action when two actions appear on one screen
@@ -165,7 +169,7 @@ Background #ffffff, border 1px #e5e7eb, border-radius 8px, padding 16px. Uses th
 ### Input Field
 **Role:** Form inputs, search fields, and inline editors
 
-Background #ffffff, border 1px #d1d9e4, border-radius 4px, padding 8px 12px. TWK Lausanne 14px weight 400. Placeholder text in #92939e. Focus state shifts border to #a565ff with 2px outer ring of #ebebff.
+Background #ffffff, border 1px #d1d9e4, border-radius 4px, padding 8px 12px. TWK Lausanne 14px weight 400. Placeholder text in #92939e. Focus state shifts border to #7c3aed with 2px outer ring of #ebebff.
 
 ### Integration Logo Tile
 **Role:** Third-party brand logos in the integration grid
@@ -200,7 +204,7 @@ No background or border. Wordmarks in #1d1d20 at consistent visual weight, space
 ## Do's and Don'ts
 
 ### Do
-- Use Violet Pulse (#a565ff) exclusively for the single primary CTA per screen; never for body text, icons in resting state, or large fills
+- Use Violet Pulse (#7c3aed) exclusively for the single primary CTA per screen; never for body text, icons in resting state, or large fills
 - Set all headings 24px and above in TWK Lausanne weight 300; reserve Moderat Serif for the 40–46px display headline only
 - Use Ash (#e5e7eb) 1px as the default border across cards, dividers, inputs, and tiles — this is the structural line of the system
 - Apply the pill radius (9999px) to all buttons, nav items, and tags; use 8px for cards and 4px for inputs and small interactive elements
@@ -228,7 +232,7 @@ No background or border. Wordmarks in #1d1d20 at consistent visual weight, space
 
 ## Elevation
 
-- **Primary CTA button:** `0px 0px 0px 1px rgba(58,58,64,0.1), 0px 1px 3px 0px rgba(0,0,0,0.1), 0px 1px 2px -1px rgba(0,0,0,0.1) + violet halo via #e0c9ff at ~20% opacity 0 0 8px 2px`
+- **Primary CTA button:** `0px 0px 0px 1px rgba(58,58,64,0.1), 0px 1px 3px 0px rgba(0,0,0,0.1), 0px 1px 2px -1px rgba(0,0,0,0.1) + violet halo via #e0c9ff at ~20% opacity 0 0 8px 2px` (+ `rgba(99,102,241,0.4) 0 0 8px 2px` intensification layer)
 - **Product screenshot cards:** `0px 0px 0px 2px rgb(239,239,239), 0px 22px 9px 0px rgba(0,0,0,0.01), 0px 12px 7px 0px rgba(0,0,0,0.04), 0px 5px 5px 0px rgba(0,0,0,0.06), 0px 1px 3px 0px rgba(0,0,0,0.07)`
 - **Secondary/outlined button:** `0px 0px 0px 1px rgba(29,29,32,0.08)`
 - **Subtle elevation ring:** `0px 0px 0px 1px rgba(0,0,0,0.05)`
@@ -259,13 +263,13 @@ Hero and section backgrounds use two signature soft washes: a horizontal purple 
 - text: #1d1d20 (headings), #505050 (body), #757575 (muted)
 - background: #ffffff (canvas), #f7f7f7 (recessed surface)
 - border: #e5e7eb (default hairline), #d1d9e4 (input border)
-- accent: #a565ff (Violet Pulse — the only chromatic accent)
-- primary action: #a565ff (filled action)
+- accent: #7c3aed (Violet Pulse — the only chromatic accent)
+- primary action: #7c3aed (filled action)
 
 **Example Component Prompts**
-1. Create a Primary Action Button: #a565ff background, #ffffff text, 9999px radius, compact pill padding. Use this filled treatment for the main CTA.
+1. Create a Primary Action Button: #7c3aed background, #ffffff text, 9999px radius, compact pill padding. Use this filled treatment for the main CTA.
 2. *Product Feature Card*: Background #ffffff, border 1px #e5e7eb, border-radius 8px, padding 24px. Icon 24px in #1d1d20 at top-left. Title TWK Lausanne 18px weight 500 #1d1d20. Body TWK Lausanne 14px weight 400 #757575. No resting shadow.
-3. *Input field*: Background #ffffff, border 1px #d1d9e4, border-radius 4px, padding 8px 12px. Text TWK Lausanne 14px weight 400 #1d1d20. Placeholder #92939e. Focus state: border shifts to #a565ff, 2px outer ring of #ebebff.
+3. *Input field*: Background #ffffff, border 1px #d1d9e4, border-radius 4px, padding 8px 12px. Text TWK Lausanne 14px weight 400 #1d1d20. Placeholder #92939e. Focus state: border shifts to #7c3aed, 2px outer ring of #ebebff.
 4. *Status badge (success)*: Background #f7f7f7, text #2e7317, TWK Lausanne 11px weight 500, border-radius 9999px, padding 2px 10px.
 5. *Announcement bar*: Full-bleed background #fff6df, text #1d1d20 TWK Lausanne 13px weight 400 centered, padding 8px vertical. Inline arrow link in #5e5cff.
 
@@ -284,7 +288,7 @@ Hero and section backgrounds use two signature soft washes: a horizontal purple 
 ```css
 :root {
   /* Colors */
-  --color-violet-pulse: #a565ff;
+  --color-violet-pulse: #7c3aed;
   --color-indigo-ink: #5e5cff;
   --color-lavender-wash: #ebebff;
   --color-iris-glow: #e0c9ff;
@@ -336,24 +340,24 @@ Hero and section backgrounds use two signature soft washes: a horizontal purple 
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  /* Spacing */
+  /* Spacing — design scale (namespaced; the default --spacing-* scale is left to Tailwind) */
   --spacing-unit: 4px;
-  --spacing-4: 4px;
-  --spacing-8: 8px;
-  --spacing-12: 12px;
-  --spacing-16: 16px;
-  --spacing-20: 20px;
-  --spacing-24: 24px;
-  --spacing-28: 28px;
-  --spacing-32: 32px;
-  --spacing-40: 40px;
-  --spacing-48: 48px;
-  --spacing-52: 52px;
-  --spacing-56: 56px;
-  --spacing-64: 64px;
-  --spacing-80: 80px;
-  --spacing-96: 96px;
-  --spacing-160: 160px;
+  --ds-4: 4px;
+  --ds-8: 8px;
+  --ds-12: 12px;
+  --ds-16: 16px;
+  --ds-20: 20px;
+  --ds-24: 24px;
+  --ds-28: 28px;
+  --ds-32: 32px;
+  --ds-40: 40px;
+  --ds-48: 48px;
+  --ds-52: 52px;
+  --ds-56: 56px;
+  --ds-64: 64px;
+  --ds-80: 80px;
+  --ds-96: 96px;
+  --ds-160: 160px;
 
   /* Layout */
   --page-max-width: 1200px;
@@ -362,6 +366,7 @@ Hero and section backgrounds use two signature soft washes: a horizontal purple 
   --element-gap: 8px;
 
   /* Border Radius */
+  --radius-sm: 4px;
   --radius-md: 4px;
   --radius-lg: 8px;
   --radius-xl: 12px;
@@ -380,7 +385,7 @@ Hero and section backgrounds use two signature soft washes: a horizontal purple 
   --shadow-subtle: rgba(58, 58, 64, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
   --shadow-subtle-2: rgba(29, 29, 32, 0.08) 0px 0px 0px 1px;
   --shadow-subtle-3: rgb(239, 239, 239) 0px 0px 0px 2px, rgba(0, 0, 0, 0.01) 0px 22px 9px 0px, rgba(0, 0, 0, 0.04) 0px 12px 7px 0px, rgba(0, 0, 0, 0.06) 0px 5px 5px 0px, rgba(0, 0, 0, 0.07) 0px 1px 3px 0px;
-  --shadow-sm: rgba(99, 102, 241, 0.4) 0px 0px 8px 2px;
+  --shadow-sm: var(--shadow-subtle), rgba(224, 201, 255, 0.2) 0px 0px 8px 2px, rgba(99, 102, 241, 0.4) 0px 0px 8px 2px;
   --shadow-subtle-4: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
   --shadow-subtle-5: rgba(117, 117, 117, 0.2) 0px 0px 0px 1px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   --shadow-subtle-6: rgba(255, 255, 255, 0.14) 0px 1px 0px 0px inset, rgba(13, 25, 37, 0.08) 0px 1px 1px 0px, rgba(14, 26, 38, 0.05) 0px 0px 0px 1px, rgba(13, 25, 37, 0.05) 0px 2px 3px 0px;
@@ -391,7 +396,7 @@ Hero and section backgrounds use two signature soft washes: a horizontal purple 
   --shadow-subtle-10: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   --shadow-subtle-11: rgba(117, 117, 117, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.05) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -4px;
   --shadow-subtle-12: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px inset;
-  --shadow-subtle-13: rgb(165, 101, 255) 0px 0px 0px 1px;
+  --shadow-subtle-13: rgb(124, 58, 237) 0px 0px 0px 1px;
 
   /* Surfaces */
   --surface-page-canvas: #ffffff;
@@ -406,7 +411,7 @@ Hero and section backgrounds use two signature soft washes: a horizontal purple 
 ```css
 @theme {
   /* Colors */
-  --color-violet-pulse: #a565ff;
+  --color-violet-pulse: #7c3aed;
   --color-indigo-ink: #5e5cff;
   --color-lavender-wash: #ebebff;
   --color-iris-glow: #e0c9ff;
@@ -451,25 +456,26 @@ Hero and section backgrounds use two signature soft washes: a horizontal purple 
   --leading-display: 1;
   --tracking-display: -1.15px;
 
-  /* Spacing */
-  --spacing-4: 4px;
-  --spacing-8: 8px;
-  --spacing-12: 12px;
-  --spacing-16: 16px;
-  --spacing-20: 20px;
-  --spacing-24: 24px;
-  --spacing-28: 28px;
-  --spacing-32: 32px;
-  --spacing-40: 40px;
-  --spacing-48: 48px;
-  --spacing-52: 52px;
-  --spacing-56: 56px;
-  --spacing-64: 64px;
-  --spacing-80: 80px;
-  --spacing-96: 96px;
-  --spacing-160: 160px;
+  /* Spacing — design scale (namespaced; the default --spacing-* scale is left to Tailwind) */
+  --ds-4: 4px;
+  --ds-8: 8px;
+  --ds-12: 12px;
+  --ds-16: 16px;
+  --ds-20: 20px;
+  --ds-24: 24px;
+  --ds-28: 28px;
+  --ds-32: 32px;
+  --ds-40: 40px;
+  --ds-48: 48px;
+  --ds-52: 52px;
+  --ds-56: 56px;
+  --ds-64: 64px;
+  --ds-80: 80px;
+  --ds-96: 96px;
+  --ds-160: 160px;
 
   /* Border Radius */
+  --radius-sm: 4px;
   --radius-md: 4px;
   --radius-lg: 8px;
   --radius-xl: 12px;
@@ -481,7 +487,7 @@ Hero and section backgrounds use two signature soft washes: a horizontal purple 
   --shadow-subtle: rgba(58, 58, 64, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
   --shadow-subtle-2: rgba(29, 29, 32, 0.08) 0px 0px 0px 1px;
   --shadow-subtle-3: rgb(239, 239, 239) 0px 0px 0px 2px, rgba(0, 0, 0, 0.01) 0px 22px 9px 0px, rgba(0, 0, 0, 0.04) 0px 12px 7px 0px, rgba(0, 0, 0, 0.06) 0px 5px 5px 0px, rgba(0, 0, 0, 0.07) 0px 1px 3px 0px;
-  --shadow-sm: rgba(99, 102, 241, 0.4) 0px 0px 8px 2px;
+  --shadow-sm: var(--shadow-subtle), rgba(224, 201, 255, 0.2) 0px 0px 8px 2px, rgba(99, 102, 241, 0.4) 0px 0px 8px 2px;
   --shadow-subtle-4: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
   --shadow-subtle-5: rgba(117, 117, 117, 0.2) 0px 0px 0px 1px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   --shadow-subtle-6: rgba(255, 255, 255, 0.14) 0px 1px 0px 0px inset, rgba(13, 25, 37, 0.08) 0px 1px 1px 0px, rgba(14, 26, 38, 0.05) 0px 0px 0px 1px, rgba(13, 25, 37, 0.05) 0px 2px 3px 0px;
@@ -492,6 +498,6 @@ Hero and section backgrounds use two signature soft washes: a horizontal purple 
   --shadow-subtle-10: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   --shadow-subtle-11: rgba(117, 117, 117, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.05) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -4px;
   --shadow-subtle-12: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px inset;
-  --shadow-subtle-13: rgb(165, 101, 255) 0px 0px 0px 1px;
+  --shadow-subtle-13: rgb(124, 58, 237) 0px 0px 0px 1px;
 }
 ```

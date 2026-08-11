@@ -1,6 +1,4 @@
 import { Construction } from "lucide-react";
-import type { MouseEvent } from "react";
-import { useCallback, useState } from "react";
 
 import { PageHeader } from "@/components/page-header";
 import {
@@ -9,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function TodoPage({
   title,
@@ -17,51 +16,22 @@ export function TodoPage({
   title: string;
   tabs?: readonly string[];
 }) {
-  const [activeTab, setActiveTab] = useState(tabs?.[0]);
-  const pageId = title.toLowerCase().replaceAll(" ", "-");
-  const activeTabId = activeTab
-    ? `${pageId}-${activeTab.toLowerCase().replaceAll(" ", "-")}`
-    : undefined;
-  const handleTabClick = useCallback((event: MouseEvent<HTMLButtonElement>) => {
-    setActiveTab(event.currentTarget.dataset.tab);
-  }, []);
-
   return (
     <main className="bg-paper-white p-4 sm:p-8">
       <div className="mx-auto max-w-5xl space-y-6">
         <PageHeader title={title} />
         {tabs && tabs.length > 0 ? (
-          <div
-            aria-label={`${title} sections`}
-            className="flex gap-6 overflow-x-auto border-border border-b"
-            role="tablist"
-          >
-            {tabs.map((tab) => {
-              const tabId = `${pageId}-${tab.toLowerCase().replaceAll(" ", "-")}`;
-
-              return (
-                <button
-                  aria-controls={`${pageId}-panel`}
-                  aria-selected={activeTab === tab}
-                  className="-mb-px shrink-0 border-transparent border-b-2 px-1 pb-3 font-medium text-sm text-smoke transition-colors hover:border-violet-pulse/40 hover:text-graphite aria-selected:border-violet-pulse aria-selected:text-violet-pulse"
-                  id={tabId}
-                  key={tab}
-                  onClick={handleTabClick}
-                  role="tab"
-                  type="button"
-                >
+          <Tabs className="w-fit border-border border-b" defaultValue={tabs[0]}>
+            <TabsList variant="line">
+              {tabs.map((tab) => (
+                <TabsTrigger key={tab} value={tab}>
                   {tab}
-                </button>
-              );
-            })}
-          </div>
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
         ) : null}
-        <Card
-          aria-labelledby={activeTabId}
-          className="border-dashed bg-bone/40 shadow-none"
-          id={activeTabId ? `${pageId}-panel` : undefined}
-          role={activeTabId ? "tabpanel" : undefined}
-        >
+        <Card className="border-dashed bg-bone/40 shadow-none">
           <CardHeader className="flex flex-col items-center justify-center gap-4 py-12 text-center">
             <span className="mb-3 flex size-12 items-center justify-center rounded-full bg-lavender-wash">
               <Construction className="size-6 text-violet-pulse" />

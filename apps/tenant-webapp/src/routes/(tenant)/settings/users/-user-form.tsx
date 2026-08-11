@@ -6,8 +6,17 @@ import {
   useState,
 } from "react";
 
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export type UserRole = "admin" | "member";
 
@@ -25,9 +34,6 @@ type UserFormProps = {
   onCancel: () => void;
   onSubmit: (values: UserFormValues) => Promise<void>;
 };
-
-const selectClass =
-  "h-9 w-full min-w-0 rounded-md border border-mist bg-paper-white px-3 py-1.5 text-sm text-graphite transition-colors outline-none focus-visible:border-violet-pulse focus-visible:ring-2 focus-visible:ring-iris-glow md:text-xs/relaxed";
 
 export function UserForm({
   initialValues,
@@ -62,15 +68,13 @@ export function UserForm({
     },
     [],
   );
-  const handleRoleChange = useCallback(
-    (event: ChangeEvent<HTMLSelectElement>) => {
-      setValues((current) => ({
-        ...current,
-        role: event.target.value as UserRole,
-      }));
-    },
-    [],
-  );
+  const handleRoleChange = useCallback((role: UserRole | null) => {
+    if (!role) return;
+    setValues((current) => ({
+      ...current,
+      role,
+    }));
+  }, []);
   const handleSubmit = useCallback(
     async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -95,9 +99,9 @@ export function UserForm({
   return (
     <form className="grid gap-4" onSubmit={handleSubmit}>
       <div className="grid gap-1.5">
-        <label className="font-medium text-slate text-xs" htmlFor={nameId}>
+        <Label className="text-slate text-xs" htmlFor={nameId}>
           Full name
-        </label>
+        </Label>
         <Input
           autoComplete="name"
           id={nameId}
@@ -109,9 +113,9 @@ export function UserForm({
       </div>
 
       <div className="grid gap-1.5">
-        <label className="font-medium text-slate text-xs" htmlFor={emailId}>
+        <Label className="text-slate text-xs" htmlFor={emailId}>
           Email address
-        </label>
+        </Label>
         <Input
           autoComplete="email"
           disabled={isEditing}
@@ -131,12 +135,9 @@ export function UserForm({
 
       {!isEditing ? (
         <div className="grid gap-1.5">
-          <label
-            className="font-medium text-slate text-xs"
-            htmlFor={passwordId}
-          >
+          <Label className="text-slate text-xs" htmlFor={passwordId}>
             Temporary password
-          </label>
+          </Label>
           <Input
             aria-describedby={`${passwordId}-hint`}
             autoComplete="new-password"
@@ -155,9 +156,9 @@ export function UserForm({
       ) : null}
 
       <div className="grid gap-1.5">
-        <label className="font-medium text-slate text-xs" htmlFor={roleId}>
+        <Label className="text-slate text-xs" htmlFor={roleId}>
           Workspace role
-        </label>
+        </Label>
         {isOwner ? (
           <div
             className="flex h-9 items-center rounded-md border border-mist bg-bone px-3 text-sm text-steel"
@@ -166,15 +167,24 @@ export function UserForm({
             Owner
           </div>
         ) : (
-          <select
-            className={selectClass}
-            id={roleId}
-            onChange={handleRoleChange}
+          <Select
+            name="role"
+            onValueChange={handleRoleChange}
             value={values.role}
           >
-            <option value="member">Member</option>
-            <option value="admin">Administrator</option>
-          </select>
+            <SelectTrigger
+              className="h-9 w-full border-mist bg-paper-white text-sm"
+              id={roleId}
+            >
+              <SelectValue>
+                {values.role === "admin" ? "Administrator" : "Member"}
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="member">Member</SelectItem>
+              <SelectItem value="admin">Administrator</SelectItem>
+            </SelectContent>
+          </Select>
         )}
         <p className="text-[11px] text-steel">
           Administrators can manage workspace settings and users.
@@ -182,9 +192,11 @@ export function UserForm({
       </div>
 
       {error ? (
-        <p className="rounded-md border border-destructive/20 bg-destructive/10 px-3 py-2 text-destructive text-xs">
-          {error}
-        </p>
+        <Alert variant="destructive">
+          <AlertDescription className="text-destructive">
+            {error}
+          </AlertDescription>
+        </Alert>
       ) : null}
 
       <div className="flex flex-col-reverse justify-end gap-2 border-ash border-t pt-4 sm:flex-row">

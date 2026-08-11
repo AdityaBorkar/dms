@@ -2,8 +2,18 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Plus, UserPlus, UsersRound } from "lucide-react";
 
 import { PageHeader } from "@/components/page-header";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { orpc } from "@/lib/orpc";
 
 export const Route = createFileRoute("/(tenant)/settings/users/")({
@@ -34,10 +44,13 @@ function UsersPage() {
         <PageHeader
           actions={
             <div className="flex items-center gap-2">
-              <span className="hidden items-center gap-2 rounded-full border border-ash bg-card px-3 py-1.5 text-smoke text-xs sm:flex">
+              <Badge
+                className="hidden items-center gap-2 rounded-full border-ash bg-card px-3 py-1.5 text-smoke text-xs sm:inline-flex"
+                variant="outline"
+              >
                 <UsersRound className="size-4" />
                 {count} {count === 1 ? "user" : "users"}
-              </span>
+              </Badge>
               <Button
                 nativeButton={false}
                 render={<Link to="/settings/users/new" />}
@@ -75,59 +88,60 @@ function UsersPage() {
                 title="No users yet"
               />
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full min-w-[680px] text-sm">
-                  <thead className="bg-bone text-left text-smoke text-xs">
-                    <tr>
-                      <th className="px-5 py-3 font-medium">User</th>
-                      <th className="px-5 py-3 font-medium">Role</th>
-                      <th className="px-5 py-3 font-medium">Added</th>
-                      <th className="px-5 py-3 text-right font-medium" />
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-ash">
-                    {users.map((user) => (
-                      <tr
-                        className="transition-colors hover:bg-bone/40"
-                        key={user.id}
-                      >
-                        <td className="px-5 py-4">
-                          <div className="flex items-center gap-3">
-                            <UserAvatar name={user.name ?? user.email ?? "?"} />
-                            <div className="min-w-0">
-                              <p className="truncate font-medium text-graphite">
-                                {user.name ?? "Unnamed user"}
-                              </p>
-                              <p className="truncate text-smoke text-xs">
-                                {user.email ?? "No email"}
-                              </p>
-                            </div>
+              <Table className="min-w-[680px]">
+                <TableHeader className="bg-bone">
+                  <TableRow className="hover:bg-transparent">
+                    <TableHead className="px-5 text-smoke text-xs">
+                      User
+                    </TableHead>
+                    <TableHead className="px-5 text-smoke text-xs">
+                      Role
+                    </TableHead>
+                    <TableHead className="px-5 text-smoke text-xs">
+                      Added
+                    </TableHead>
+                    <TableHead className="px-5 text-right text-smoke text-xs" />
+                  </TableRow>
+                </TableHeader>
+                <TableBody className="divide-y divide-ash">
+                  {users.map((user) => (
+                    <TableRow className="hover:bg-bone/40" key={user.id}>
+                      <TableCell className="px-5 py-4">
+                        <div className="flex items-center gap-3">
+                          <UserAvatar name={user.name ?? user.email ?? "?"} />
+                          <div className="min-w-0">
+                            <p className="truncate font-medium text-graphite">
+                              {user.name ?? "Unnamed user"}
+                            </p>
+                            <p className="truncate text-smoke text-xs">
+                              {user.email ?? "No email"}
+                            </p>
                           </div>
-                        </td>
-                        <td className="px-5 py-4">
-                          <span className="rounded-full bg-lavender-wash px-2.5 py-1 font-medium text-indigo-ink text-xs">
-                            {roleLabels[user.role ?? ""] ??
-                              user.role ??
-                              "Unassigned"}
-                          </span>
-                        </td>
-                        <td className="whitespace-nowrap px-5 py-4 text-smoke text-xs">
-                          {formatDate(user.createdAt)}
-                        </td>
-                        <td className="px-5 py-4 text-right">
-                          <Link
-                            className="font-medium text-indigo-ink text-xs hover:underline"
-                            params={{ id: user.id }}
-                            to="/settings/users/$id"
-                          >
-                            View
-                          </Link>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                        </div>
+                      </TableCell>
+                      <TableCell className="px-5 py-4">
+                        <Badge className="bg-lavender-wash text-indigo-ink">
+                          {roleLabels[user.role ?? ""] ??
+                            user.role ??
+                            "Unassigned"}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="px-5 py-4 text-smoke text-xs">
+                        {formatDate(user.createdAt)}
+                      </TableCell>
+                      <TableCell className="px-5 py-4 text-right">
+                        <Link
+                          className="font-medium text-indigo-ink text-xs hover:underline"
+                          params={{ id: user.id }}
+                          to="/settings/users/$id"
+                        >
+                          View
+                        </Link>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             )}
           </CardContent>
         </Card>
@@ -162,9 +176,11 @@ function UserAvatar({ name }: { name: string }) {
     .join("");
 
   return (
-    <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-lavender-wash font-medium text-indigo-ink text-xs">
-      {initials || "?"}
-    </span>
+    <Avatar className="size-9 bg-lavender-wash">
+      <AvatarFallback className="bg-lavender-wash font-medium text-indigo-ink text-xs">
+        {initials || "?"}
+      </AvatarFallback>
+    </Avatar>
   );
 }
 

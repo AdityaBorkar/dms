@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { useCallback, useState } from "react";
 
 import { PageHeader } from "@/components/page-header";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -249,20 +250,18 @@ function Detail({ label, value }: { label: string; value: ReactNode }) {
 
 // biome-ignore lint/style/useComponentExportOnlyModules: route modules export a Route config alongside render helpers
 function StatusBadge({ status }: { status: string }) {
-  const tone =
+  const variant =
     status === "active"
-      ? "bg-bone text-ledger-green"
+      ? "outline"
       : status === "suspended"
-        ? "bg-destructive/10 text-destructive"
-        : "bg-bone text-slate";
+        ? "destructive"
+        : "secondary";
 
   return (
-    <span
-      className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 font-medium text-[11px] ${tone}`}
-    >
+    <Badge className="gap-1.5 px-2 py-0.5 text-[11px]" variant={variant}>
       <span className="size-1.5 rounded-full bg-current opacity-70" />
       {status}
-    </span>
+    </Badge>
   );
 }
 

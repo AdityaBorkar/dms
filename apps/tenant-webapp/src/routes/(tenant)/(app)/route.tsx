@@ -2,6 +2,7 @@ import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
 import { useCallback } from "react";
 
 import { p } from "@/aspen/client";
+import { NotPrintable } from "@/components/not-printable";
 import { TenantSidebar } from "@/components/tenant-sidebar";
 import { Route as BaseRoute } from "../route";
 
@@ -19,16 +20,18 @@ function RouteComponent() {
   }, [navigate]);
 
   return (
-    <div className="flex min-h-svh flex-col bg-paper-white text-iron md:flex-row">
-      <TenantSidebar
-        onSignOut={handleSignOut}
-        organization={organization}
-        user={user}
-      />
+    <NotPrintable>
+      <div className="flex min-h-svh flex-col bg-paper-white text-iron md:flex-row">
+        <TenantSidebar
+          onSignOut={handleSignOut}
+          organization={organization}
+          user={user}
+        />
 
-      <main className="min-w-0 flex-1">
-        <Outlet />
-      </main>
-    </div>
+        <main className="min-w-0 flex-1">
+          <Outlet />
+        </main>
+      </div>
+    </NotPrintable>
   );
 }

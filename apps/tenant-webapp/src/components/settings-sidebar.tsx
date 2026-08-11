@@ -14,6 +14,8 @@ import {
   Users,
 } from "lucide-react";
 
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { WorkspaceSelector } from "@/components/workspace-selector";
 
 type Organization = {
@@ -86,13 +88,16 @@ export function SettingsSidebar({
       </div>
 
       <div className="border-ash border-b px-4 py-3">
-        <Link
-          className="flex h-9 w-full items-center gap-3 rounded-md px-3 text-sm text-steel transition-colors hover:bg-bone hover:text-graphite focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-pulse/30"
-          to="/dashboard"
+        <Button
+          className="w-full justify-start rounded-md px-3 text-steel"
+          nativeButton={false}
+          render={<Link to="/dashboard" />}
+          size="default"
+          variant="ghost"
         >
           <ArrowLeft className="size-4 shrink-0" />
           <span className="truncate">Back</span>
-        </Link>
+        </Button>
       </div>
 
       <nav
@@ -115,24 +120,26 @@ export function SettingsSidebar({
 
       <div className="border-ash border-t px-4 py-3">
         <div className="flex items-center gap-3 rounded-md px-2 py-2">
-          <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-bone font-medium text-steel text-xs uppercase">
-            {user.name.slice(0, 1)}
-          </span>
+          <Avatar className="bg-bone">
+            <AvatarFallback className="bg-bone font-medium text-steel text-xs uppercase">
+              {user.name.slice(0, 1)}
+            </AvatarFallback>
+          </Avatar>
           <span className="min-w-0 flex-1">
             <span className="block truncate font-medium text-graphite text-sm">
               {user.name}
             </span>
             <span className="block truncate text-smoke text-xs">Signed in</span>
           </span>
-          <button
+          <Button
             aria-label="Sign out"
-            className="flex size-8 items-center justify-center rounded-md text-smoke transition-colors hover:bg-bone hover:text-graphite focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-pulse/30"
             onClick={onSignOut}
+            size="icon-sm"
             title="Sign out"
-            type="button"
+            variant="ghost"
           >
             <LogOut className="size-4" />
-          </button>
+          </Button>
         </div>
       </div>
     </aside>
@@ -169,13 +176,16 @@ function SettingsSidebarItem({
   const active = location.pathname === href;
 
   return (
-    <Link
+    <Button
       aria-current={active ? "page" : undefined}
-      className={`flex h-9 w-full items-center gap-3 rounded-md px-3 text-left text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-pulse/30 ${active ? "bg-lavender-wash font-medium text-violet-pulse" : "text-steel hover:bg-bone hover:text-graphite"}`}
-      to={href}
+      className={`w-full justify-start rounded-md px-3 text-left ${active ? "bg-lavender-wash font-medium text-violet-pulse" : "text-steel"}`}
+      nativeButton={false}
+      render={<Link aria-current={active ? "page" : undefined} to={href} />}
+      size="default"
+      variant={active ? "secondary" : "ghost"}
     >
       <Icon className="size-4 shrink-0" />
       <span className="truncate">{label}</span>
-    </Link>
+    </Button>
   );
 }

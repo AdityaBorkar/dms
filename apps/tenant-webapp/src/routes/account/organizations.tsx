@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, Building2 } from "lucide-react";
 import { object, optional, string } from "valibot";
 
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { env } from "@/env";
 import { orpc } from "@/lib/orpc";
 
@@ -51,10 +52,15 @@ function RouteComponent() {
         {organizations.length > 0 ? (
           <div className="space-y-3">
             {organizations.map((organization) => (
-              <a
-                className="group flex min-h-16 items-center justify-between rounded-lg border border-ash bg-paper-white px-4 py-3 shadow-[var(--shadow-subtle-4)] transition-colors hover:border-violet-pulse/60 hover:bg-bone"
-                href={getOrganizationUrl(organization.slug)}
+              <Card
+                className="shadow-subtle"
                 key={organization.id}
+                render={
+                  <a
+                    className="group flex min-h-16 items-center justify-between rounded-lg px-4 py-3 transition-colors hover:border-violet-pulse/60 hover:bg-bone"
+                    href={getOrganizationUrl(organization.slug)}
+                  />
+                }
               >
                 <span className="min-w-0">
                   <span className="block truncate font-medium text-graphite text-sm">
@@ -65,18 +71,21 @@ function RouteComponent() {
                   </span>
                 </span>
                 <ArrowRight className="ml-4 size-4 shrink-0 text-smoke transition-transform group-hover:translate-x-0.5 group-hover:text-violet-pulse" />
-              </a>
+              </Card>
             ))}
           </div>
         ) : (
-          <div className="rounded-lg border border-ash bg-paper-white px-5 py-8 text-center">
-            <p className="font-medium text-graphite text-sm">
-              No organizations available
-            </p>
-            <p className="mt-2 text-sm text-steel">
-              Contact your administrator if you need access to an organization.
-            </p>
-          </div>
+          <Card className="shadow-subtle">
+            <CardHeader className="items-center pt-8 text-center">
+              <CardTitle className="text-sm">
+                No organizations available
+              </CardTitle>
+              <p className="mt-1 text-sm text-steel">
+                Contact your administrator if you need access to an
+                organization.
+              </p>
+            </CardHeader>
+          </Card>
         )}
       </div>
     </main>

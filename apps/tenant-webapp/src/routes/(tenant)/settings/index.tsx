@@ -60,7 +60,7 @@ const sections = [
       },
       {
         description: "Model your organization's hierarchy and teams.",
-        href: "/settings/structure",
+        href: "/settings/branches",
         icon: UsersRound,
         label: "Organization Structure",
       },

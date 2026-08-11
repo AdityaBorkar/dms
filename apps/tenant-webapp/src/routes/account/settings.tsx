@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { PageHeader } from "@/components/page-header";
 import {
   Card,
   CardDescription,
@@ -22,14 +23,10 @@ function RouteComponent() {
   return (
     <main className="bg-paper-white p-4 sm:p-8">
       <div className="mx-auto max-w-4xl space-y-6">
-        <div>
-          <h1 className="font-medium text-2xl text-graphite tracking-[-0.048px]">
-            Account settings
-          </h1>
-          <p className="mt-1 text-sm text-steel">
-            Manage your personal account and preferences.
-          </p>
-        </div>
+        <PageHeader
+          description="Manage your personal account and preferences."
+          title="Account settings"
+        />
         <div className="grid gap-4 sm:grid-cols-2">
           {sections.map((section) => (
             <Card

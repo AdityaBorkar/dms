@@ -1,8 +1,29 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowLeft, Mail, Pencil, ShieldCheck, Trash2 } from "lucide-react";
+import {
+  AlertCircle,
+  ArrowLeft,
+  Mail,
+  Pencil,
+  ShieldCheck,
+  Trash2,
+} from "lucide-react";
 import { useCallback, useState } from "react";
 
 import { PageHeader } from "@/components/page-header";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -36,11 +57,10 @@ function UserDetailsPage() {
   const navigate = useNavigate();
   const [isRemoving, setIsRemoving] = useState(false);
   const [removeError, setRemoveError] = useState<string | null>(null);
+  const [isRemoveDialogOpen, setIsRemoveDialogOpen] = useState(false);
 
   const handleRemove = useCallback(async () => {
-    if (!user || !window.confirm(`Remove ${user.name} from this workspace?`)) {
-      return;
-    }
+    if (!user) return;
 
     setRemoveError(null);
     setIsRemoving(true);
@@ -52,6 +72,7 @@ function UserDetailsPage() {
         error instanceof Error ? error.message : "Unable to remove user",
       );
       setIsRemoving(false);
+      setIsRemoveDialogOpen(false);
     }
   }, [navigate, user]);
 
@@ -134,13 +155,16 @@ function UserDetailsPage() {
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-lavender-wash px-2.5 py-1 font-medium text-indigo-ink text-xs">
+                  <Badge className="gap-1.5 bg-lavender-wash text-indigo-ink">
                     <ShieldCheck className="size-3.5" />
                     {roleLabels[user.role] ?? user.role}
-                  </span>
-                  <span className="rounded-full bg-bone px-2.5 py-1 text-steel text-xs">
+                  </Badge>
+                  <Badge
+                    className="rounded-full bg-bone px-2.5 py-1 text-steel"
+                    variant="outline"
+                  >
                     Added {formatDate(user.createdAt)}
-                  </span>
+                  </Badge>
                 </div>
               </div>
             </CardContent>
@@ -156,19 +180,51 @@ function UserDetailsPage() {
             </CardHeader>
             <CardContent className="space-y-3">
               {removeError ? (
-                <p className="rounded-md border border-destructive/20 bg-destructive/10 px-3 py-2 text-destructive text-xs">
-                  {removeError}
-                </p>
+                <Alert variant="destructive">
+                  <AlertCircle className="size-4 shrink-0" />
+                  <AlertDescription className="text-destructive">
+                    {removeError}
+                  </AlertDescription>
+                </Alert>
               ) : null}
-              <Button
-                className="w-full"
-                disabled={isRemoving}
-                onClick={handleRemove}
-                variant="destructive"
+              <AlertDialog
+                onOpenChange={setIsRemoveDialogOpen}
+                open={isRemoveDialogOpen}
               >
-                <Trash2 />
-                {isRemoving ? "Removing..." : "Remove from workspace"}
-              </Button>
+                <AlertDialogTrigger
+                  render={
+                    <Button
+                      className="w-full"
+                      disabled={isRemoving}
+                      variant="destructive"
+                    >
+                      <Trash2 />
+                      {isRemoving ? "Removing..." : "Remove from workspace"}
+                    </Button>
+                  }
+                />
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Remove {user.name}?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This removes the user from this workspace. Their account
+                      is not deleted, and they can be added back at any time.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel disabled={isRemoving}>
+                      Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction
+                      disabled={isRemoving}
+                      onClick={handleRemove}
+                      variant="destructive"
+                    >
+                      {isRemoving ? "Removing..." : "Remove from workspace"}
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </CardContent>
           </Card>
         </div>
@@ -196,9 +252,11 @@ function UserAvatar({ name }: { name: string }) {
     .join("");
 
   return (
-    <span className="flex size-16 shrink-0 items-center justify-center rounded-2xl bg-lavender-wash font-medium text-indigo-ink text-xl">
-      {initials || "?"}
-    </span>
+    <Avatar className="size-16 rounded-2xl bg-lavender-wash">
+      <AvatarFallback className="rounded-2xl bg-lavender-wash font-medium text-indigo-ink text-xl">
+        {initials || "?"}
+      </AvatarFallback>
+    </Avatar>
   );
 }
 

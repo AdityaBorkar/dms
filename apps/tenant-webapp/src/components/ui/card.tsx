@@ -1,3 +1,5 @@
+import { mergeProps } from "@base-ui/react/merge-props";
+import { useRender } from "@base-ui/react/use-render";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
@@ -5,19 +7,28 @@ import { cn } from "@/lib/utils";
 function Card({
   className,
   size = "default",
+  render,
   ...props
-}: React.ComponentProps<"div"> & { size?: "default" | "sm" }) {
-  return (
-    <div
-      className={cn(
-        "group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-lg border border-ash bg-card py-(--card-spacing) text-sm/relaxed text-card-foreground [--card-spacing:--spacing(4)] has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] *:[img:first-child]:rounded-t-lg *:[img:last-child]:rounded-b-lg",
-        className,
-      )}
-      data-size={size}
-      data-slot="card"
-      {...props}
-    />
-  );
+}: useRender.ComponentProps<"div"> & { size?: "default" | "sm" }) {
+  return useRender({
+    defaultTagName: "div",
+    props: mergeProps<"div">(
+      {
+        className: cn(
+          "group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-lg border border-ash bg-card py-(--card-spacing) text-sm/relaxed text-card-foreground [--card-spacing:--spacing(4)] has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] *:[img:first-child]:rounded-t-lg *:[img:last-child]:rounded-b-lg",
+          className,
+        ),
+        ...(size === "sm" ? {} : {}),
+        ...(size === "sm" ? {} : {}),
+      },
+      props,
+    ),
+    render,
+    state: {
+      size,
+      slot: "card",
+    },
+  });
 }
 
 function CardHeader({ className, ...props }: React.ComponentProps<"div">) {

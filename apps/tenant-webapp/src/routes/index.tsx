@@ -10,8 +10,11 @@ import {
 import { object, optional, string } from "valibot";
 
 import { p } from "@/aspen/client";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { env } from "@/env";
 import { orpc } from "@/lib/orpc";
 
@@ -117,7 +120,7 @@ function LoginPage() {
 
     return (
       <main className="flex min-h-svh items-center justify-center bg-paper-white px-4 py-12 font-sans text-iron">
-        <div className="w-full max-w-sm rounded-lg border border-ash bg-paper-white p-6 text-center shadow-[var(--shadow-subtle-8)]">
+        <Card className="w-full max-w-sm p-6 text-center shadow-[var(--shadow-subtle-8)]">
           <span className="mx-auto mb-5 flex size-10 items-center justify-center rounded-full bg-bone text-graphite">
             <Building2 className="size-5" />
           </span>
@@ -127,13 +130,15 @@ function LoginPage() {
           <p className="mt-2 text-sm text-steel">
             This organization does not exist or is no longer active.
           </p>
-          <a
-            className="mt-6 inline-flex h-10 items-center justify-center rounded-full bg-violet-pulse px-5 font-medium text-sm text-white shadow-[var(--shadow-subtle),rgba(224,201,255,0.25)_0_0_16px_2px] transition-colors hover:bg-violet-pulse/90"
-            href={apexUrl}
+          <Button
+            className="mt-6 w-full"
+            nativeButton={false}
+            render={<a href={apexUrl} />}
+            size="lg"
           >
             Return to Global Sign-In Page
-          </a>
-        </div>
+          </Button>
+        </Card>
       </main>
     );
   }
@@ -153,20 +158,19 @@ function LoginPage() {
         {showEmailForm ? (
           <form className="mt-5 space-y-4" onSubmit={onSubmit}>
             {!!error && (
-              <div className="flex items-center gap-2 rounded-md border border-destructive/20 bg-destructive/10 px-3 py-2 font-medium text-destructive text-xs">
+              <Alert variant="destructive">
                 <AlertCircle className="size-4 shrink-0" />
-                {error}
-              </div>
+                <AlertDescription className="font-medium text-destructive">
+                  {error}
+                </AlertDescription>
+              </Alert>
             )}
 
             <div className="space-y-3">
               <div>
-                <label
-                  className="mb-1.5 block font-medium text-slate text-xs"
-                  htmlFor={emailId}
-                >
+                <Label className="mb-1.5 block text-xs" htmlFor={emailId}>
                   Email
-                </label>
+                </Label>
                 <Input
                   autoComplete="email"
                   className="h-11"
@@ -181,12 +185,9 @@ function LoginPage() {
               </div>
 
               <div>
-                <label
-                  className="mb-1.5 block font-medium text-slate text-xs"
-                  htmlFor={passwordId}
-                >
+                <Label className="mb-1.5 block text-xs" htmlFor={passwordId}>
                   Password
-                </label>
+                </Label>
                 <Input
                   autoComplete="current-password"
                   className="h-11"
@@ -215,21 +216,25 @@ function LoginPage() {
                 "Continue"
               )}
             </Button>
-            <button
-              className="block w-full py-1 text-center text-smoke text-xs transition-colors hover:text-graphite"
+            <Button
+              className="block w-full py-1 text-center text-smoke text-xs hover:text-graphite"
               onClick={handleBackToOptions}
+              size="xs"
               type="button"
+              variant="ghost"
             >
               Back to sign-in options
-            </button>
+            </Button>
           </form>
         ) : (
           <div className="mt-5 space-y-4">
             {!!error && (
-              <div className="flex items-center gap-2 rounded-md border border-destructive/20 bg-destructive/10 px-3 py-2 font-medium text-destructive text-xs">
+              <Alert variant="destructive">
                 <AlertCircle className="size-4 shrink-0" />
-                {error}
-              </div>
+                <AlertDescription className="font-medium text-destructive">
+                  {error}
+                </AlertDescription>
+              </Alert>
             )}
             <Button
               className="w-full"

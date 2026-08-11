@@ -16,6 +16,8 @@ import {
   Workflow,
 } from "lucide-react";
 
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { WorkspaceSelector } from "@/components/workspace-selector";
 
 type Organization = {
@@ -50,23 +52,20 @@ export function TenantSidebar({
       </div>
 
       <div className="space-y-2 px-4 py-4">
-        <button
-          className="flex h-9 w-full items-center gap-2.5 rounded-md border border-ash bg-paper-white px-3 text-sm text-steel transition-colors hover:bg-bone hover:text-graphite focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-pulse/30"
-          type="button"
+        <Button
+          className="w-full justify-start gap-2.5 text-sm"
+          variant="outline"
         >
           <Search className="size-4" />
           <span>Search</span>
           <kbd className="ml-auto rounded border border-ash px-1.5 py-0.5 text-[10px] text-smoke">
             Ctrl K
           </kbd>
-        </button>
-        <button
-          className="flex h-9 w-full items-center justify-center gap-2 rounded-full bg-violet-pulse px-3 font-medium text-sm text-white shadow-[var(--shadow-subtle),rgba(224,201,255,0.25)_0_0_16px_2px] transition-colors hover:bg-violet-pulse/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-pulse/30"
-          type="button"
-        >
+        </Button>
+        <Button className="w-full">
           <Plus className="size-4" />
           New
-        </button>
+        </Button>
       </div>
 
       <nav
@@ -126,24 +125,26 @@ export function TenantSidebar({
 
       <div className="border-ash border-t px-4 py-3">
         <div className="flex items-center gap-3 rounded-md px-2 py-2">
-          <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-bone font-medium text-steel text-xs uppercase">
-            {user.name.slice(0, 1)}
-          </span>
+          <Avatar className="bg-bone">
+            <AvatarFallback className="bg-bone font-medium text-steel text-xs uppercase">
+              {user.name.slice(0, 1)}
+            </AvatarFallback>
+          </Avatar>
           <span className="min-w-0 flex-1">
             <span className="block truncate font-medium text-graphite text-sm">
               {user.name}
             </span>
             <span className="block truncate text-smoke text-xs">Signed in</span>
           </span>
-          <button
+          <Button
             aria-label="Sign out"
-            className="flex size-8 items-center justify-center rounded-md text-smoke transition-colors hover:bg-bone hover:text-graphite focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-pulse/30"
             onClick={onSignOut}
+            size="icon-sm"
             title="Sign out"
-            type="button"
+            variant="ghost"
           >
             <LogOut className="size-4" />
-          </button>
+          </Button>
         </div>
       </div>
     </aside>
@@ -190,7 +191,6 @@ function SidebarItem({
   label: string;
   nested?: boolean;
 }) {
-  const className = `flex h-9 w-full items-center gap-3 rounded-md px-3 text-left text-sm transition-colors hover:bg-bone hover:text-graphite focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-pulse/30 ${nested ? "pl-6 text-smoke" : "text-steel"}`;
   const content = (
     <>
       <Icon className="size-4 shrink-0" />
@@ -198,13 +198,28 @@ function SidebarItem({
     </>
   );
 
-  return href ? (
-    <Link className={className} to={href}>
+  if (href) {
+    return (
+      <Button
+        className={`w-full justify-start rounded-md px-3 ${nested ? "pl-6 text-smoke" : "text-steel"}`}
+        nativeButton={false}
+        render={<Link to={href} />}
+        size="default"
+        variant="ghost"
+      >
+        {content}
+      </Button>
+    );
+  }
+
+  return (
+    <Button
+      className={`w-full justify-start rounded-md px-3 ${nested ? "pl-6 text-smoke" : "text-steel"}`}
+      size="default"
+      type="button"
+      variant="ghost"
+    >
       {content}
-    </Link>
-  ) : (
-    <button className={className} type="button">
-      {content}
-    </button>
+    </Button>
   );
 }

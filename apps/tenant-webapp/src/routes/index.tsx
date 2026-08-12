@@ -119,15 +119,15 @@ function LoginPage() {
     const apexUrl = `${env.PUBLIC_WEB_SSL ? "https" : "http"}://${env.PUBLIC_WEB_DOMAIN}${env.PUBLIC_WEB_PORT ? `:${env.PUBLIC_WEB_PORT}` : ""}`;
 
     return (
-      <main className="flex min-h-svh items-center justify-center bg-paper-white px-4 py-12 font-sans text-iron">
-        <Card className="w-full max-w-sm p-6 text-center shadow-[var(--shadow-subtle-8)]">
-          <span className="mx-auto mb-5 flex size-10 items-center justify-center rounded-full bg-bone text-graphite">
+      <main className="flex min-h-svh items-center justify-center bg-snow px-16 py-12 font-sans text-ink">
+        <Card className="w-full max-w-sm border-0 p-6 text-center shadow-[var(--shadow-subtle)]">
+          <span className="mx-auto mb-5 flex size-10 items-center justify-center rounded-full bg-ice text-ink">
             <Building2 className="size-5" />
           </span>
-          <h1 className="font-medium text-graphite text-lg tracking-[-0.048px]">
+          <h1 className="font-semibold text-ink text-subheading tracking-[-0.03em]">
             Organization: {subdomain}
           </h1>
-          <p className="mt-2 text-sm text-steel">
+          <p className="mt-2 text-body-sm text-smoke">
             This organization does not exist or is no longer active.
           </p>
           <Button
@@ -144,23 +144,26 @@ function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-svh items-center justify-center bg-paper-white px-4 py-12 font-sans text-iron">
-      <div className="w-full max-w-72">
+    <main className="flex min-h-svh items-center justify-center bg-snow px-16 py-12 font-sans text-ink">
+      <div className="w-full max-w-md rounded-3xl bg-paper p-6 shadow-[var(--shadow-subtle)] sm:p-10">
         <div className="flex flex-col items-center">
-          <span className="flex size-10 items-center justify-center overflow-hidden rounded-full bg-graphite text-paper-white">
+          <span className="flex size-12 items-center justify-center overflow-hidden rounded-full bg-midnight text-paper">
             <Building2 className="size-5" />
           </span>
-          <h1 className="mt-9 font-medium text-graphite text-lg tracking-[-0.048px]">
+          <p className="mt-7 font-semibold text-electric-blue text-eyebrow uppercase tracking-[0.02em]">
+            Secure workspace
+          </p>
+          <h1 className="mt-3 text-center font-semibold text-3xl text-ink tracking-[-0.03em]">
             Log in to {organization?.name ?? "Tenant Application"}
           </h1>
         </div>
 
         {showEmailForm ? (
-          <form className="mt-5 space-y-4" onSubmit={onSubmit}>
+          <form className="mt-5 space-y-16" onSubmit={onSubmit}>
             {!!error && (
               <Alert variant="destructive">
                 <AlertCircle className="size-4 shrink-0" />
-                <AlertDescription className="font-medium text-destructive">
+                <AlertDescription className="font-medium text-carbon">
                   {error}
                 </AlertDescription>
               </Alert>
@@ -168,7 +171,10 @@ function LoginPage() {
 
             <div className="space-y-3">
               <div>
-                <Label className="mb-1.5 block text-xs" htmlFor={emailId}>
+                <Label
+                  className="mb-1.5 block font-semibold text-[11px] text-smoke uppercase tracking-[0.02em]"
+                  htmlFor={emailId}
+                >
                   Email
                 </Label>
                 <Input
@@ -185,7 +191,10 @@ function LoginPage() {
               </div>
 
               <div>
-                <Label className="mb-1.5 block text-xs" htmlFor={passwordId}>
+                <Label
+                  className="mb-1.5 block font-semibold text-[11px] text-smoke uppercase tracking-[0.02em]"
+                  htmlFor={passwordId}
+                >
                   Password
                 </Label>
                 <Input
@@ -217,7 +226,7 @@ function LoginPage() {
               )}
             </Button>
             <Button
-              className="block w-full py-1 text-center text-smoke text-xs hover:text-graphite"
+              className="block w-full py-1 text-center text-fog text-xs hover:text-ink"
               onClick={handleBackToOptions}
               size="xs"
               type="button"
@@ -227,11 +236,11 @@ function LoginPage() {
             </Button>
           </form>
         ) : (
-          <div className="mt-5 space-y-4">
+          <div className="mt-5 space-y-16">
             {!!error && (
               <Alert variant="destructive">
                 <AlertCircle className="size-4 shrink-0" />
-                <AlertDescription className="font-medium text-destructive">
+                <AlertDescription className="font-medium text-carbon">
                   {error}
                 </AlertDescription>
               </Alert>

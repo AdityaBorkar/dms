@@ -38,11 +38,11 @@ export function NewEntityPage({
         description={description}
         title={title}
       />
-      <Card className="shadow-subtle">
+      <Card className="shadow-[var(--shadow-subtle)]">
         <CardContent className="p-6">
           <div className="mb-4 flex items-center gap-2">
-            <Icon className="size-5 text-steel" />
-            <Badge className="bg-lavender-wash text-indigo-ink uppercase">
+            <Icon className="size-5 text-electric-blue" />
+            <Badge className="bg-lavender text-iris uppercase tracking-[0.02em]">
               {domain}
             </Badge>
           </div>

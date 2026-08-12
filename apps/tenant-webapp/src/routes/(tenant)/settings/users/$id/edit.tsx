@@ -53,7 +53,7 @@ function EditUserPage() {
 
   if (!user) {
     return (
-      <main className="bg-paper-white p-4 sm:p-8">
+      <main className="min-h-full bg-paper p-5 sm:p-32 lg:p-40">
         <div className="mx-auto max-w-2xl space-y-6">
           <Button
             nativeButton={false}
@@ -65,7 +65,7 @@ function EditUserPage() {
           </Button>
           <Card>
             <CardContent className="py-16 text-center">
-              <p className="font-medium text-graphite text-sm">
+              <p className="font-semibold text-ink text-sm">
                 We could not find this user
               </p>
               <p className="mt-2 text-smoke text-xs">
@@ -81,7 +81,7 @@ function EditUserPage() {
   const currentUser = user;
 
   return (
-    <main className="bg-paper-white p-4 sm:p-8">
+    <main className="min-h-full bg-paper p-5 sm:p-32 lg:p-40">
       <NewEntityPage
         backHref={`/settings/users/${currentUser.id}`}
         description="Update this user's name or workspace access level."

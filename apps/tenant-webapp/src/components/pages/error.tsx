@@ -17,12 +17,14 @@ export function ErrorPage() {
   return (
     <div className="space-y-6">
       <PageHeader description="Something went wrong." title="Error" />
-      <Card className="shadow-subtle">
+      <Card className="shadow-[var(--shadow-subtle)]">
         <CardHeader className="items-center pt-10 pb-2 text-center">
-          <span className="mb-3 flex size-12 items-center justify-center rounded-full bg-destructive/10">
+          <span className="mb-3 flex size-12 items-center justify-center rounded-full bg-coral/10">
             <CircleAlert className="size-6 text-destructive" />
           </span>
-          <CardTitle className="text-lg">Something went wrong</CardTitle>
+          <CardTitle className="text-subheading">
+            Something went wrong
+          </CardTitle>
           <CardDescription className="max-w-sm text-sm">
             An unexpected error occurred while loading this page. Please try
             again.

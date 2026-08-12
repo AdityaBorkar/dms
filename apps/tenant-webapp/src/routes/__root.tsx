@@ -24,7 +24,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         {/*<script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />*/}
         <HeadContent />
       </head>
-      <body className="wrap-anywhere bg-paper-white font-sans text-iron text-sm antialiased">
+      <body className="wrap-anywhere bg-paper font-sans text-ink">
         {children}
         <Devtools />
         <Scripts />

@@ -20,12 +20,18 @@ function getOrganizationSlug(headers: Headers) {
   return organizationSlug;
 }
 
-function toWorkspaceUser(member: {
+type WorkspaceMember = {
   createdAt: Date;
   id: string;
   role: string;
   user: { email: string; id: string; name: string };
-}) {
+};
+
+type OrganizationMember = WorkspaceMember & {
+  userId: string;
+};
+
+function toWorkspaceUser(member: WorkspaceMember) {
   return {
     createdAt: member.createdAt,
     email: member.user.email,
@@ -65,7 +71,9 @@ export const getUser = authed
         query: { organizationSlug },
       }),
     );
-    const member = result.members.find(({ id }) => id === input.id);
+    const member = result.members.find(
+      (member: WorkspaceMember) => member.id === input.id,
+    );
 
     if (!member) throw new Error("User not found in this workspace");
 
@@ -91,7 +99,7 @@ export const createUser = authed
         headers: context.headers,
       });
       const currentMember = organization.members.find(
-        ({ user }) => user.id === session?.user.id,
+        (member: OrganizationMember) => member.user.id === session?.user.id,
       );
       if (!currentMember || !["owner", "admin"].includes(currentMember.role)) {
         throw new Error("Only workspace administrators can add users");
@@ -138,14 +146,16 @@ export const updateUser = authed
 
       if (!organization) throw new Error("Workspace not found");
 
-      const member = organization.members.find(({ id }) => id === input.id);
+      const member = organization.members.find(
+        (member: OrganizationMember) => member.id === input.id,
+      );
       if (!member) throw new Error("User not found in this workspace");
 
       const session = await p.auth.service.api.getSession({
         headers: context.headers,
       });
       const currentMember = organization.members.find(
-        ({ user }) => user.id === session?.user.id,
+        (member: OrganizationMember) => member.user.id === session?.user.id,
       );
       if (!currentMember || !["owner", "admin"].includes(currentMember.role)) {
         throw new Error("Only workspace administrators can edit users");
@@ -173,7 +183,9 @@ export const updateUser = authed
         headers: context.headers,
         query: { organizationSlug },
       });
-      const updatedMember = updated.members.find(({ id }) => id === input.id);
+      const updatedMember = updated.members.find(
+        (member: WorkspaceMember) => member.id === input.id,
+      );
 
       if (!updatedMember) throw new Error("User was not returned after update");
 
@@ -196,7 +208,9 @@ export const removeUser = authed
 
       if (!organization) throw new Error("Workspace not found");
 
-      const member = organization.members.find(({ id }) => id === input.id);
+      const member = organization.members.find(
+        (member: OrganizationMember) => member.id === input.id,
+      );
       if (!member) throw new Error("User not found in this workspace");
 
       await p.auth.service.api.removeMember({

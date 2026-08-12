@@ -48,19 +48,19 @@ export function TenantSidebar({
   user: User;
 }) {
   return (
-    <aside className="flex w-full shrink-0 flex-col border-ash border-b bg-paper-white text-graphite md:sticky md:top-0 md:h-svh md:w-64 md:border-r md:border-b-0">
-      <div className="border-ash border-b px-4 py-4">
+    <aside className="flex w-full shrink-0 flex-col border-mist border-b bg-snow/70 text-ink md:sticky md:top-0 md:h-svh md:w-72 md:border-r md:border-b-0">
+      <div className="border-mist border-b px-5 py-5">
         <WorkspaceSelector organization={organization} />
       </div>
 
-      <div className="space-y-2 px-4 py-4">
+      <div className="space-y-2 px-5 py-5">
         <Button
           className="w-full justify-start gap-2.5 text-sm"
           variant="outline"
         >
           <Search className="size-4" />
           <span>Search</span>
-          <kbd className="ml-auto rounded border border-ash px-1.5 py-0.5 text-[10px] text-smoke">
+          <kbd className="ml-auto rounded-lg border border-mist px-1.5 py-0.5 font-medium text-[10px] text-fog">
             Ctrl K
           </kbd>
         </Button>
@@ -72,7 +72,7 @@ export function TenantSidebar({
 
       <nav
         aria-label="Main navigation"
-        className="min-h-0 flex-1 overflow-y-auto px-4 pb-4"
+        className="min-h-0 flex-1 overflow-y-auto px-5 pb-5"
       >
         <LayoutGroup>
           <SidebarSection>
@@ -135,18 +135,18 @@ export function TenantSidebar({
         </LayoutGroup>
       </nav>
 
-      <div className="border-ash border-t px-4 py-3">
-        <div className="flex items-center gap-3 rounded-md px-2 py-2">
-          <Avatar className="bg-bone">
-            <AvatarFallback className="bg-bone font-medium text-steel text-xs uppercase">
+      <div className="border-mist border-t px-5 py-16">
+        <div className="flex items-center gap-3 rounded-2xl bg-paper px-3 py-2.5 shadow-[var(--shadow-subtle)]">
+          <Avatar className="bg-ice">
+            <AvatarFallback className="bg-ice font-semibold text-ink text-xs uppercase">
               {user.name.slice(0, 1)}
             </AvatarFallback>
           </Avatar>
           <span className="min-w-0 flex-1">
-            <span className="block truncate font-medium text-graphite text-sm">
+            <span className="block truncate font-semibold text-ink text-sm">
               {user.name}
             </span>
-            <span className="block truncate text-smoke text-xs">Signed in</span>
+            <span className="block truncate text-fog text-xs">Signed in</span>
           </span>
           <Button
             aria-label="Sign out"
@@ -173,7 +173,7 @@ function SidebarSection({
   return (
     <section className="mb-6 last:mb-0">
       {label ? (
-        <h2 className="mb-2 px-3 font-semibold text-[10px] text-steel uppercase tracking-[0.14em]">
+        <h2 className="mb-2 px-3 font-semibold text-[11px] text-fog uppercase tracking-[0.02em]">
           {label}
         </h2>
       ) : null}
@@ -214,7 +214,7 @@ function SidebarItem({
     return (
       <SidebarHoverItem>
         <Button
-          className={`w-full justify-start rounded-md bg-transparent px-3 hover:bg-transparent hover:text-graphite ${nested ? "pl-6 text-smoke" : "text-steel"}`}
+          className={`w-full justify-start rounded-2xl bg-transparent px-3 hover:bg-transparent hover:text-ink ${nested ? "pl-6 text-fog" : "text-smoke"}`}
           nativeButton={false}
           render={<Link to={href} />}
           size="default"
@@ -229,7 +229,7 @@ function SidebarItem({
   return (
     <SidebarHoverItem>
       <Button
-        className={`w-full justify-start rounded-md bg-transparent px-3 hover:bg-transparent hover:text-graphite ${nested ? "pl-6 text-smoke" : "text-steel"}`}
+        className={`w-full justify-start rounded-2xl bg-transparent px-3 hover:bg-transparent hover:text-ink ${nested ? "pl-6 text-fog" : "text-smoke"}`}
         size="default"
         type="button"
         variant="ghost"

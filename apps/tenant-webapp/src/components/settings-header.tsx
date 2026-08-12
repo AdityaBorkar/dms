@@ -77,9 +77,11 @@ export function SettingsHeader() {
   insertUsersCrumb(breadcrumbs);
 
   return (
-    <header className="sticky top-0 z-10 border-ash border-b bg-paper-white/80 backdrop-blur-md">
-      <div className="flex h-14 items-center gap-2 px-4 sm:px-6">
-        <Settings2 className="size-4 shrink-0 text-indigo-ink" />
+    <header className="sticky top-0 z-10 border-mist border-b bg-paper/85 backdrop-blur-md">
+      <div className="flex h-64 items-center gap-3 px-5 sm:px-32">
+        <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-ice">
+          <Settings2 className="size-4 text-electric-blue" />
+        </span>
         <Breadcrumb aria-label="Breadcrumb" className="min-w-0 flex-1">
           <BreadcrumbList className="flex-nowrap">
             {breadcrumbs.map((crumb, index) => {
@@ -89,14 +91,14 @@ export function SettingsHeader() {
                 <BreadcrumbItem className="min-w-0" key={crumb.href}>
                   {index > 0 ? <BreadcrumbSeparator /> : null}
                   {isLast ? (
-                    <BreadcrumbPage className="min-w-0 truncate font-medium text-graphite text-sm">
+                    <BreadcrumbPage className="min-w-0 truncate font-semibold text-ink text-sm">
                       {crumb.label}
                     </BreadcrumbPage>
                   ) : (
                     <BreadcrumbLink
                       render={
                         <Link
-                          className="block truncate rounded px-1 py-0.5 text-smoke transition-colors hover:text-graphite focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-pulse/30"
+                          className="block truncate rounded-lg px-1 py-0.5 text-fog transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue/30"
                           to={crumb.href}
                         />
                       }

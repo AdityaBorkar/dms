@@ -64,7 +64,7 @@ function GeneralPage() {
 
   if (organization === null) {
     return (
-      <main className="bg-paper-white p-4 sm:p-8">
+      <main className="min-h-full bg-paper p-5 sm:p-32 lg:p-40">
         <div className="mx-auto max-w-4xl space-y-6">
           <PageHeader
             description="Organization profile and workspace details."
@@ -72,13 +72,13 @@ function GeneralPage() {
           />
           <Card>
             <CardContent className="py-16 text-center">
-              <span className="mx-auto mb-3 flex size-12 items-center justify-center rounded-full bg-bone">
-                <Building2 className="size-6 text-steel" />
+              <span className="mx-auto mb-3 flex size-12 items-center justify-center rounded-full bg-ice">
+                <Building2 className="size-6 text-electric-blue" />
               </span>
-              <p className="font-medium text-graphite text-sm">
+              <p className="font-semibold text-ink text-sm">
                 Organization information is unavailable
               </p>
-              <p className="mx-auto mt-2 max-w-sm text-steel text-xs">
+              <p className="mx-auto mt-2 max-w-sm text-body-sm text-smoke">
                 We could not load your organization's profile. Try refreshing
                 the page.
               </p>
@@ -91,7 +91,7 @@ function GeneralPage() {
 
   if (isEditing) {
     return (
-      <main className="bg-paper-white p-4 sm:p-8">
+      <main className="min-h-full bg-paper p-5 sm:p-32 lg:p-40">
         <div className="mx-auto max-w-3xl space-y-6">
           <PageHeader
             description="Update your organization's information."
@@ -112,7 +112,7 @@ function GeneralPage() {
   }
 
   return (
-    <main className="bg-paper-white p-4 sm:p-8">
+    <main className="min-h-full bg-paper p-5 sm:p-32 lg:p-40">
       <div className="mx-auto max-w-4xl space-y-6">
         <PageHeader
           actions={
@@ -166,8 +166,10 @@ function GeneralPage() {
               <Detail label="Locale" value={organization.locale} />
               <Detail label="Timezone" value={organization.timezone} />
               <div>
-                <dt className="font-medium text-steel text-xs">Accent color</dt>
-                <dd className="mt-1.5 flex items-center gap-2 text-graphite text-sm">
+                <dt className="font-semibold text-[11px] text-smoke uppercase tracking-[0.02em]">
+                  Accent color
+                </dt>
+                <dd className="mt-1.5 flex items-center gap-2 text-ink text-sm">
                   <span
                     className="size-4 rounded-full ring-1 ring-foreground/15 ring-inset"
                     style={{ backgroundColor: organization.accentColor }}
@@ -189,7 +191,9 @@ function GeneralPage() {
           <CardContent className="p-6">
             <dl className="grid gap-x-8 gap-y-5 sm:grid-cols-2">
               <div>
-                <dt className="font-medium text-steel text-xs">Status</dt>
+                <dt className="font-semibold text-[11px] text-smoke uppercase tracking-[0.02em]">
+                  Status
+                </dt>
                 <dd className="mt-1.5">
                   <StatusBadge status={organization.status} />
                 </dd>
@@ -242,8 +246,10 @@ function toFormValues(
 function Detail({ label, value }: { label: string; value: ReactNode }) {
   return (
     <div>
-      <dt className="font-medium text-steel text-xs">{label}</dt>
-      <dd className="mt-1 break-words text-graphite text-sm">{value ?? "—"}</dd>
+      <dt className="font-semibold text-[11px] text-smoke uppercase tracking-[0.02em]">
+        {label}
+      </dt>
+      <dd className="mt-1 break-words text-ink text-sm">{value ?? "—"}</dd>
     </div>
   );
 }

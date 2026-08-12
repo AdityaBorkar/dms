@@ -78,7 +78,7 @@ function UserDetailsPage() {
 
   if (!user) {
     return (
-      <main className="bg-paper-white p-4 sm:p-8">
+      <main className="min-h-full bg-paper p-5 sm:p-32 lg:p-40">
         <div className="mx-auto max-w-4xl space-y-6">
           <PageHeader
             actions={
@@ -96,7 +96,7 @@ function UserDetailsPage() {
           />
           <Card>
             <CardContent className="py-16 text-center">
-              <p className="font-medium text-graphite text-sm">
+              <p className="font-semibold text-ink text-sm">
                 We could not find this user
               </p>
               <p className="mt-2 text-smoke text-xs">
@@ -110,7 +110,7 @@ function UserDetailsPage() {
   }
 
   return (
-    <main className="bg-paper-white p-4 sm:p-8">
+    <main className="min-h-full bg-paper p-5 sm:p-32 lg:p-40">
       <div className="mx-auto max-w-4xl space-y-6">
         <PageHeader
           actions={
@@ -146,21 +146,21 @@ function UserDetailsPage() {
               <UserAvatar name={user.name} />
               <div className="min-w-0 space-y-3">
                 <div>
-                  <p className="font-medium text-base text-graphite">
+                  <p className="font-semibold text-base text-ink">
                     {user.name}
                   </p>
-                  <p className="mt-1 flex items-center gap-1.5 break-all text-sm text-steel">
+                  <p className="mt-1 flex items-center gap-1.5 break-all text-sm text-smoke">
                     <Mail className="size-3.5 shrink-0" />
                     {user.email}
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  <Badge className="gap-1.5 bg-lavender-wash text-indigo-ink">
+                  <Badge className="gap-1.5 bg-lavender text-iris">
                     <ShieldCheck className="size-3.5" />
                     {roleLabels[user.role] ?? user.role}
                   </Badge>
                   <Badge
-                    className="rounded-full bg-bone px-2.5 py-1 text-steel"
+                    className="rounded-full bg-snow px-2.5 py-1 text-smoke"
                     variant="outline"
                   >
                     Added {formatDate(user.createdAt)}
@@ -230,11 +230,9 @@ function UserDetailsPage() {
         </div>
 
         <Card>
-          <CardContent className="grid gap-2 px-6 py-4 text-xs sm:grid-cols-[auto_1fr]">
-            <span className="font-medium text-steel">User ID</span>
-            <code className="break-all font-mono text-graphite">
-              {user.userId}
-            </code>
+          <CardContent className="grid gap-2 px-6 py-16 text-xs sm:grid-cols-[auto_1fr]">
+            <span className="font-semibold text-smoke">User ID</span>
+            <code className="break-all font-mono text-ink">{user.userId}</code>
           </CardContent>
         </Card>
       </div>
@@ -252,8 +250,8 @@ function UserAvatar({ name }: { name: string }) {
     .join("");
 
   return (
-    <Avatar className="size-16 rounded-2xl bg-lavender-wash">
-      <AvatarFallback className="rounded-2xl bg-lavender-wash font-medium text-indigo-ink text-xl">
+    <Avatar className="size-16 rounded-2xl bg-lavender">
+      <AvatarFallback className="rounded-2xl bg-lavender font-semibold text-iris text-xl">
         {initials || "?"}
       </AvatarFallback>
     </Avatar>

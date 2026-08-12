@@ -1,285 +1,278 @@
-# Sequence — Style Reference
-> blueprint paper with violet annotations. A near-white editorial surface where everything is grayscale and one precise violet pulse marks every action worth taking.
+# Style Reference
+> Paper invoice on frosted glass
 
 **Theme:** light
 
-Sequence reads like an editorial finance publication rendered in product form: a near-white canvas, a humanist sans (TWK Lausanne) carrying almost all interface text, and a light-weight serif (Moderat Serif) used sparingly on large display headlines to inject editorial gravity. Depth comes from hairline borders and thin layered shadows, not heavy panels or colored fills. A single vivid violet (#7c3aed) is the only chromatic accent in the system — it functions as a precise annotation, appearing on primary CTAs, active icons, and subtle brand glows, while the rest of the interface stays in cool grays. Soft blue-violet radial washes in hero and section backgrounds create atmospheric depth without committing to color, and the overall density is compact and precise rather than spacious or airy.
+Runs a white-canvas invoicing product on a near-monochrome foundation: paper-white surfaces, dense near-black text, and a single electric blue (#0098f2) used as functional punctuation for checkmarks, rates, and inline highlights. The brand voice is geometric and confident — pill-shaped controls, generous 16px card radii, and rounded invoice mockups floating against pure white. Color is deployed sparingly: most screens stay achromatic so the blue, violet, and pink decorative chips read as deliberate accents rather than noise. Typography is built on Open Runde at weight 600, with tight -0.03em tracking on display sizes that gives headlines a compressed, almost monolinear feel, paired with handwritten Caveat signatures for testimonial contrast.
 
 ## Tokens — Colors
 
 | Name | Value | Token | Role |
 |------|-------|-------|------|
-| Violet Pulse | `#7c3aed` | `--color-violet-pulse` | Primary CTAs, active icons, brand glow accents — the single chromatic accent in the system; everything else defers to it. Darkened from `#a565ff` so white text meets WCAG AA contrast (≈5.7:1) on filled actions |
-| Indigo Ink | `#5e5cff` | `--color-indigo-ink` | Link text, secondary text emphasis, and accent strokes where violet would be too loud |
-| Lavender Wash | `#ebebff` | `--color-lavender-wash` | Soft tinted backgrounds for highlighted callouts and subtle surface differentiation |
-| Iris Glow | `#e0c9ff` | `--color-iris-glow` | Violet supporting accent for decorative details and low-frequency emphasis. Do not promote it to the primary CTA color |
-| Ledger Green | `#2e7317` | `--color-ledger-green` | Green text accent for links, tags, and emphasized short phrases. Use as a supporting accent, not as a status color |
-| Paper White | `#ffffff` | `--color-paper-white` | Primary canvas, card surfaces, button fills, and elevated surface layer |
-| Bone | `#f7f7f7` | `--color-bone` | Recessed card surfaces and subtle panel backgrounds one step off white |
-| Fog | `#f1f1f1` | `--color-fog` | Disabled surface fills, table row alternates, and recessed UI regions |
-| Silver | `#efefef` | `--color-silver` | Inset borders, button outlines, and shadow-stack fills for elevation |
-| Marble | `#fff6df` | `--color-marble` | Warm cream accent for announcement bars and subtle highlight bands |
-| Graphite | `#1d1d20` | `--color-graphite` | Primary heading and body text — near-black with a barely-warm tint |
-| Slate | `#42424a` | `--color-slate` | Secondary headings, emphasized body text, and list accents |
-| Iron | `#505050` | `--color-iron` | Default body text and the most-used text color across the system |
-| Steel | `#757575` | `--color-steel` | Muted helper text, navigation labels, and secondary table text |
-| Smoke | `#92939e` | `--color-smoke` | Placeholder text, disabled labels, and tertiary table cells |
-| Ash | `#e5e7eb` | `--color-ash` | Default hairline border — the structural backbone of the entire UI; the most-used color in the system |
-| Mist | `#d1d9e4` | `--color-mist` | Cooler border for inputs, dividers, and sections needing visual separation from Ash |
-| Olive Gray | `#808076` | `--color-olive-gray` | SVG illustration stroke and fill — the default for vector graphics in content |
-| Noir | `#000000` | `--color-noir` | Icon fills and contrast anchors where pure black is required |
+| Ink | `#1e1e1e` | `--color-ink` | Headings and primary body text — near-black with a slight cool cast reads as authoritative without the harshness of pure #000 |
+| Carbon | `#0f0f0f` | `--color-carbon` | Body text and secondary headings — deeper than Ink, used where maximum contrast against white surfaces is needed |
+| Midnight | `#0d111b` | `--color-midnight` | Primary action buttons (filled) — dark navy-black instead of pure black, giving CTAs a subtle blue undertone that harmonizes with the electric blue accent |
+| Smoke | `#666666` | `--color-smoke` | Secondary body text, helper copy, muted descriptions under headlines |
+| Fog | `#8d8d8d` | `--color-fog` | Tertiary text, nav links, subdued metadata — the lightest readable neutral before borders take over |
+| Ash | `#999999` | `--color-ash` | Disabled state text, placeholder text, low-priority labels |
+| Mist | `#ccd1da` | `--color-mist` | Hairline borders, input outlines, divider lines — cool blue-gray instead of pure gray so dividers feel on-brand |
+| Paper | `#ffffff` | `--color-paper` | Page canvas, card surfaces, hero background — the dominant surface, occupying the majority of every viewport |
+| Snow | `#f7fafc` | `--color-snow` | Subtle section backgrounds, alternating bands — barely warmer than Paper, creates gentle visual rhythm without darkening the page |
+| Concrete | `#afb0b1` | `--color-concrete` | Muted surface fills, inactive chip backgrounds — sits between border and surface in the neutral stack |
+| Electric Blue | `#0098f2` | `--color-electric-blue` | Brand accent — checkmark icons, payment rate callouts, inline highlights, the single most prominent chromatic color across the page |
+| Iris | `#6c56fc` | `--color-iris` | Decorative accent and illustration fill — violet chip on invoice cards, secondary brand signal |
+| Magenta | `#f200ca` | `--color-magenta` | Decorative accent and illustration fill — pink chip on invoice cards, tertiary brand signal |
+| Leaf | `#5d9c06` | `--color-leaf` | Green text accent for links, tags, and emphasized short phrases. Use as a supporting accent, not as a status color |
+| Coral | `#ff6363` | `--color-coral` | Red decorative accent for icons, marks, and small graphic details. Use as a supporting accent, not as a status color |
+| Ice | `#cfeafa` | `--color-ice` | Tinted surface wash — light blue card backgrounds for highlight sections, soft accent backgrounds |
+| Lavender | `#e1e0fc` | `--color-lavender` | Tinted surface wash — light violet card backgrounds for feature blocks |
+| Blush | `#f6d2f4` | `--color-blush` | Tinted surface wash — light pink card backgrounds, decorative highlight blocks |
 
 ## Tokens — Typography
 
-### TWK Lausanne — Primary UI typeface — all body text, navigation, buttons, labels, and most headings from 8px to 24px. A humanist sans with open apertures that stays legible at 10–12px in dense tables and form chrome. · `--font-twk-lausanne`
-- **Substitute:** Inter, IBM Plex Sans, or Söhne
-- **Weights:** 300, 400, 500, 600, 700
-- **Sizes:** 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 24
-- **Line height:** 1.00–2.00 (body 1.50–1.60, tight 1.00–1.20 for compact UI)
-- **Letter spacing:** -0.003em at display sizes, -0.002em at subhead sizes, normal at body
-- **Role:** Primary UI typeface — all body text, navigation, buttons, labels, and most headings from 8px to 24px. A humanist sans with open apertures that stays legible at 10–12px in dense tables and form chrome.
-
-### Moderat Serif — Editorial display serif used only on the largest marketing headlines (h1). Light weight at 40–46px with aggressive -0.025em tracking — the contrast against the humanist sans signals premium editorial tone and breaks the product-UI pattern. · `--font-moderat-serif`
-- **Substitute:** GT Sectra, Tiempos Headline, or Canela
-- **Weights:** 300, 400
-- **Sizes:** 40, 46
-- **Line height:** 1.00
-- **Letter spacing:** -0.0250em
-- **Role:** Editorial display serif used only on the largest marketing headlines (h1). Light weight at 40–46px with aggressive -0.025em tracking — the contrast against the humanist sans signals premium editorial tone and breaks the product-UI pattern.
-
-### SF Mono — Monospaced micro-text for API references, code snippets, and technical annotations at 10px. Rare and deliberate — appears only where machine-readable content is shown. · `--font-sf-mono`
-- **Substitute:** JetBrains Mono or IBM Plex Mono
+### sans-serif — sans-serif — detected in extracted data but not described by AI · `--font-sans-serif`
 - **Weights:** 400
-- **Sizes:** 10
-- **Line height:** 1.50–1.80
-- **Role:** Monospaced micro-text for API references, code snippets, and technical annotations at 10px. Rare and deliberate — appears only where machine-readable content is shown.
+- **Sizes:** 12px
+- **Line height:** 1.2
+- **Role:** sans-serif — detected in extracted data but not described by AI
+
+### Open Runde — Primary typeface for all headings and body text — geometric sans-serif with weight 600 at display sizes (64/48/40/32/24/20px) carrying -0.03em letter-spacing for compressed confident headlines; weight 500 for body (22/16/14px) with -0.02em tracking; 11px uppercase eyebrow labels at weight 600 with +0.02em tracking · `--font-open-runde`
+- **Substitute:** Inter, DM Sans, or Outfit
+- **Weights:** 500, 600
+- **Sizes:** 11, 12, 14, 16, 20, 22, 24, 32, 40, 48, 64
+- **Line height:** 1.13-1.78
+- **Letter spacing:** -0.03em at 20px+ display, -0.02em at 14-16px body, +0.02em at 11px uppercase
+- **OpenType features:** `"ss01" on`
+- **Role:** Primary typeface for all headings and body text — geometric sans-serif with weight 600 at display sizes (64/48/40/32/24/20px) carrying -0.03em letter-spacing for compressed confident headlines; weight 500 for body (22/16/14px) with -0.02em tracking; 11px uppercase eyebrow labels at weight 600 with +0.02em tracking
+
+### Caveat — Handwritten signature font for testimonial attributions — creates human warmth against the geometric system at small sizes only · `--font-caveat`
+- **Substitute:** Dancing Script or Kalam
+- **Weights:** 600
+- **Sizes:** 16, 24
+- **Line height:** 1.33, 1.50
+- **Role:** Handwritten signature font for testimonial attributions — creates human warmth against the geometric system at small sizes only
+
+### SF Pro Text — Secondary system font for small uppercase labels — only used sparingly where system rendering is preferred over Open Runde · `--font-sf-pro-text`
+- **Substitute:** System UI sans-serif
+- **Weights:** 600
+- **Sizes:** 11
+- **Line height:** 1.62
+- **Letter spacing:** +0.02em
+- **Role:** Secondary system font for small uppercase labels — only used sparingly where system rendering is preferred over Open Runde
+
+### Inter — Inter — detected in extracted data but not described by AI · `--font-inter`
+- **Weights:** 400, 500
+- **Sizes:** 16px, 32px
+- **Line height:** 1, 1.25
+- **Role:** Inter — detected in extracted data but not described by AI
 
 ### Type Scale
 
 | Role | Size | Line Height | Letter Spacing | Token |
 |------|------|-------------|----------------|-------|
-| caption | 11px | 1.45 | -0.022px | `--text-caption` |
-| body | 14px | 1.57 | — | `--text-body` |
-| body-lg | 16px | 1.63 | — | `--text-body-lg` |
-| subheading | 18px | 1.56 | — | `--text-subheading` |
-| heading-sm | 24px | 1.33 | -0.048px | `--text-heading-sm` |
-| heading | 40px | 1 | -1px | `--text-heading` |
-| display | 46px | 1 | -1.15px | `--text-display` |
+| eyebrow | 11px | 1.62 | 0.22px | `--text-eyebrow` |
+| body-sm | 14px | 1.43 | -0.28px | `--text-body-sm` |
+| body | 16px | 1.5 | -0.32px | `--text-body` |
+| body-lg | 22px | 1.29 | — | `--text-body-lg` |
+| subheading | 24px | 1.33 | -0.72px | `--text-subheading` |
+| heading-sm | 32px | 1.25 | -0.96px | `--text-heading-sm` |
+| heading | 40px | 1.2 | -1.2px | `--text-heading` |
+| heading-lg | 48px | 1.17 | -1.44px | `--text-heading-lg` |
+| display | 64px | 1.13 | -1.92px | `--text-display` |
 
 ## Tokens — Spacing & Shapes
 
 **Base unit:** 4px
 
-**Density:** compact
+**Density:** comfortable
 
 ### Spacing Scale
 
-> **Naming:** the design's spacing tokens are `--ds-*` (not `--spacing-*`). `--spacing-*` is reserved for the Tailwind default spacing system, which sizing utilities (`w-64`, `p-4`, `gap-2`, …) resolve against. Using `--ds-*` keeps the Scale available without shrinking Tailwind utilities like `w-64` (256px).
-
 | Name | Value | Token |
 |------|-------|-------|
-| 4 | 4px | `--ds-4` |
-| 8 | 8px | `--ds-8` |
-| 12 | 12px | `--ds-12` |
-| 16 | 16px | `--ds-16` |
-| 20 | 20px | `--ds-20` |
-| 24 | 24px | `--ds-24` |
-| 28 | 28px | `--ds-28` |
-| 32 | 32px | `--ds-32` |
-| 40 | 40px | `--ds-40` |
-| 48 | 48px | `--ds-48` |
-| 52 | 52px | `--ds-52` |
-| 56 | 56px | `--ds-56` |
-| 64 | 64px | `--ds-64` |
-| 80 | 80px | `--ds-80` |
-| 96 | 96px | `--ds-96` |
-| 160 | 160px | `--ds-160` |
+| 4 | 4px | `--spacing-4` |
+| 8 | 8px | `--spacing-8` |
+| 12 | 12px | `--spacing-12` |
+| 16 | 16px | `--spacing-16` |
+| 20 | 20px | `--spacing-20` |
+| 24 | 24px | `--spacing-24` |
+| 28 | 28px | `--spacing-28` |
+| 32 | 32px | `--spacing-32` |
+| 36 | 36px | `--spacing-36` |
+| 40 | 40px | `--spacing-40` |
+| 48 | 48px | `--spacing-48` |
+| 64 | 64px | `--spacing-64` |
+| 80 | 80px | `--spacing-80` |
+| 96 | 96px | `--spacing-96` |
 
 ### Border Radius
 
-> Tailwind radii (`--radius-sm/md/lg/xl/2xl`) are pinned to the design scale so `rounded-sm`/`rounded-md`/`rounded-lg` resolve to 4/4/8px.
-
 | Element | Value |
 |---------|-------|
-| cards | 8px |
-| badges | 9999px |
-| inputs | 4px |
-| buttons | 9999px |
-| large-panels | 16px |
+| tags | 100px |
+| cards | 16px |
+| icons | 888px |
+| images | 20px |
+| buttons | 100px |
+| largeCards | 32px |
 
 ### Shadows
 
 | Name | Value | Token |
 |------|-------|-------|
-| subtle | `rgba(58, 58, 64, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1)...` | `--shadow-subtle` |
-| subtle-2 | `rgba(29, 29, 32, 0.08) 0px 0px 0px 1px` | `--shadow-subtle-2` |
-| subtle-3 | `rgb(239, 239, 239) 0px 0px 0px 2px, rgba(0, 0, 0, 0.01) 0...` | `--shadow-subtle-3` |
-| sm | `--shadow-subtle` stack + `rgba(224, 201, 255, 0.2) 0px 0px 8px 2px` + `rgba(99, 102, 241, 0.4) 0px 0px 8px 2px` | `--shadow-sm` |
-| subtle-4 | `rgba(0, 0, 0, 0.05) 0px 0px 0px 1px` | `--shadow-subtle-4` |
-| subtle-5 | `rgba(117, 117, 117, 0.2) 0px 0px 0px 1px, rgba(0, 0, 0, 0...` | `--shadow-subtle-5` |
-| subtle-6 | `rgba(255, 255, 255, 0.14) 0px 1px 0px 0px inset, rgba(13,...` | `--shadow-subtle-6` |
-| subtle-7 | `rgba(80, 80, 80, 0.1) 0px 0px 0px 1px` | `--shadow-subtle-7` |
-| subtle-8 | `rgba(29, 29, 32, 0.08) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1...` | `--shadow-subtle-8` |
-| sm-2 | `rgba(0, 0, 0, 0.04) 0px 4px 6px 0px, rgb(242, 242, 242) 0...` | `--shadow-sm-2` |
-| subtle-9 | `rgba(29, 29, 32, 0.08) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1...` | `--shadow-subtle-9` |
-| subtle-10 | `rgba(0, 0, 0, 0.05) 0px 1px 2px 0px` | `--shadow-subtle-10` |
-| subtle-11 | `rgba(117, 117, 117, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0...` | `--shadow-subtle-11` |
-| subtle-12 | `rgba(0, 0, 0, 0.1) 0px 1px 1px 0px inset` | `--shadow-subtle-12` |
-| subtle-13 | `rgb(124, 58, 237) 0px 0px 0px 1px` | `--shadow-subtle-13` |
+| subtle | `rgba(10, 13, 20, 0.03) 0px 1px 2px 0px` | `--shadow-subtle` |
+| subtle-2 | `rgb(36, 38, 40) 0px 0px 0px 1px, rgba(27, 28, 29, 0.48) 0...` | `--shadow-subtle-2` |
+| subtle-3 | `rgba(0, 0, 0, 0.06) 0px 2px 3px -1px` | `--shadow-subtle-3` |
 
 ### Layout
 
 - **Page max-width:** 1200px
-- **Section gap:** 80px
+- **Section gap:** 96px
 - **Card padding:** 24px
-- **Element gap:** 8px
+- **Element gap:** 12px
 
 ## Components
 
-### Primary Action Button
-**Role:** Filled CTA for the single most important action on any screen
+### Filled Action Button
+**Role:** Primary CTA — 'Send my first invoice', 'Create an invoice', 'Sign up for free'
 
-Background #7c3aed, text #ffffff, border-radius 9999px (pill), padding 10px 20px. TWK Lausanne 14px weight 500. Gains a violet halo via box-shadow using #e0c9ff at low opacity. This is the only filled chromatic button in the system.
+Background #0d111b (Midnight), text #ffffff, border-radius 100px (pill), padding 8px 12px (small) or 6px 14px (nav), shadow rgb(36,38,40) 0px 0px 0px 1px + rgba(27,28,29,0.48) 0px 1px 2px 0px. Open Runde 14px/500, text #ffffff, letter-spacing -0.02em.
 
-### Secondary Action Button
-**Role:** Outlined or ghost action when two actions appear on one screen
+### Secondary Dark Button
+**Role:** Compact dark action — nav-level CTAs and dense button rows
 
-Background transparent or #ffffff, border 1px #efefef, text #1d1d20, border-radius 9999px, padding 10px 20px. Hover lifts to #f7f7f7 background. Layered shadow: rgba(58,58,64,0.1) 0 0 0 1px + rgba(0,0,0,0.1) 0 1px 3px 0.
+Background #0f0f0f (Carbon), text #ffffff, border-radius 100px, padding 6px 10px or 6px 14px. Same shadow stack as primary button. Used where a slightly smaller, denser button is needed in nav or toolbar contexts.
 
-### Navigation Link
-**Role:** Top-level nav items and inline text links
+### Outline Link Button
+**Role:** Navigation links — 'Freelancer', 'Agency', 'Pricing', 'Blog', 'Guides'
 
-Text #505050 weight 500 at 14px, no underline. Active state shifts to #1d1d20 and may carry a 1px #1d1d20 underline. Hover transitions to #1d1d20.
+Background #ffffff, text #1e1e1, border-radius 100px, padding 8px 12px. No shadow. Functions as a ghost nav item inside the pill-shaped header container.
 
-### Display Headline Block
-**Role:** Hero h1 and section-opening headlines
+### Feature Card
+**Role:** Standard content card for feature blocks and comparison panels
 
-Moderat Serif weight 300 at 46px, line-height 1.00, letter-spacing -0.025em (-1.15px). Color #1d1d20. Centered or left-aligned, always followed by a TWK Lausanne body paragraph at 16px weight 400 in #505050.
+Background #fafafa (or #ffffff), border-radius 16px, padding 24px, no shadow. Open Runde 24px/600 heading with -0.03em tracking, body text 16px/500 in #666666. Sits flush on white canvas.
 
-### Product Feature Card
-**Role:** Cards in the product suite grid and feature sections
+### Elevated Card
+**Role:** Card with subtle elevation for invoice previews and testimonial blocks
 
-Background #ffffff, border 1px #e5e7eb, border-radius 8px, padding 24px. Icon at 24px in #1d1d20 sits top-left. Title in TWK Lausanne 18px weight 500 #1d1d20. Description in 14px weight 400 #757575. No shadow on resting state.
+Background #ffffff, border-radius 20px, shadow rgba(0,0,0,0.05) 0px 1.78px 8px 0px + rgba(0,0,0,0.04) 0px 0.89px 2.67px 0px. No padding (content fills card). Used for the invoice mockup stack and the testimonial quote card.
 
-### Product Screenshot Card
-**Role:** Faux product UI cards floating in the hero
+### Large Feature Panel
+**Role:** Full-width feature section with generous internal padding
 
-Background #ffffff, border 1px #e5e7eb, border-radius 8px, padding 16px. Uses the layered shadow stack: rgba(58,58,64,0.1) 0 0 0 1px + rgba(0,0,0,0.1) 0 1px 3px 0 + rgba(0,0,0,0.1) 0 1px 2px -1px. Internal mock chrome uses #f7f7f7 fills and #ebebff tints for active fields.
+Background #fafafa, border-radius 32px, padding 96px 48px. No shadow. Used for the 'We designed an invoice...' section and similar spacious feature panels that need to feel like standalone editorial blocks.
 
-### Input Field
-**Role:** Form inputs, search fields, and inline editors
+### Tinted Accent Card
+**Role:** Highlight block with brand-tinted background
 
-Background #ffffff, border 1px #d1d9e4, border-radius 4px, padding 8px 12px. TWK Lausanne 14px weight 400. Placeholder text in #92939e. Focus state shifts border to #7c3aed with 2px outer ring of #ebebff.
+Background rgba(0,152,242,0.16) (Ice at 16% opacity), border-radius 16px, no padding or shadow. Used for payment rate callout strips and highlighted info blocks.
 
-### Integration Logo Tile
-**Role:** Third-party brand logos in the integration grid
+### Invoice Mockup Card
+**Role:** Overlapping invoice preview document
 
-Background #ffffff, border 1px #e5e7eb, border-radius 8px, padding 16px. Logo mark centered, no accompanying text. Renders at roughly 48–64px square within the tile.
+Background #ffffff, border-radius 16px, shadow rgba(10,13,20,0.03) 0px 1px 2px 0px. Contains a structured invoice layout: 'INVOICE NO' label at 11px uppercase in #666666, 'FROM/TO' blocks with brand-color circular icons (Iris #6c56fc, Leaf #5d9c06), line items in a table with #666666 labels and #1e1e1 values. Stacked with slight rotation and offset for depth.
 
-### Status Badge
-**Role:** Inline status indicators (Sent, Scheduled, Approved)
+### Star Rating Block
+**Role:** 5-star rating indicator for testimonial credibility
 
-Background #ebebff or #f7f7f7, text #5e5cff or #2e7317 weight 500 at 11px, border-radius 9999px, padding 2px 10px. Success variant uses #2e7317 text on #f7f7f7 background.
+Five solid orange/amber stars (default #f5a623 implied) centered above a quote. No border or background. Open Runde 24px/600 quote text below in #1e1e1, Caveat 16px/600 attribution in #666666.
 
-### Announcement Bar
-**Role:** Top-of-page promotional strip
+### Payment Rate Badge
+**Role:** Inline rate indicator — 'Cards 2.7%', 'Bank transfer 1%', 'Stablecoin 1%'
 
-Background #fff6df, text #1d1d20 weight 400 at 13px, centered. Full-bleed, padding 8px vertical. Arrow link in #5e5cff.
+No background, inline horizontal arrangement: Electric Blue #0098f2 circular checkmark icon (radius 888px = fully round), followed by label text in #1e1e1 at 16px/500, rate value in bold. No padding, no border.
 
-### Logo Lockup
-**Role:** Brand mark + wordmark in nav and footer
+### FAQ Accordion Item
+**Role:** Expandable question row in the FAQ section
 
-Hex-cluster glyph in #1d1d20 followed by 'Sequence' in TWK Lausanne weight 500 at 18px, letter-spacing -0.002em. No tagline.
+Full-width row with no background, no border-radius, horizontal divider line (1px #ccd1da or similar hairline). Question text in #1e1e1 at 16px/500, plus icon (+) on the right in #1e1e1e. Vertical padding ~16px, spacing between items ~12px.
 
-### Section Header
-**Role:** Eyebrow label + h2 combination introducing each section
+### Pill-Shaped Header Container
+**Role:** Floating navigation bar wrapping logo, links, and CTAs
 
-Eyebrow in TWK Lausanne 12px weight 500 #757575 uppercase or sentence-case, optional 4px row-gap. h2 in TWK Lausanne 40px weight 300 #1d1d20 line-height 1.00. Centered stack pattern in hero, left-aligned in product sections.
+Background #ffffff, border-radius 100px, wrapping the entire nav row. Contains logo + nav links (outline buttons) + login text + filled CTA, all arranged inline with 8-12px gaps. Floats above the hero with subtle shadow.
 
-### Customer Logo Strip
-**Role:** Row of customer wordmarks for social proof
+### Logo Mark
+**Role:** brand logo — stylized arrow/chevron monogram
 
-No background or border. Wordmarks in #1d1d20 at consistent visual weight, spaced with 48–80px column-gap. Centered horizontally with star rating above at 14px in #757575.
+Two stacked chevron/arrow shapes forming 'A' or '→' glyph, rendered in #1e1e1 (dark). Paired with wordmark in Open Runde 16px/500, #1e1e1e.
+
+### Eyebrow Label
+**Role:** Small uppercase category tag above section headings — 'Used by 5,000+ businesses worldwide'
+
+Open Runde 11px/600, letter-spacing +0.02em, text-transform uppercase, color #0098f2 (Electric Blue). No background, no border. Sits centered above the headline as a tiny blue capsule of context.
 
 ## Do's and Don'ts
 
 ### Do
-- Use Violet Pulse (#7c3aed) exclusively for the single primary CTA per screen; never for body text, icons in resting state, or large fills
-- Set all headings 24px and above in TWK Lausanne weight 300; reserve Moderat Serif for the 40–46px display headline only
-- Use Ash (#e5e7eb) 1px as the default border across cards, dividers, inputs, and tiles — this is the structural line of the system
-- Apply the pill radius (9999px) to all buttons, nav items, and tags; use 8px for cards and 4px for inputs and small interactive elements
-- Anchor every section to a white or near-white surface; let depth come from hairline borders and the layered shadow stack, not colored fills
-- Pair Lavender Wash (#ebebff) with Iris Glow (#e0c9ff) when building tinted callouts or highlighted states — never use them as large surface fills
-- Keep section gaps at 80px and card padding at 24px; drop to 16px padding only in dense grid cells or product chrome
+- Use Open Runde weight 600 for all headings 20px and above with -0.03em letter-spacing — the tight tracking is the signature compressed headline feel
+- Set primary action buttons to #0d111b with white text and 100px pill radius — never use colored fills for primary CTAs
+- Use #0098f2 Electric Blue exclusively for inline icons (checkmarks), rate callouts, and eyebrow labels — never for button backgrounds or large surface fills
+- Apply 16px border-radius to all content cards and 32px to large feature panels — radius hierarchy is a core part of the visual rhythm
+- Set page canvas to pure #ffffff and use #fafafa or #f7fafc only for alternating section bands — keep the page as bright as possible
+- Use Caveat 16px/600 for testimonial attributions only — it is a signature element, not a body font
+- Stack invoice mockup cards with slight rotation and overlapping offset to create the layered paper effect visible in the hero
 
 ### Don't
-- Don't introduce any new chromatic color — the system is monochrome grays plus exactly one violet accent and one green semantic
-- Don't use Moderat Serif below 40px or for anything other than the h1 display headline; it will lose its editorial weight
-- Don't apply colored backgrounds to large content regions; atmospheric depth comes from the soft blue-violet radial gradient washes, not solid color
-- Don't use heavy drop shadows; the system relies on thin 1px rings and tightly-clamped offset shadows, never blurry elevation blobs
-- Don't set body text below 12px; the smallest TWK Lausanne size for any user-facing text is 12px, with 14px as the comfortable default
-- Don't use Indigo Ink (#5e5cff) as a button background — it is a link and secondary-text color, not an action fill
-- Don't round buttons or tags with 8px; they must be pills (9999px) to maintain the contrast against the 8px card radius
+- Don't use #0098f2, #6c56fc, or #f200ca as button backgrounds — the brand accent colors are decorative, not interactive
+- Don't use pure #000000 for text or buttons — use #1e1e1 for text and #0d111b for button fills; the near-black tones are deliberate
+- Don't apply box-shadow to feature cards — elevation is reserved for the invoice mockups and testimonial cards; flat surfaces are the norm
+- Don't use border-radius below 10px on any interactive element — pills (100px), 16px, and 32px are the only valid radius values
+- Don't use gradient backgrounds anywhere — the design is strictly flat with solid fills only
+- Don't set body text below #666666 — the neutral floor for readable text is Smoke, not lighter grays
+- Don't use more than two chromatic accent colors on a single screen — the system relies on color appearing as rare punctuation
 
 ## Surfaces
 
 | Level | Name | Value | Purpose |
 |-------|------|-------|---------|
-| 0 | Page Canvas | `#ffffff` | Base page background, hero and section backgrounds |
-| 1 | Recessed Surface | `#f7f7f7` | Card and panel surfaces sitting one step below the canvas |
-| 2 | Tinted Surface | `#ebebff` | Lavender-tinted highlight regions for special content blocks |
-| 3 | Warm Accent | `#fff6df` | Cream announcement bar and warm highlight bands |
+| 0 | Paper | `#ffffff` | Page canvas — dominant background for the entire site, hero, and most content sections |
+| 1 | Snow | `#fafafa` | Alternating section bands, feature card backgrounds, subtle contrast surfaces |
+| 2 | Ice | `#cfeafa` | Tinted highlight blocks for payment info and feature callouts |
+| 3 | Lavender | `#e1e0fc` | Violet-tinted card backgrounds for secondary feature blocks |
 
 ## Elevation
 
-- **Primary CTA button:** `0px 0px 0px 1px rgba(58,58,64,0.1), 0px 1px 3px 0px rgba(0,0,0,0.1), 0px 1px 2px -1px rgba(0,0,0,0.1) + violet halo via #e0c9ff at ~20% opacity 0 0 8px 2px` (+ `rgba(99,102,241,0.4) 0 0 8px 2px` intensification layer)
-- **Product screenshot cards:** `0px 0px 0px 2px rgb(239,239,239), 0px 22px 9px 0px rgba(0,0,0,0.01), 0px 12px 7px 0px rgba(0,0,0,0.04), 0px 5px 5px 0px rgba(0,0,0,0.06), 0px 1px 3px 0px rgba(0,0,0,0.07)`
-- **Secondary/outlined button:** `0px 0px 0px 1px rgba(29,29,32,0.08)`
-- **Subtle elevation ring:** `0px 0px 0px 1px rgba(0,0,0,0.05)`
+- **Primary Button:** `rgb(36, 38, 40) 0px 0px 0px 1px, rgba(27, 28, 29, 0.48) 0px 1px 2px 0px`
+- **Elevated Card:** `rgba(0, 0, 0, 0.05) 0px 1.78px 8px 0px, rgba(0, 0, 0, 0.04) 0px 0.89px 2.67px 0px`
+- **Invoice Mockup:** `rgba(10, 13, 20, 0.03) 0px 1px 2px 0px`
 
 ## Imagery
 
-Imagery is restrained and product-centric: no lifestyle photography, no stock imagery, no decorative illustrations. The visual content is almost entirely UI mockups — floating product screenshot cards showing contract interfaces, billing forms, and invoice tables rendered in the same TWK Lausanne / grayscale palette as the rest of the site. Integration logos appear as small monochrome wordmarks inside bordered tiles. A subtle concentric-circle diagram appears once in the product suite section as a structural diagram in #e5e7eb strokes. The hero uses a soft blue-violet radial gradient wash (radial-gradient with rgba(186,217,249,0.8) and rgba(234,234,255,0.8)) as background atmosphere rather than any photographic content. Icons are 1.5–2px stroke, line-style, monochrome in #1d1d20 or #505050 — the only colored icon usage is the Violet Pulse active state.
-
-## Layout
-
-Max-width 1200px centered container with 24px gutter. The page is built as a vertical stack of distinct sections separated by 80px gaps, with a thin #e5e7eb hairline divider between some sections. The hero opens full-bleed white with a centered headline stack (eyebrow → serif display → paragraph → CTA pair) and product screenshot cards floating below as a 3-column grid with slight stagger. The social-proof strip is a single horizontal row of customer wordmarks, centered, with a 5-star rating above. Product suite sections use a left-aligned text column beside a right-side visual column, alternating sides. A 2-column feature section uses a diagram on one side and a 2×3 icon+text grid on the other. Navigation is a single fixed top bar: logo left, product/customer/docs/pricing/resources center-left, sign-in and Book demo button right — the demo button is the only filled violet element in the chrome. No sidebar, no mega-menu, no sticky scroll behavior beyond the nav.
-
-## Editorial Serif Accent
-
-The system uses a light-weight editorial serif (Moderat Serif) exclusively for the 40–46px display headline, paired with a humanist sans for all surrounding text. This is the signature typographic move: it makes marketing pages read like a financial publication rather than a product UI. An AI agent should only invoke the serif for the single largest headline on a page — never for subheadings, never for product UI, never below 40px. The light weight (300) and aggressive -0.025em tracking make the serif whisper rather than shout; the contrast with the sans body text creates the premium editorial tone.
-
-## Violet Halo System
-
-The primary CTA carries a distinctive violet halo built from #e0c9ff in the box-shadow layer. This is not a generic drop shadow — it is a brand-specific glow that makes the filled button look like it is emitting light in the brand color. The halo sits outside the standard elevation stack and is applied only to the primary action. Secondary buttons get the thin 1px ring shadow but no glow. The same violet appears at lower opacity (rgba(99,102,241,0.4) 0 0 8px 2px) as a focus or hover intensification in some contexts.
-
-## Atmospheric Gradient Washes
-
-Hero and section backgrounds use two signature soft washes: a horizontal purple fade (linear-gradient to right, transparent → #9492ff) that appears on headline underlines or accent strokes, and a soft blue-violet radial wash (radial-gradient with rgba(186,217,249,0.8) fading through rgba(234,234,255,0.8) to transparent) that fills hero backgrounds. These create atmosphere without committing the page to color. Use them at 60–80% opacity maximum so the underlying white canvas still reads as the dominant surface.
+Imagery is minimal and product-focused: flat-lay photography of office objects (keyboard, binder clip, red binder, Apple display) cropped at the edges and scattered around the page as atmospheric decoration. The dominant visual asset is the layered invoice mockup stack — rendered as actual UI, not illustration, showing real invoice data with brand-color icons. Icons are simple flat geometric shapes (circles for checkmarks, rounded squares) in Electric Blue. No illustrations, no 3D renders, no lifestyle photography. The aesthetic is 'desktop overhead shot meets UI artifact'.
 
 ## Agent Prompt Guide
 
-**Quick Color Reference**
-- text: #1d1d20 (headings), #505050 (body), #757575 (muted)
-- background: #ffffff (canvas), #f7f7f7 (recessed surface)
-- border: #e5e7eb (default hairline), #d1d9e4 (input border)
-- accent: #7c3aed (Violet Pulse — the only chromatic accent)
-- primary action: #7c3aed (filled action)
+## Quick Color Reference
+- Text (primary): #1e1e1e
+- Text (secondary): #666666
+- Text (muted): #8d8d8d
+- Background (page): #ffffff
+- Background (card): #fafafa
+- Border: #ccd1da
+- Accent: #0098f2
+- primary action: #0d111b (filled action)
 
-**Example Component Prompts**
-1. Create a Primary Action Button: #7c3aed background, #ffffff text, 9999px radius, compact pill padding. Use this filled treatment for the main CTA.
-2. *Product Feature Card*: Background #ffffff, border 1px #e5e7eb, border-radius 8px, padding 24px. Icon 24px in #1d1d20 at top-left. Title TWK Lausanne 18px weight 500 #1d1d20. Body TWK Lausanne 14px weight 400 #757575. No resting shadow.
-3. *Input field*: Background #ffffff, border 1px #d1d9e4, border-radius 4px, padding 8px 12px. Text TWK Lausanne 14px weight 400 #1d1d20. Placeholder #92939e. Focus state: border shifts to #7c3aed, 2px outer ring of #ebebff.
-4. *Status badge (success)*: Background #f7f7f7, text #2e7317, TWK Lausanne 11px weight 500, border-radius 9999px, padding 2px 10px.
-5. *Announcement bar*: Full-bleed background #fff6df, text #1d1d20 TWK Lausanne 13px weight 400 centered, padding 8px vertical. Inline arrow link in #5e5cff.
+## 5 Example Component Prompts
+
+1. Create a Primary Action Button: #0d111b background, #ffffff text, 9999px radius, compact pill padding. Use this filled treatment for the main CTA.
+
+2. **Feature Card**: Background #fafafa, border-radius 16px, padding 24px, no shadow. Heading at 24px Open Runde weight 600, #1e1e1e, letter-spacing -0.72px. Body at 16px Open Runde weight 500, #666666.
+
+3. **Payment Rate Badge**: Inline row — Electric Blue #0098f2 circular checkmark icon (12px diameter, 888px radius = perfect circle), followed by label text 'Cards' in #1e1e1e at 16px/500, then rate '2.7%' in bold #1e1e1e. No background, no border, no padding.
+
+4. **Invoice Mockup Card**: Background #ffffff, border-radius 16px, shadow rgba(10,13,20,0.03) 0px 1px 2px. Header label 'INVOICE NO 001' at 11px Open Runde weight 600 uppercase, #666666. Two-column body: 'FROM' block with Iris #6c56fc circular icon + 'Marble Studio' at 20px/600 #1e1e1e; 'TO' block with Leaf #5d9c06 circular icon + 'Charm AI' at 20px/600. Address lines at 14px/500 in #666666.
+
+5. **FAQ Accordion Row**: Full-width row, no background, 1px bottom border in #ccd1da. Question text at 16px Open Runde weight 500, #1e1e1e, padding 16px 0. Plus icon on right at 16px, #1e1e1e. Spacing between rows: 12px.
 
 ## Similar Brands
 
-- **Linear** — Same near-monochrome light canvas with a single vivid accent and editorial restraint; both use hairline borders and compact density to feel precise rather than decorative
-- **Stripe** — Similar quiet light-mode product chrome with one chromatic brand color used surgically; both use layered subtle shadows and pill buttons for primary actions
-- **Mercury** — Same financial-product confidence expressed through generous whitespace, editorial sans typography, and violet/purple accent appearing only on primary actions
-- **Vercel** — Both use a near-white canvas with hairline #e5e7eb borders as the dominant structural element, and rely on a single brand color rather than multi-color palettes
-- **Notion** — Same light-dominant interface with muted gray text hierarchy and pill-shaped interactive controls; both treat color as functional punctuation rather than decoration
+- **Stripe** — Same flat white-canvas approach with pill-shaped buttons, minimal shadows, and restrained use of color for functional accents rather than decoration
+- **Linear** — Same compressed geometric sans-serif headlines with tight negative letter-spacing, dark filled CTA buttons, and a near-monochrome palette with rare chromatic punctuation
+- **FreshBooks** — Same invoicing product category with overlapping paper/invoice mockup photography and a clean white-surface aesthetic for financial UI
+- **Plausible Analytics** — Same approach of using a single vivid accent color (blue) sparingly against a white canvas, with pill-radius buttons and generous card padding
+- **Vercel** — Same near-black (#0d111b range) primary buttons instead of pure black, minimal shadows, and geometric typography with tight tracking on display sizes
 
 ## Quick Start
 
@@ -288,121 +281,116 @@ Hero and section backgrounds use two signature soft washes: a horizontal purple 
 ```css
 :root {
   /* Colors */
-  --color-violet-pulse: #7c3aed;
-  --color-indigo-ink: #5e5cff;
-  --color-lavender-wash: #ebebff;
-  --color-iris-glow: #e0c9ff;
-  --color-ledger-green: #2e7317;
-  --color-paper-white: #ffffff;
-  --color-bone: #f7f7f7;
-  --color-fog: #f1f1f1;
-  --color-silver: #efefef;
-  --color-marble: #fff6df;
-  --color-graphite: #1d1d20;
-  --color-slate: #42424a;
-  --color-iron: #505050;
-  --color-steel: #757575;
-  --color-smoke: #92939e;
-  --color-ash: #e5e7eb;
-  --color-mist: #d1d9e4;
-  --color-olive-gray: #808076;
-  --color-noir: #000000;
+  --color-ink: #1e1e1e;
+  --color-carbon: #0f0f0f;
+  --color-midnight: #0d111b;
+  --color-smoke: #666666;
+  --color-fog: #8d8d8d;
+  --color-ash: #999999;
+  --color-mist: #ccd1da;
+  --color-paper: #ffffff;
+  --color-snow: #f7fafc;
+  --color-concrete: #afb0b1;
+  --color-electric-blue: #0098f2;
+  --color-iris: #6c56fc;
+  --color-magenta: #f200ca;
+  --color-leaf: #5d9c06;
+  --color-coral: #ff6363;
+  --color-ice: #cfeafa;
+  --color-lavender: #e1e0fc;
+  --color-blush: #f6d2f4;
 
   /* Typography — Font Families */
-  --font-twk-lausanne: 'TWK Lausanne', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-moderat-serif: 'Moderat Serif', ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-sf-mono: 'SF Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-sans-serif: 'sans-serif', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-open-runde: 'Open Runde', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-caveat: 'Caveat', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sf-pro-text: 'SF Pro Text', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-inter: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   /* Typography — Scale */
-  --text-caption: 11px;
-  --leading-caption: 1.45;
-  --tracking-caption: -0.022px;
-  --text-body: 14px;
-  --leading-body: 1.57;
-  --text-body-lg: 16px;
-  --leading-body-lg: 1.63;
-  --text-subheading: 18px;
-  --leading-subheading: 1.56;
-  --text-heading-sm: 24px;
-  --leading-heading-sm: 1.33;
-  --tracking-heading-sm: -0.048px;
+  --text-eyebrow: 11px;
+  --leading-eyebrow: 1.62;
+  --tracking-eyebrow: 0.22px;
+  --text-body-sm: 14px;
+  --leading-body-sm: 1.43;
+  --tracking-body-sm: -0.28px;
+  --text-body: 16px;
+  --leading-body: 1.5;
+  --tracking-body: -0.32px;
+  --text-body-lg: 22px;
+  --leading-body-lg: 1.29;
+  --text-subheading: 24px;
+  --leading-subheading: 1.33;
+  --tracking-subheading: -0.72px;
+  --text-heading-sm: 32px;
+  --leading-heading-sm: 1.25;
+  --tracking-heading-sm: -0.96px;
   --text-heading: 40px;
-  --leading-heading: 1;
-  --tracking-heading: -1px;
-  --text-display: 46px;
-  --leading-display: 1;
-  --tracking-display: -1.15px;
+  --leading-heading: 1.2;
+  --tracking-heading: -1.2px;
+  --text-heading-lg: 48px;
+  --leading-heading-lg: 1.17;
+  --tracking-heading-lg: -1.44px;
+  --text-display: 64px;
+  --leading-display: 1.13;
+  --tracking-display: -1.92px;
 
   /* Typography — Weights */
-  --font-weight-light: 300;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
-  --font-weight-bold: 700;
 
-  /* Spacing — design scale (namespaced; the default --spacing-* scale is left to Tailwind) */
+  /* Spacing */
   --spacing-unit: 4px;
-  --ds-4: 4px;
-  --ds-8: 8px;
-  --ds-12: 12px;
-  --ds-16: 16px;
-  --ds-20: 20px;
-  --ds-24: 24px;
-  --ds-28: 28px;
-  --ds-32: 32px;
-  --ds-40: 40px;
-  --ds-48: 48px;
-  --ds-52: 52px;
-  --ds-56: 56px;
-  --ds-64: 64px;
-  --ds-80: 80px;
-  --ds-96: 96px;
-  --ds-160: 160px;
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-28: 28px;
+  --spacing-32: 32px;
+  --spacing-36: 36px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-96: 96px;
 
   /* Layout */
   --page-max-width: 1200px;
-  --section-gap: 80px;
+  --section-gap: 96px;
   --card-padding: 24px;
-  --element-gap: 8px;
+  --element-gap: 12px;
 
   /* Border Radius */
-  --radius-sm: 4px;
-  --radius-md: 4px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
+  --radius-lg: 10px;
   --radius-2xl: 16px;
   --radius-2xl-2: 20px;
-  --radius-full: 9999px;
+  --radius-3xl: 32px;
+  --radius-full: 50px;
+  --radius-full-2: 100px;
+  --radius-full-3: 888px;
+  --radius-full-4: 999px;
 
   /* Named Radii */
-  --radius-cards: 8px;
-  --radius-badges: 9999px;
-  --radius-inputs: 4px;
-  --radius-buttons: 9999px;
-  --radius-large-panels: 16px;
+  --radius-tags: 100px;
+  --radius-cards: 16px;
+  --radius-icons: 888px;
+  --radius-images: 20px;
+  --radius-buttons: 100px;
+  --radius-largecards: 32px;
 
   /* Shadows */
-  --shadow-subtle: rgba(58, 58, 64, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
-  --shadow-subtle-2: rgba(29, 29, 32, 0.08) 0px 0px 0px 1px;
-  --shadow-subtle-3: rgb(239, 239, 239) 0px 0px 0px 2px, rgba(0, 0, 0, 0.01) 0px 22px 9px 0px, rgba(0, 0, 0, 0.04) 0px 12px 7px 0px, rgba(0, 0, 0, 0.06) 0px 5px 5px 0px, rgba(0, 0, 0, 0.07) 0px 1px 3px 0px;
-  --shadow-sm: var(--shadow-subtle), rgba(224, 201, 255, 0.2) 0px 0px 8px 2px, rgba(99, 102, 241, 0.4) 0px 0px 8px 2px;
-  --shadow-subtle-4: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
-  --shadow-subtle-5: rgba(117, 117, 117, 0.2) 0px 0px 0px 1px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-  --shadow-subtle-6: rgba(255, 255, 255, 0.14) 0px 1px 0px 0px inset, rgba(13, 25, 37, 0.08) 0px 1px 1px 0px, rgba(14, 26, 38, 0.05) 0px 0px 0px 1px, rgba(13, 25, 37, 0.05) 0px 2px 3px 0px;
-  --shadow-subtle-7: rgba(80, 80, 80, 0.1) 0px 0px 0px 1px;
-  --shadow-subtle-8: rgba(29, 29, 32, 0.08) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
-  --shadow-sm-2: rgba(0, 0, 0, 0.04) 0px 4px 6px 0px, rgb(242, 242, 242) 0px 0px 0px 4px, rgba(0, 0, 0, 0.03) 0px 0px 0px 1px;
-  --shadow-subtle-9: rgba(29, 29, 32, 0.08) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
-  --shadow-subtle-10: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-  --shadow-subtle-11: rgba(117, 117, 117, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.05) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -4px;
-  --shadow-subtle-12: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px inset;
-  --shadow-subtle-13: rgb(124, 58, 237) 0px 0px 0px 1px;
+  --shadow-subtle: rgba(10, 13, 20, 0.03) 0px 1px 2px 0px;
+  --shadow-subtle-2: rgb(36, 38, 40) 0px 0px 0px 1px, rgba(27, 28, 29, 0.48) 0px 1px 2px 0px;
+  --shadow-subtle-3: rgba(0, 0, 0, 0.06) 0px 2px 3px -1px;
 
   /* Surfaces */
-  --surface-page-canvas: #ffffff;
-  --surface-recessed-surface: #f7f7f7;
-  --surface-tinted-surface: #ebebff;
-  --surface-warm-accent: #fff6df;
+  --surface-paper: #ffffff;
+  --surface-snow: #fafafa;
+  --surface-ice: #cfeafa;
+  --surface-lavender: #e1e0fc;
 }
 ```
 
@@ -411,93 +399,89 @@ Hero and section backgrounds use two signature soft washes: a horizontal purple 
 ```css
 @theme {
   /* Colors */
-  --color-violet-pulse: #7c3aed;
-  --color-indigo-ink: #5e5cff;
-  --color-lavender-wash: #ebebff;
-  --color-iris-glow: #e0c9ff;
-  --color-ledger-green: #2e7317;
-  --color-paper-white: #ffffff;
-  --color-bone: #f7f7f7;
-  --color-fog: #f1f1f1;
-  --color-silver: #efefef;
-  --color-marble: #fff6df;
-  --color-graphite: #1d1d20;
-  --color-slate: #42424a;
-  --color-iron: #505050;
-  --color-steel: #757575;
-  --color-smoke: #92939e;
-  --color-ash: #e5e7eb;
-  --color-mist: #d1d9e4;
-  --color-olive-gray: #808076;
-  --color-noir: #000000;
+  --color-ink: #1e1e1e;
+  --color-carbon: #0f0f0f;
+  --color-midnight: #0d111b;
+  --color-smoke: #666666;
+  --color-fog: #8d8d8d;
+  --color-ash: #999999;
+  --color-mist: #ccd1da;
+  --color-paper: #ffffff;
+  --color-snow: #f7fafc;
+  --color-concrete: #afb0b1;
+  --color-electric-blue: #0098f2;
+  --color-iris: #6c56fc;
+  --color-magenta: #f200ca;
+  --color-leaf: #5d9c06;
+  --color-coral: #ff6363;
+  --color-ice: #cfeafa;
+  --color-lavender: #e1e0fc;
+  --color-blush: #f6d2f4;
 
   /* Typography */
-  --font-twk-lausanne: 'TWK Lausanne', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-moderat-serif: 'Moderat Serif', ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-sf-mono: 'SF Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-sans-serif: 'sans-serif', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-open-runde: 'Open Runde', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-caveat: 'Caveat', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sf-pro-text: 'SF Pro Text', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-inter: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   /* Typography — Scale */
-  --text-caption: 11px;
-  --leading-caption: 1.45;
-  --tracking-caption: -0.022px;
-  --text-body: 14px;
-  --leading-body: 1.57;
-  --text-body-lg: 16px;
-  --leading-body-lg: 1.63;
-  --text-subheading: 18px;
-  --leading-subheading: 1.56;
-  --text-heading-sm: 24px;
-  --leading-heading-sm: 1.33;
-  --tracking-heading-sm: -0.048px;
+  --text-eyebrow: 11px;
+  --leading-eyebrow: 1.62;
+  --tracking-eyebrow: 0.22px;
+  --text-body-sm: 14px;
+  --leading-body-sm: 1.43;
+  --tracking-body-sm: -0.28px;
+  --text-body: 16px;
+  --leading-body: 1.5;
+  --tracking-body: -0.32px;
+  --text-body-lg: 22px;
+  --leading-body-lg: 1.29;
+  --text-subheading: 24px;
+  --leading-subheading: 1.33;
+  --tracking-subheading: -0.72px;
+  --text-heading-sm: 32px;
+  --leading-heading-sm: 1.25;
+  --tracking-heading-sm: -0.96px;
   --text-heading: 40px;
-  --leading-heading: 1;
-  --tracking-heading: -1px;
-  --text-display: 46px;
-  --leading-display: 1;
-  --tracking-display: -1.15px;
+  --leading-heading: 1.2;
+  --tracking-heading: -1.2px;
+  --text-heading-lg: 48px;
+  --leading-heading-lg: 1.17;
+  --tracking-heading-lg: -1.44px;
+  --text-display: 64px;
+  --leading-display: 1.13;
+  --tracking-display: -1.92px;
 
-  /* Spacing — design scale (namespaced; the default --spacing-* scale is left to Tailwind) */
-  --ds-4: 4px;
-  --ds-8: 8px;
-  --ds-12: 12px;
-  --ds-16: 16px;
-  --ds-20: 20px;
-  --ds-24: 24px;
-  --ds-28: 28px;
-  --ds-32: 32px;
-  --ds-40: 40px;
-  --ds-48: 48px;
-  --ds-52: 52px;
-  --ds-56: 56px;
-  --ds-64: 64px;
-  --ds-80: 80px;
-  --ds-96: 96px;
-  --ds-160: 160px;
+  /* Spacing */
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-28: 28px;
+  --spacing-32: 32px;
+  --spacing-36: 36px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-96: 96px;
 
   /* Border Radius */
-  --radius-sm: 4px;
-  --radius-md: 4px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
+  --radius-lg: 10px;
   --radius-2xl: 16px;
   --radius-2xl-2: 20px;
-  --radius-full: 9999px;
+  --radius-3xl: 32px;
+  --radius-full: 50px;
+  --radius-full-2: 100px;
+  --radius-full-3: 888px;
+  --radius-full-4: 999px;
 
   /* Shadows */
-  --shadow-subtle: rgba(58, 58, 64, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
-  --shadow-subtle-2: rgba(29, 29, 32, 0.08) 0px 0px 0px 1px;
-  --shadow-subtle-3: rgb(239, 239, 239) 0px 0px 0px 2px, rgba(0, 0, 0, 0.01) 0px 22px 9px 0px, rgba(0, 0, 0, 0.04) 0px 12px 7px 0px, rgba(0, 0, 0, 0.06) 0px 5px 5px 0px, rgba(0, 0, 0, 0.07) 0px 1px 3px 0px;
-  --shadow-sm: var(--shadow-subtle), rgba(224, 201, 255, 0.2) 0px 0px 8px 2px, rgba(99, 102, 241, 0.4) 0px 0px 8px 2px;
-  --shadow-subtle-4: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
-  --shadow-subtle-5: rgba(117, 117, 117, 0.2) 0px 0px 0px 1px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-  --shadow-subtle-6: rgba(255, 255, 255, 0.14) 0px 1px 0px 0px inset, rgba(13, 25, 37, 0.08) 0px 1px 1px 0px, rgba(14, 26, 38, 0.05) 0px 0px 0px 1px, rgba(13, 25, 37, 0.05) 0px 2px 3px 0px;
-  --shadow-subtle-7: rgba(80, 80, 80, 0.1) 0px 0px 0px 1px;
-  --shadow-subtle-8: rgba(29, 29, 32, 0.08) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
-  --shadow-sm-2: rgba(0, 0, 0, 0.04) 0px 4px 6px 0px, rgb(242, 242, 242) 0px 0px 0px 4px, rgba(0, 0, 0, 0.03) 0px 0px 0px 1px;
-  --shadow-subtle-9: rgba(29, 29, 32, 0.08) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
-  --shadow-subtle-10: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-  --shadow-subtle-11: rgba(117, 117, 117, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.05) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -4px;
-  --shadow-subtle-12: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px inset;
-  --shadow-subtle-13: rgb(124, 58, 237) 0px 0px 0px 1px;
+  --shadow-subtle: rgba(10, 13, 20, 0.03) 0px 1px 2px 0px;
+  --shadow-subtle-2: rgb(36, 38, 40) 0px 0px 0px 1px, rgba(27, 28, 29, 0.48) 0px 1px 2px 0px;
+  --shadow-subtle-3: rgba(0, 0, 0, 0.06) 0px 2px 3px -1px;
 }
 ```

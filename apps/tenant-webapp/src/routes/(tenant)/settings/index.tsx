@@ -113,20 +113,20 @@ type Service = (typeof sections)[number]["items"][number];
 
 function SettingsPage() {
   return (
-    <main className="bg-paper-white p-4 sm:p-8">
-      <div className="mx-auto max-w-6xl space-y-8">
+    <main className="min-h-full bg-paper p-5 sm:p-32 lg:p-40">
+      <div className="mx-auto max-w-6xl space-y-32">
         <PageHeader
           description="Manage your workspace services and configuration."
           title="Settings"
         />
 
-        <div className="space-y-8">
+        <div className="space-y-32">
           {sections.map((section) => (
             <section key={section.label}>
-              <h2 className="mb-3 font-semibold text-[10px] text-steel uppercase tracking-[0.14em]">
+              <h2 className="mb-3 font-semibold text-[11px] text-electric-blue uppercase tracking-[0.02em]">
                 {section.label}
               </h2>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-16 sm:grid-cols-2 lg:grid-cols-3">
                 {section.items.map((item) => (
                   <ServiceCard item={item} key={item.href} />
                 ))}
@@ -144,13 +144,13 @@ function ServiceCard({ item }: { item: Service }) {
   const Icon = item.icon;
 
   return (
-    <Link className="group/card block rounded-lg" to={item.href}>
-      <Card className="h-full transition-colors hover:bg-bone/60">
+    <Link className="group/card block rounded-2xl" to={item.href}>
+      <Card className="h-full border-0 bg-snow transition-colors hover:bg-ice/50">
         <CardHeader>
-          <span className="flex size-10 items-center justify-center rounded-lg bg-lavender-wash text-indigo-ink">
-            <Icon className="size-5 text-violet-pulse" />
+          <span className="flex size-11 items-center justify-center rounded-2xl bg-lavender text-iris">
+            <Icon className="size-5" />
           </span>
-          <CardTitle>{item.label}</CardTitle>
+          <CardTitle className="text-subheading">{item.label}</CardTitle>
           <CardDescription>{item.description}</CardDescription>
           <CardAction>
             <ChevronRight className="size-4 text-smoke transition-transform group-hover/card:translate-x-0.5" />

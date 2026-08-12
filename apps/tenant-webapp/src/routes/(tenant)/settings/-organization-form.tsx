@@ -76,10 +76,13 @@ export function OrganizationForm({
   );
 
   return (
-    <form className="grid gap-4" onSubmit={handleSubmit}>
-      <div className="grid gap-4 sm:grid-cols-2">
+    <form className="grid gap-16" onSubmit={handleSubmit}>
+      <div className="grid gap-16 sm:grid-cols-2">
         <div className="grid gap-1.5">
-          <Label className="text-slate text-xs" htmlFor={nameId}>
+          <Label
+            className="font-semibold text-[11px] text-smoke uppercase tracking-[0.02em]"
+            htmlFor={nameId}
+          >
             Organization name
           </Label>
           <Input
@@ -92,7 +95,10 @@ export function OrganizationForm({
         </div>
 
         <div className="grid gap-1.5">
-          <Label className="text-slate text-xs" htmlFor={slugId}>
+          <Label
+            className="font-semibold text-[11px] text-smoke uppercase tracking-[0.02em]"
+            htmlFor={slugId}
+          >
             Slug
           </Label>
           <Input
@@ -102,7 +108,7 @@ export function OrganizationForm({
             required
             value={values.slug}
           />
-          <p className="text-[11px] text-steel">
+          <p className="text-[11px] text-fog">
             Used for this workspace's subdomain. Changing it changes your URL.
           </p>
         </div>
@@ -153,7 +159,10 @@ export function OrganizationForm({
           value={values.taxId}
         />
         <div className="grid gap-1.5">
-          <Label className="text-slate text-xs" htmlFor={foundedDateId}>
+          <Label
+            className="font-semibold text-[11px] text-smoke uppercase tracking-[0.02em]"
+            htmlFor={foundedDateId}
+          >
             Founded date
           </Label>
           <Input
@@ -177,7 +186,10 @@ export function OrganizationForm({
         />
 
         <div className="grid gap-1.5">
-          <Label className="text-slate text-xs" htmlFor={accentColorId}>
+          <Label
+            className="font-semibold text-[11px] text-smoke uppercase tracking-[0.02em]"
+            htmlFor={accentColorId}
+          >
             Accent color
           </Label>
           <Input
@@ -191,13 +203,11 @@ export function OrganizationForm({
 
       {error ? (
         <Alert variant="destructive">
-          <AlertDescription className="text-destructive">
-            {error}
-          </AlertDescription>
+          <AlertDescription className="text-carbon">{error}</AlertDescription>
         </Alert>
       ) : null}
 
-      <div className="flex flex-col-reverse justify-end gap-2 border-ash border-t pt-4 sm:flex-row">
+      <div className="flex flex-col-reverse justify-end gap-2 border-mist border-t pt-5 sm:flex-row">
         <Button onClick={onCancel} type="button" variant="outline">
           Cancel
         </Button>
@@ -225,7 +235,10 @@ function TextField({
   const id = useId();
   return (
     <div className="grid gap-1.5">
-      <Label className="text-slate text-xs" htmlFor={id}>
+      <Label
+        className="font-semibold text-[11px] text-smoke uppercase tracking-[0.02em]"
+        htmlFor={id}
+      >
         {label}
       </Label>
       <Input

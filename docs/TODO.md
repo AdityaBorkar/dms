@@ -1,5 +1,7 @@
 # TODO
 
+Debug adn solve the build errors
+
 Compact and appealing User Interface
 
 Proper Forms (using skills)
@@ -10,10 +12,6 @@ Proper Tables (using skills)
 Start creating the module and orpc endpoints for the "users" page
 
 In the Organization's General settings, show the information from aspen-os organization module. Also, give an edit button to allow the user to update the organization's information.
-
-Branches
-Addresses
-Bank Accounts
 
 Settings/connections
 

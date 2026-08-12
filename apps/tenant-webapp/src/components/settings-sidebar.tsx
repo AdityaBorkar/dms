@@ -84,14 +84,14 @@ export function SettingsSidebar({
   user: User;
 }) {
   return (
-    <aside className="flex w-full shrink-0 flex-col border-ash border-b bg-paper-white text-graphite md:sticky md:top-0 md:h-svh md:w-64 md:border-r md:border-b-0">
-      <div className="border-ash border-b px-4 py-4">
+    <aside className="flex w-full shrink-0 flex-col border-mist border-b bg-snow/70 text-ink md:sticky md:top-0 md:h-svh md:w-72 md:border-r md:border-b-0">
+      <div className="border-mist border-b px-5 py-5">
         <WorkspaceSelector organization={organization} />
       </div>
 
-      <div className="border-ash border-b px-4 py-3">
+      <div className="border-mist border-b px-5 py-3">
         <Button
-          className="w-full justify-start rounded-md px-3 text-steel"
+          className="w-full justify-start rounded-2xl px-3 text-smoke"
           nativeButton={false}
           render={<Link to="/dashboard" />}
           size="default"
@@ -104,7 +104,7 @@ export function SettingsSidebar({
 
       <nav
         aria-label="Settings navigation"
-        className="min-h-0 flex-1 overflow-y-auto px-4 py-4"
+        className="min-h-0 flex-1 overflow-y-auto px-5 py-5"
       >
         <LayoutGroup>
           {sections.map((section) => (
@@ -122,18 +122,18 @@ export function SettingsSidebar({
         </LayoutGroup>
       </nav>
 
-      <div className="border-ash border-t px-4 py-3">
-        <div className="flex items-center gap-3 rounded-md px-2 py-2">
-          <Avatar className="bg-bone">
-            <AvatarFallback className="bg-bone font-medium text-steel text-xs uppercase">
+      <div className="border-mist border-t px-5 py-16">
+        <div className="flex items-center gap-3 rounded-2xl bg-paper px-3 py-2.5 shadow-[var(--shadow-subtle)]">
+          <Avatar className="bg-ice">
+            <AvatarFallback className="bg-ice font-semibold text-ink text-xs uppercase">
               {user.name.slice(0, 1)}
             </AvatarFallback>
           </Avatar>
           <span className="min-w-0 flex-1">
-            <span className="block truncate font-medium text-graphite text-sm">
+            <span className="block truncate font-semibold text-ink text-sm">
               {user.name}
             </span>
-            <span className="block truncate text-smoke text-xs">Signed in</span>
+            <span className="block truncate text-fog text-xs">Signed in</span>
           </span>
           <Button
             aria-label="Sign out"
@@ -159,7 +159,7 @@ function SidebarSection({
 }) {
   return (
     <section className="mb-5 last:mb-0">
-      <h2 className="mb-2 px-3 font-semibold text-[10px] text-steel uppercase tracking-[0.14em]">
+      <h2 className="mb-2 px-3 font-semibold text-[11px] text-fog uppercase tracking-[0.02em]">
         {label}
       </h2>
       <div className="space-y-0.5">{children}</div>
@@ -183,7 +183,7 @@ function SettingsSidebarItem({
     <SidebarHoverItem>
       <Button
         aria-current={active ? "page" : undefined}
-        className={`w-full justify-start rounded-md bg-transparent px-3 text-left hover:bg-transparent ${active ? "bg-lavender-wash font-medium text-violet-pulse" : "text-steel"}`}
+        className={`w-full justify-start rounded-2xl bg-transparent px-3 text-left hover:bg-transparent ${active ? "bg-ice font-semibold text-ink" : "text-smoke"}`}
         nativeButton={false}
         render={<Link aria-current={active ? "page" : undefined} to={href} />}
         size="default"

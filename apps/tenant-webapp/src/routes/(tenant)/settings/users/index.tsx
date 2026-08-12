@@ -34,18 +34,26 @@ const roleLabels: Record<string, string> = {
   owner: "Owner",
 };
 
+type WorkspaceUser = {
+  createdAt: Date | string;
+  email: string | null;
+  id: string;
+  name: string | null;
+  role: string | null;
+};
+
 function UsersPage() {
   const users = Route.useLoaderData();
   const count = users?.length ?? 0;
 
   return (
-    <main className="bg-paper-white p-4 sm:p-8">
-      <div className="mx-auto max-w-6xl space-y-6">
+    <main className="min-h-full bg-paper p-5 sm:p-32 lg:p-40">
+      <div className="mx-auto max-w-6xl space-y-32">
         <PageHeader
           actions={
             <div className="flex items-center gap-2">
               <Badge
-                className="hidden items-center gap-2 rounded-full border-ash bg-card px-3 py-1.5 text-smoke text-xs sm:inline-flex"
+                className="hidden items-center gap-2 rounded-full border-mist bg-snow px-3 py-1.5 text-smoke text-xs sm:inline-flex"
                 variant="outline"
               >
                 <UsersRound className="size-4" />
@@ -69,7 +77,7 @@ function UsersPage() {
             <div className="flex items-center justify-between gap-3">
               <div>
                 <CardTitle>Workspace users</CardTitle>
-                <p className="mt-1 text-steel text-xs">
+                <p className="mt-1 text-body-sm text-smoke">
                   Roles and access are provisioned through Aspen.
                 </p>
               </div>
@@ -89,7 +97,7 @@ function UsersPage() {
               />
             ) : (
               <Table className="min-w-[680px]">
-                <TableHeader className="bg-bone">
+                <TableHeader className="bg-snow">
                   <TableRow className="hover:bg-transparent">
                     <TableHead className="px-5 text-smoke text-xs">
                       User
@@ -103,14 +111,14 @@ function UsersPage() {
                     <TableHead className="px-5 text-right text-smoke text-xs" />
                   </TableRow>
                 </TableHeader>
-                <TableBody className="divide-y divide-ash">
-                  {users.map((user) => (
-                    <TableRow className="hover:bg-bone/40" key={user.id}>
-                      <TableCell className="px-5 py-4">
+                <TableBody className="divide-y divide-mist">
+                  {users.map((user: WorkspaceUser) => (
+                    <TableRow className="hover:bg-snow" key={user.id}>
+                      <TableCell className="px-5 py-16">
                         <div className="flex items-center gap-3">
                           <UserAvatar name={user.name ?? user.email ?? "?"} />
                           <div className="min-w-0">
-                            <p className="truncate font-medium text-graphite">
+                            <p className="truncate font-semibold text-ink">
                               {user.name ?? "Unnamed user"}
                             </p>
                             <p className="truncate text-smoke text-xs">
@@ -119,19 +127,19 @@ function UsersPage() {
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell className="px-5 py-4">
-                        <Badge className="bg-lavender-wash text-indigo-ink">
+                      <TableCell className="px-5 py-16">
+                        <Badge className="bg-lavender text-iris">
                           {roleLabels[user.role ?? ""] ??
                             user.role ??
                             "Unassigned"}
                         </Badge>
                       </TableCell>
-                      <TableCell className="px-5 py-4 text-smoke text-xs">
+                      <TableCell className="px-5 py-16 text-smoke text-xs">
                         {formatDate(user.createdAt)}
                       </TableCell>
-                      <TableCell className="px-5 py-4 text-right">
+                      <TableCell className="px-5 py-16 text-right">
                         <Link
-                          className="font-medium text-indigo-ink text-xs hover:underline"
+                          className="font-semibold text-electric-blue text-xs hover:text-ink hover:underline"
                           params={{ id: user.id }}
                           to="/settings/users/$id"
                         >
@@ -160,7 +168,7 @@ function EmptyState({
 }) {
   return (
     <div className="px-6 py-16 text-center">
-      <p className="font-medium text-graphite text-sm">{title}</p>
+      <p className="font-semibold text-ink text-sm">{title}</p>
       <p className="mx-auto mt-2 max-w-sm text-smoke text-xs">{description}</p>
     </div>
   );
@@ -176,8 +184,8 @@ function UserAvatar({ name }: { name: string }) {
     .join("");
 
   return (
-    <Avatar className="size-9 bg-lavender-wash">
-      <AvatarFallback className="bg-lavender-wash font-medium text-indigo-ink text-xs">
+    <Avatar className="size-9 bg-lavender">
+      <AvatarFallback className="bg-lavender font-semibold text-iris text-xs">
         {initials || "?"}
       </AvatarFallback>
     </Avatar>

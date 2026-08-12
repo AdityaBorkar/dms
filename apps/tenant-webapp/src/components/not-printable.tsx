@@ -10,13 +10,13 @@ export function NotPrintable({ children }: NotPrintableProps) {
     <>
       <div
         aria-hidden="true"
-        className="hidden h-full w-full items-center justify-center bg-paper-white p-8 print:flex"
+        className="hidden h-full w-full items-center justify-center bg-paper p-32 print:flex"
       >
         <div className="mx-auto flex max-w-sm flex-col items-center gap-2 text-center">
-          <span className="flex size-12 items-center justify-center rounded-full bg-lavender-wash">
-            <ShieldAlert className="size-6 text-violet-pulse" />
+          <span className="flex size-12 items-center justify-center rounded-full bg-ice">
+            <ShieldAlert className="size-6 text-electric-blue" />
           </span>
-          <p className="font-medium text-graphite text-sm">
+          <p className="font-semibold text-ink text-sm">
             This content is protected to prevent unauthorized printing.
           </p>
         </div>

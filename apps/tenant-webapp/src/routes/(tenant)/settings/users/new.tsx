@@ -26,7 +26,7 @@ function NewUserPage() {
   );
 
   return (
-    <main className="bg-paper-white p-4 sm:p-8">
+    <main className="min-h-full bg-paper p-5 sm:p-32 lg:p-40">
       <NewEntityPage
         backHref="/settings/users"
         description="Create an account and give someone access to this workspace."

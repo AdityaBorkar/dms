@@ -22,7 +22,7 @@ function RouteComponent() {
 
   return (
     <NotPrintable>
-      <div className="flex min-h-svh flex-col bg-paper-white text-iron md:flex-row">
+      <div className="flex min-h-svh flex-col bg-paper text-ink md:flex-row">
         <SettingsSidebar
           onSignOut={handleSignOut}
           organization={organization}

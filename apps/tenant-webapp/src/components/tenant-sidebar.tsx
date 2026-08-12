@@ -15,7 +15,9 @@ import {
   Trash2,
   Workflow,
 } from "lucide-react";
+import { LayoutGroup } from "motion/react";
 
+import { SidebarHoverItem } from "@/components/sidebar-hover-item";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { WorkspaceSelector } from "@/components/workspace-selector";
@@ -72,55 +74,65 @@ export function TenantSidebar({
         aria-label="Main navigation"
         className="min-h-0 flex-1 overflow-y-auto px-4 pb-4"
       >
-        <SidebarSection>
-          <SidebarItem
-            href="/notifications"
-            icon={Bell}
-            label="Notifications"
-          />
-          <SidebarItem href="/tasks" icon={ListChecks} label="Tasks" />
-          <SidebarItem href="/workflows" icon={Workflow} label="Workflows" />
-          <SidebarItem href="/documents" icon={Files} label="All Documents" />
-          <SidebarItem
-            href="/document-classes"
-            icon={Tags}
-            label="Document Classes"
-          />
-          <div className="space-y-0.5">
-            {pinnedDocumentClasses.map((documentClass) => (
-              <SidebarItem
-                href="/document-classes"
-                icon={Pin}
-                key={documentClass}
-                label={documentClass}
-                nested
-              />
-            ))}
-          </div>
-          <SidebarItem
-            href="/document-views"
-            icon={LayoutList}
-            label="Document Views"
-          />
-          <div className="space-y-0.5">
-            {pinnedDocumentViews.map((documentView) => (
-              <SidebarItem
-                href="/document-views"
-                icon={Pin}
-                key={documentView}
-                label={documentView}
-                nested
-              />
-            ))}
-          </div>
-          <SidebarItem
-            href="/discussions"
-            icon={MessageSquare}
-            label="Discussions"
-          />
-          <SidebarItem href="/contacts" icon={ContactRound} label="Contacts" />
-          <SidebarItem href="/recycle-bin" icon={Trash2} label="Recycle Bin" />
-        </SidebarSection>
+        <LayoutGroup>
+          <SidebarSection>
+            <SidebarItem
+              href="/notifications"
+              icon={Bell}
+              label="Notifications"
+            />
+            <SidebarItem href="/tasks" icon={ListChecks} label="Tasks" />
+            <SidebarItem href="/workflows" icon={Workflow} label="Workflows" />
+            <SidebarItem href="/documents" icon={Files} label="All Documents" />
+            <SidebarItem
+              href="/document-classes"
+              icon={Tags}
+              label="Document Classes"
+            />
+            <div className="space-y-0.5">
+              {pinnedDocumentClasses.map((documentClass) => (
+                <SidebarItem
+                  href="/document-classes"
+                  icon={Pin}
+                  key={documentClass}
+                  label={documentClass}
+                  nested
+                />
+              ))}
+            </div>
+            <SidebarItem
+              href="/document-views"
+              icon={LayoutList}
+              label="Document Views"
+            />
+            <div className="space-y-0.5">
+              {pinnedDocumentViews.map((documentView) => (
+                <SidebarItem
+                  href="/document-views"
+                  icon={Pin}
+                  key={documentView}
+                  label={documentView}
+                  nested
+                />
+              ))}
+            </div>
+            <SidebarItem
+              href="/discussions"
+              icon={MessageSquare}
+              label="Discussions"
+            />
+            <SidebarItem
+              href="/contacts"
+              icon={ContactRound}
+              label="Contacts"
+            />
+            <SidebarItem
+              href="/recycle-bin"
+              icon={Trash2}
+              label="Recycle Bin"
+            />
+          </SidebarSection>
+        </LayoutGroup>
       </nav>
 
       <div className="border-ash border-t px-4 py-3">
@@ -200,26 +212,30 @@ function SidebarItem({
 
   if (href) {
     return (
-      <Button
-        className={`w-full justify-start rounded-md px-3 ${nested ? "pl-6 text-smoke" : "text-steel"}`}
-        nativeButton={false}
-        render={<Link to={href} />}
-        size="default"
-        variant="ghost"
-      >
-        {content}
-      </Button>
+      <SidebarHoverItem>
+        <Button
+          className={`w-full justify-start rounded-md bg-transparent px-3 hover:bg-transparent hover:text-graphite ${nested ? "pl-6 text-smoke" : "text-steel"}`}
+          nativeButton={false}
+          render={<Link to={href} />}
+          size="default"
+          variant="ghost"
+        >
+          {content}
+        </Button>
+      </SidebarHoverItem>
     );
   }
 
   return (
-    <Button
-      className={`w-full justify-start rounded-md px-3 ${nested ? "pl-6 text-smoke" : "text-steel"}`}
-      size="default"
-      type="button"
-      variant="ghost"
-    >
-      {content}
-    </Button>
+    <SidebarHoverItem>
+      <Button
+        className={`w-full justify-start rounded-md bg-transparent px-3 hover:bg-transparent hover:text-graphite ${nested ? "pl-6 text-smoke" : "text-steel"}`}
+        size="default"
+        type="button"
+        variant="ghost"
+      >
+        {content}
+      </Button>
+    </SidebarHoverItem>
   );
 }

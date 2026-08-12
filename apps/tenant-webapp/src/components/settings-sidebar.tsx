@@ -13,7 +13,9 @@ import {
   Ticket,
   Users,
 } from "lucide-react";
+import { LayoutGroup } from "motion/react";
 
+import { SidebarHoverItem } from "@/components/sidebar-hover-item";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { WorkspaceSelector } from "@/components/workspace-selector";
@@ -104,18 +106,20 @@ export function SettingsSidebar({
         aria-label="Settings navigation"
         className="min-h-0 flex-1 overflow-y-auto px-4 py-4"
       >
-        {sections.map((section) => (
-          <SidebarSection key={section.label} label={section.label}>
-            {section.items.map((item) => (
-              <SettingsSidebarItem
-                href={item.href}
-                icon={item.icon}
-                key={item.href}
-                label={item.label}
-              />
-            ))}
-          </SidebarSection>
-        ))}
+        <LayoutGroup>
+          {sections.map((section) => (
+            <SidebarSection key={section.label} label={section.label}>
+              {section.items.map((item) => (
+                <SettingsSidebarItem
+                  href={item.href}
+                  icon={item.icon}
+                  key={item.href}
+                  label={item.label}
+                />
+              ))}
+            </SidebarSection>
+          ))}
+        </LayoutGroup>
       </nav>
 
       <div className="border-ash border-t px-4 py-3">
@@ -176,16 +180,18 @@ function SettingsSidebarItem({
   const active = location.pathname === href;
 
   return (
-    <Button
-      aria-current={active ? "page" : undefined}
-      className={`w-full justify-start rounded-md px-3 text-left ${active ? "bg-lavender-wash font-medium text-violet-pulse" : "text-steel"}`}
-      nativeButton={false}
-      render={<Link aria-current={active ? "page" : undefined} to={href} />}
-      size="default"
-      variant={active ? "secondary" : "ghost"}
-    >
-      <Icon className="size-4 shrink-0" />
-      <span className="truncate">{label}</span>
-    </Button>
+    <SidebarHoverItem>
+      <Button
+        aria-current={active ? "page" : undefined}
+        className={`w-full justify-start rounded-md bg-transparent px-3 text-left hover:bg-transparent ${active ? "bg-lavender-wash font-medium text-violet-pulse" : "text-steel"}`}
+        nativeButton={false}
+        render={<Link aria-current={active ? "page" : undefined} to={href} />}
+        size="default"
+        variant={active ? "secondary" : "ghost"}
+      >
+        <Icon className="size-4 shrink-0" />
+        <span className="truncate">{label}</span>
+      </Button>
+    </SidebarHoverItem>
   );
 }

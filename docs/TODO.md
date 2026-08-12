@@ -7,6 +7,8 @@ Compact and appealing User Interface
 Proper Forms (using skills)
 Proper Tables (using skills)
 
+Run the command `bun run build` in `tenant-webapp` and debug the build errors and how to solve them.
+
 ---
 
 Start creating the module and orpc endpoints for the "users" page

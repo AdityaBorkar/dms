@@ -1,4 +1,4 @@
-import { ManagementPlane } from "@aspen-os/management-plane";
+import { ManagementPlane } from "@aspen-os/management";
 import { Organization } from "@aspen-os/organization";
 import type { IsolatedTenantConfig } from "@aspen-os/platform/server";
 import { IsolatedTenantPlatform } from "@aspen-os/platform/server";

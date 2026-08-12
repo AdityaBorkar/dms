@@ -1,6 +1,6 @@
 # TODO
 
-Debug adn solve the build errors
+Debug and solve the build errors
 
 Compact and appealing User Interface
 

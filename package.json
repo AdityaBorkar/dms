@@ -19,8 +19,5 @@
     "prepare": "husky",
     "update:deps": "taze -rw --maturity-period 3"
   },
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ]
+  "workspaces": ["packages/*", "apps/*"]
 }

@@ -2,12 +2,9 @@
 node_modules
 
 # build output
-*.tgz
 .output
-.nitro
 .wrangler
 .tanstack
-.source
 *.gen.ts
 
 # dotenv environment variable files
@@ -20,5 +17,14 @@ logs
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # caches
-.cache
+*.tgz
 *.tsbuildinfo
+.cache
+.DS_Store
+
+# AI
+.agents
+opencode.jsonc
+codedb.snapshot
+
+docs/.archive

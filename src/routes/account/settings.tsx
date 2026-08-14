@@ -1,12 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { PageHeader } from "@/components/page-header";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const Route = createFileRoute("/account/settings")({
   component: RouteComponent,
@@ -21,15 +16,15 @@ const sections = [
 
 function RouteComponent() {
   return (
-    <main className="min-h-full bg-paper p-5 sm:p-32 lg:p-40">
-      <div className="mx-auto max-w-4xl space-y-32">
+    <main className="bg-stone-canvas p-4 sm:p-8">
+      <div className="mx-auto max-w-4xl space-y-6">
         <PageHeader
           description="Manage your personal account and preferences."
           title="Account settings"
         />
-        <div className="grid gap-16 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2">
           {sections.map((section) => (
-            <Card className="border-0 bg-snow" key={section.title}>
+            <Card className="shadow-[var(--shadow-md)]" key={section.title}>
               <CardHeader>
                 <CardTitle>{section.title}</CardTitle>
                 <CardDescription>{section.description}</CardDescription>

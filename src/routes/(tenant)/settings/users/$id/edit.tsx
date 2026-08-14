@@ -2,11 +2,11 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { ArrowLeft, UsersRound } from "lucide-react";
 import { useCallback } from "react";
 
+import { UserForm, type UserFormValues } from "../-user-form";
 import { NewEntityPage } from "@/components/pages/new-entity";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { orpc } from "@/lib/orpc";
-import { UserForm, type UserFormValues } from "../-user-form";
 
 export const Route = createFileRoute("/(tenant)/settings/users/$id/edit")({
   component: EditUserPage,
@@ -26,7 +26,9 @@ function EditUserPage() {
 
   const handleSubmit = useCallback(
     async (values: UserFormValues) => {
-      if (!user) return;
+      if (!user) {
+        return;
+      }
 
       await orpc.users.update({
         id: user.id,
@@ -53,22 +55,16 @@ function EditUserPage() {
 
   if (!user) {
     return (
-      <main className="min-h-full bg-paper p-5 sm:p-32 lg:p-40">
+      <main className="bg-stone-canvas p-4 sm:p-8">
         <div className="mx-auto max-w-2xl space-y-6">
-          <Button
-            nativeButton={false}
-            render={<Link to="/settings/users" />}
-            variant="outline"
-          >
+          <Button nativeButton={false} render={<Link to="/settings/users" />} variant="outline">
             <ArrowLeft />
             Back to users
           </Button>
           <Card>
             <CardContent className="py-16 text-center">
-              <p className="font-semibold text-ink text-sm">
-                We could not find this user
-              </p>
-              <p className="mt-2 text-smoke text-xs">
+              <p className="text-sm font-medium text-ink-black">We could not find this user</p>
+              <p className="mt-2 text-xs text-warm-gray">
                 The user may have been removed from this workspace.
               </p>
             </CardContent>
@@ -81,7 +77,7 @@ function EditUserPage() {
   const currentUser = user;
 
   return (
-    <main className="min-h-full bg-paper p-5 sm:p-32 lg:p-40">
+    <main className="bg-stone-canvas p-4 sm:p-8">
       <NewEntityPage
         backHref={`/settings/users/${currentUser.id}`}
         description="Update this user's name or workspace access level."

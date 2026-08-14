@@ -24,27 +24,25 @@ function RouteComponent() {
   const getOrganizationUrl = (slug: string) => {
     const protocol = env.PUBLIC_WEB_SSL ? "https" : "http";
     const port = env.PUBLIC_WEB_PORT ? `:${env.PUBLIC_WEB_PORT}` : "";
-    const url = new URL(
-      `${protocol}://${slug}.${env.PUBLIC_WEB_DOMAIN}${port}/dashboard`,
-    );
+    const url = new URL(`${protocol}://${slug}.${env.PUBLIC_WEB_DOMAIN}${port}/dashboard`);
 
     return url.toString();
   };
 
   return (
-    <main className="flex min-h-svh items-center justify-center bg-snow px-16 py-12 font-sans text-ink">
+    <main className="flex min-h-svh items-center justify-center bg-stone-canvas px-4 py-12 font-sans text-ink-black">
       <div className="w-full max-w-lg">
         <div className="mb-8 flex flex-col items-center text-center">
-          <span className="flex size-12 items-center justify-center rounded-full bg-midnight text-paper">
+          <span className="flex size-10 items-center justify-center rounded-full bg-ink-black text-white">
             <Building2 className="size-5" />
           </span>
-          <p className="mt-6 font-semibold text-electric-blue text-eyebrow uppercase tracking-[0.02em]">
+          <p className="mt-6 text-xs font-medium tracking-[0.18em] text-warm-gray uppercase">
             Tenant Application
           </p>
-          <h1 className="mt-3 font-semibold text-heading text-ink tracking-[-0.03em]">
+          <h1 className="mt-3 font-roobert text-2xl font-medium tracking-[-0.8px] text-ink-black">
             Choose your organization
           </h1>
-          <p className="mt-2 max-w-sm text-body-sm text-smoke">
+          <p className="mt-2 max-w-sm text-sm text-warm-gray">
             Select an organization to continue to its sign-in page.
           </p>
         </div>
@@ -53,36 +51,34 @@ function RouteComponent() {
           <div className="space-y-3">
             {organizations.map((organization) => (
               <Card
-                className="border-0 shadow-[var(--shadow-subtle)]"
+                className="shadow-[var(--shadow-md)]"
                 key={organization.id}
                 render={
                   <a
-                    className="group flex min-h-64 items-center justify-between rounded-2xl px-5 py-16 transition-colors hover:bg-snow"
+                    aria-label={organization.name}
+                    className="group flex min-h-16 items-center justify-between rounded-lg px-4 py-3 transition-colors hover:border-cyan-edge/60 hover:bg-muted"
                     href={getOrganizationUrl(organization.slug)}
                   />
                 }
               >
                 <span className="min-w-0">
-                  <span className="block truncate font-semibold text-ink text-sm">
+                  <span className="block truncate text-sm font-medium text-ink-black">
                     {organization.name}
                   </span>
-                  <span className="mt-1 block truncate text-fog text-xs">
+                  <span className="mt-1 block truncate text-xs text-warm-gray">
                     {organization.slug}
                   </span>
                 </span>
-                <ArrowRight className="ml-4 size-4 shrink-0 text-fog transition-transform group-hover:translate-x-0.5 group-hover:text-electric-blue" />
+                <ArrowRight className="ml-4 size-4 shrink-0 text-warm-gray transition-transform group-hover:translate-x-0.5 group-hover:text-cyan-edge" />
               </Card>
             ))}
           </div>
         ) : (
-          <Card className="border-0 shadow-[var(--shadow-subtle)]">
+          <Card className="shadow-[var(--shadow-md)]">
             <CardHeader className="items-center pt-8 text-center">
-              <CardTitle className="text-sm">
-                No organizations available
-              </CardTitle>
-              <p className="mt-1 text-body-sm text-smoke">
-                Contact your administrator if you need access to an
-                organization.
+              <CardTitle className="text-sm">No organizations available</CardTitle>
+              <p className="mt-1 text-sm text-warm-gray">
+                Contact your administrator if you need access to an organization.
               </p>
             </CardHeader>
           </Card>

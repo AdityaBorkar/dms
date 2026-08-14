@@ -1,5 +1,5 @@
-name: healthcare-clinic
-description: Healthcare Clinic
+name: dms
+description: Document Management System
 main: infra/index.ts
 runtime: bun
 options:

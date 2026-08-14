@@ -1,7 +1,6 @@
 import { ManagementPlane } from "@aspen-os/management";
 import { Organization } from "@aspen-os/organization";
-import type { IsolatedTenantConfig } from "@aspen-os/platform/server";
-import { IsolatedTenantPlatform } from "@aspen-os/platform/server";
+import { type IsolatedTenantConfig, IsolatedTenantPlatform } from "@aspen-os/platform/server";
 
 import { env } from "../env";
 
@@ -17,8 +16,7 @@ export function isTrustedWebOrigin(origin: string): boolean {
     return (
       candidate.protocol === `${protocol}:` &&
       candidate.port === port &&
-      (candidate.hostname === hostname ||
-        candidate.hostname.endsWith(`.${hostname}`))
+      (candidate.hostname === hostname || candidate.hostname.endsWith(`.${hostname}`))
     );
   } catch {
     return false;
@@ -41,6 +39,12 @@ const auth = {
   },
   secret: env.AUTH_SECRET,
   session: { expiresIn: 60 * 60 * 24 * 7 },
+  socialProviders: {
+    google: {
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+    },
+  },
 } satisfies IsolatedTenantConfig["auth"];
 
 const kvStore = {} satisfies IsolatedTenantConfig["kvStore"];
@@ -83,19 +87,15 @@ const management_plane = ManagementPlane.create(undefined);
 
 const organization = Organization.create({ country: "INDIA" });
 
-// const hr = HumanResources.create();
+// Const hr = HumanResources.create();
 
-// const inventory = Inventory.create({
-//   service_name: "Pharmacy"
+// Const inventory = Inventory.create({
+//   Service_name: "Pharmacy"
 // });
 
 // Platform
 
-export const p = IsolatedTenantPlatform.create(
-  { auth, db, kvStore, logs, pubsub, rpc, storage },
-  [management_plane, organization],
-);
-
-// p.organization.
-
-// p.management.
+export const pm = IsolatedTenantPlatform.create({ auth, db, kvStore, logs, pubsub, rpc, storage }, [
+  management_plane,
+  organization,
+]);

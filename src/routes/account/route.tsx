@@ -6,7 +6,7 @@ export const Route = createFileRoute("/account")({
 
 function RouteComponent() {
   return (
-    <main className="min-h-svh bg-snow">
+    <main className="min-h-svh bg-stone-canvas">
       <Outlet />
     </main>
   );

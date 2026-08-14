@@ -1,10 +1,4 @@
-import {
-  type ChangeEvent,
-  type FormEvent,
-  useCallback,
-  useId,
-  useState,
-} from "react";
+import { type ChangeEvent, type FormEvent, useCallback, useId, useState } from "react";
 
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -33,11 +27,7 @@ type OrganizationFormProps = {
   onSubmit: (values: OrganizationFormValues) => Promise<void>;
 };
 
-export function OrganizationForm({
-  initialValues,
-  onCancel,
-  onSubmit,
-}: OrganizationFormProps) {
+export function OrganizationForm({ initialValues, onCancel, onSubmit }: OrganizationFormProps) {
   const [values, setValues] = useState(initialValues);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -47,10 +37,9 @@ export function OrganizationForm({
   const accentColorId = useId();
 
   const handleChange = useCallback(
-    (key: keyof OrganizationFormValues) =>
-      (event: ChangeEvent<HTMLInputElement>) => {
-        setValues((current) => ({ ...current, [key]: event.target.value }));
-      },
+    (key: keyof OrganizationFormValues) => (event: ChangeEvent<HTMLInputElement>) => {
+      setValues((current) => ({ ...current, [key]: event.target.value }));
+    },
     [],
   );
 
@@ -64,9 +53,7 @@ export function OrganizationForm({
         await onSubmit(values);
       } catch (submitError) {
         setError(
-          submitError instanceof Error
-            ? submitError.message
-            : "Unable to save organization",
+          submitError instanceof Error ? submitError.message : "Unable to save organization",
         );
       } finally {
         setIsSubmitting(false);
@@ -76,13 +63,10 @@ export function OrganizationForm({
   );
 
   return (
-    <form className="grid gap-16" onSubmit={handleSubmit}>
-      <div className="grid gap-16 sm:grid-cols-2">
+    <form className="grid gap-4" onSubmit={handleSubmit}>
+      <div className="grid gap-4 sm:grid-cols-2">
         <div className="grid gap-1.5">
-          <Label
-            className="font-semibold text-[11px] text-smoke uppercase tracking-[0.02em]"
-            htmlFor={nameId}
-          >
+          <Label className="text-xs text-warm-gray" htmlFor={nameId}>
             Organization name
           </Label>
           <Input
@@ -95,10 +79,7 @@ export function OrganizationForm({
         </div>
 
         <div className="grid gap-1.5">
-          <Label
-            className="font-semibold text-[11px] text-smoke uppercase tracking-[0.02em]"
-            htmlFor={slugId}
-          >
+          <Label className="text-xs text-warm-gray" htmlFor={slugId}>
             Slug
           </Label>
           <Input
@@ -108,7 +89,7 @@ export function OrganizationForm({
             required
             value={values.slug}
           />
-          <p className="text-[11px] text-fog">
+          <p className="text-[11px] text-warm-gray">
             Used for this workspace's subdomain. Changing it changes your URL.
           </p>
         </div>
@@ -159,10 +140,7 @@ export function OrganizationForm({
           value={values.taxId}
         />
         <div className="grid gap-1.5">
-          <Label
-            className="font-semibold text-[11px] text-smoke uppercase tracking-[0.02em]"
-            htmlFor={foundedDateId}
-          >
+          <Label className="text-xs text-warm-gray" htmlFor={foundedDateId}>
             Founded date
           </Label>
           <Input
@@ -186,10 +164,7 @@ export function OrganizationForm({
         />
 
         <div className="grid gap-1.5">
-          <Label
-            className="font-semibold text-[11px] text-smoke uppercase tracking-[0.02em]"
-            htmlFor={accentColorId}
-          >
+          <Label className="text-xs text-warm-gray" htmlFor={accentColorId}>
             Accent color
           </Label>
           <Input
@@ -203,11 +178,11 @@ export function OrganizationForm({
 
       {error ? (
         <Alert variant="destructive">
-          <AlertDescription className="text-carbon">{error}</AlertDescription>
+          <AlertDescription className="text-destructive">{error}</AlertDescription>
         </Alert>
       ) : null}
 
-      <div className="flex flex-col-reverse justify-end gap-2 border-mist border-t pt-5 sm:flex-row">
+      <div className="flex flex-col-reverse justify-end gap-2 border-t border-stone-border pt-4 sm:flex-row">
         <Button onClick={onCancel} type="button" variant="outline">
           Cancel
         </Button>
@@ -235,19 +210,10 @@ function TextField({
   const id = useId();
   return (
     <div className="grid gap-1.5">
-      <Label
-        className="font-semibold text-[11px] text-smoke uppercase tracking-[0.02em]"
-        htmlFor={id}
-      >
+      <Label className="text-xs text-warm-gray" htmlFor={id}>
         {label}
       </Label>
-      <Input
-        id={id}
-        onChange={onChange}
-        placeholder={placeholder}
-        type={type}
-        value={value}
-      />
+      <Input id={id} onChange={onChange} placeholder={placeholder} type={type} value={value} />
     </div>
   );
 }

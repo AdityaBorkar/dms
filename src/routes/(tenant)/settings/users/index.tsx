@@ -34,35 +34,24 @@ const roleLabels: Record<string, string> = {
   owner: "Owner",
 };
 
-type WorkspaceUser = {
-  createdAt: Date | string;
-  email: string | null;
-  id: string;
-  name: string | null;
-  role: string | null;
-};
-
 function UsersPage() {
   const users = Route.useLoaderData();
   const count = users?.length ?? 0;
 
   return (
-    <main className="min-h-full bg-paper p-5 sm:p-32 lg:p-40">
-      <div className="mx-auto max-w-6xl space-y-32">
+    <main className="bg-stone-canvas p-4 sm:p-8">
+      <div className="mx-auto max-w-6xl space-y-6">
         <PageHeader
           actions={
             <div className="flex items-center gap-2">
               <Badge
-                className="hidden items-center gap-2 rounded-full border-mist bg-snow px-3 py-1.5 text-smoke text-xs sm:inline-flex"
+                className="hidden items-center gap-2 rounded-full border-stone-border bg-white px-3 py-1.5 text-xs text-warm-gray sm:inline-flex"
                 variant="outline"
               >
                 <UsersRound className="size-4" />
                 {count} {count === 1 ? "user" : "users"}
               </Badge>
-              <Button
-                nativeButton={false}
-                render={<Link to="/settings/users/new" />}
-              >
+              <Button nativeButton={false} render={<Link to="/settings/users/new" />}>
                 <Plus />
                 Add user
               </Button>
@@ -77,11 +66,11 @@ function UsersPage() {
             <div className="flex items-center justify-between gap-3">
               <div>
                 <CardTitle>Workspace users</CardTitle>
-                <p className="mt-1 text-body-sm text-smoke">
+                <p className="mt-1 text-xs text-warm-gray">
                   Roles and access are provisioned through Aspen.
                 </p>
               </div>
-              <UserPlus className="size-5 text-smoke" />
+              <UserPlus className="size-5 text-warm-gray" />
             </div>
           </CardHeader>
           <CardContent className="p-0">
@@ -97,49 +86,41 @@ function UsersPage() {
               />
             ) : (
               <Table className="min-w-[680px]">
-                <TableHeader className="bg-snow">
+                <TableHeader className="bg-stone-muted/30">
                   <TableRow className="hover:bg-transparent">
-                    <TableHead className="px-5 text-smoke text-xs">
-                      User
-                    </TableHead>
-                    <TableHead className="px-5 text-smoke text-xs">
-                      Role
-                    </TableHead>
-                    <TableHead className="px-5 text-smoke text-xs">
-                      Added
-                    </TableHead>
-                    <TableHead className="px-5 text-right text-smoke text-xs" />
+                    <TableHead className="px-5 text-xs text-warm-gray">User</TableHead>
+                    <TableHead className="px-5 text-xs text-warm-gray">Role</TableHead>
+                    <TableHead className="px-5 text-xs text-warm-gray">Added</TableHead>
+                    <TableHead className="px-5 text-right text-xs text-warm-gray" />
                   </TableRow>
                 </TableHeader>
-                <TableBody className="divide-y divide-mist">
-                  {users.map((user: WorkspaceUser) => (
-                    <TableRow className="hover:bg-snow" key={user.id}>
-                      <TableCell className="px-5 py-16">
+                <TableBody className="divide-y divide-stone-border">
+                  {users.map((user) => (
+                    <TableRow className="hover:bg-stone-muted/20" key={user.id}>
+                      <TableCell className="px-5 py-4">
                         <div className="flex items-center gap-3">
                           <UserAvatar name={user.name ?? user.email ?? "?"} />
                           <div className="min-w-0">
-                            <p className="truncate font-semibold text-ink">
+                            <p className="truncate font-medium text-ink-black">
                               {user.name ?? "Unnamed user"}
                             </p>
-                            <p className="truncate text-smoke text-xs">
+                            <p className="truncate text-xs text-warm-gray">
                               {user.email ?? "No email"}
                             </p>
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell className="px-5 py-16">
-                        <Badge className="bg-lavender text-iris">
-                          {roleLabels[user.role ?? ""] ??
-                            user.role ??
-                            "Unassigned"}
+                      <TableCell className="px-5 py-4">
+                        <Badge className="bg-sky-wash/40 text-cyan-edge">
+                          {roleLabels[user.role ?? ""] ?? user.role ?? "Unassigned"}
                         </Badge>
                       </TableCell>
-                      <TableCell className="px-5 py-16 text-smoke text-xs">
+                      <TableCell className="px-5 py-4 text-xs text-warm-gray">
                         {formatDate(user.createdAt)}
                       </TableCell>
-                      <TableCell className="px-5 py-16 text-right">
+                      <TableCell className="px-5 py-4 text-right">
                         <Link
-                          className="font-semibold text-electric-blue text-xs hover:text-ink hover:underline"
+                          className="text-xs font-medium text-cyan-edge hover:underline"
                           params={{ id: user.id }}
                           to="/settings/users/$id"
                         >
@@ -158,23 +139,17 @@ function UsersPage() {
   );
 }
 
-// biome-ignore lint/style/useComponentExportOnlyModules: route modules export a Route config alongside render helpers
-function EmptyState({
-  description,
-  title,
-}: {
-  description: string;
-  title: string;
-}) {
+// Biome-ignore lint/style/useComponentExportOnlyModules: route modules export a Route config alongside render helpers
+function EmptyState({ description, title }: { description: string; title: string }) {
   return (
     <div className="px-6 py-16 text-center">
-      <p className="font-semibold text-ink text-sm">{title}</p>
-      <p className="mx-auto mt-2 max-w-sm text-smoke text-xs">{description}</p>
+      <p className="text-sm font-medium text-ink-black">{title}</p>
+      <p className="mx-auto mt-2 max-w-sm text-xs text-warm-gray">{description}</p>
     </div>
   );
 }
 
-// biome-ignore lint/style/useComponentExportOnlyModules: route modules export a Route config alongside render helpers
+// Biome-ignore lint/style/useComponentExportOnlyModules: route modules export a Route config alongside render helpers
 function UserAvatar({ name }: { name: string }) {
   const initials = name
     .split(/\s+/)
@@ -184,8 +159,8 @@ function UserAvatar({ name }: { name: string }) {
     .join("");
 
   return (
-    <Avatar className="size-9 bg-lavender">
-      <AvatarFallback className="bg-lavender font-semibold text-iris text-xs">
+    <Avatar className="size-9 bg-stone-muted/40">
+      <AvatarFallback className="bg-stone-muted/40 text-xs font-medium text-warm-gray">
         {initials || "?"}
       </AvatarFallback>
     </Avatar>
@@ -193,7 +168,9 @@ function UserAvatar({ name }: { name: string }) {
 }
 
 function formatDate(value: Date | string | null | undefined) {
-  if (!value) return "—";
+  if (!value) {
+    return "—";
+  }
   return new Intl.DateTimeFormat(undefined, {
     day: "numeric",
     month: "short",

@@ -1,15 +1,9 @@
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { AlertCircle, Building2, Loader2 } from "lucide-react";
-import {
-  type ChangeEvent,
-  type FormEvent,
-  useCallback,
-  useId,
-  useState,
-} from "react";
+import { type ChangeEvent, type FormEvent, useCallback, useId, useState } from "react";
 import { object, optional, string } from "valibot";
 
-import { p } from "@/aspen/client";
+import { pm } from "@/aspen/client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -28,10 +22,9 @@ export const Route = createFileRoute("/")({
   },
   component: LoginPage,
   loader: async ({ location }) => {
-    const redirectTo = new URL(
-      location.href,
-      "http://tenant-application.local",
-    ).searchParams.get("redirect");
+    const redirectTo = new URL(location.href, "http://tenant-application.local").searchParams.get(
+      "redirect",
+    );
     const data = await orpc.organizations.bySubdomain().catch(() => ({
       organization: null,
       subdomain: null,
@@ -54,35 +47,33 @@ function LoginPage() {
   const { organization, subdomain } = data;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [showEmailForm, setShowEmailForm] = useState(false);
   const emailId = useId();
   const passwordId = useId();
 
   const handleEmailChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value),
+    (ev: ChangeEvent<HTMLInputElement>) => setEmail(ev.target.value),
     [],
   );
   const handlePasswordChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value),
+    (ev: ChangeEvent<HTMLInputElement>) => setPassword(ev.target.value),
     [],
   );
 
   const onSubmit = useCallback(
-    async (e: FormEvent) => {
-      e.preventDefault();
-      setError(null);
+    async (ev: FormEvent) => {
+      ev.preventDefault();
+      setErr(null);
       setLoading(true);
 
-      const { error } = await p.auth.client.signIn.email({ email, password });
+      const { error } = await pm.auth.client.signIn.email({ email, password });
       if (error) {
-        setError(error.message ?? "Login failed");
+        setErr(error.message ?? "Login failed");
       } else {
         const target =
-          redirectTo?.startsWith("/") && !redirectTo.startsWith("//")
-            ? redirectTo
-            : "/dashboard";
+          redirectTo?.startsWith("/") && !redirectTo.startsWith("//") ? redirectTo : "/dashboard";
         navigate({ to: target });
       }
 
@@ -92,14 +83,14 @@ function LoginPage() {
   );
 
   const showUnavailableMethod = useCallback((method: string) => {
-    setError(`${method} sign-in is not configured for this workspace.`);
+    setErr(`${method} sign-in is not configured for this workspace.`);
   }, []);
   const handleBackToOptions = useCallback(() => {
-    setError(null);
+    setErr(null);
     setShowEmailForm(false);
   }, []);
   const handleEmailOption = useCallback(() => {
-    setError(null);
+    setErr(null);
     setShowEmailForm(true);
   }, []);
   const handleGoogleOption = useCallback(
@@ -119,21 +110,21 @@ function LoginPage() {
     const apexUrl = `${env.PUBLIC_WEB_SSL ? "https" : "http"}://${env.PUBLIC_WEB_DOMAIN}${env.PUBLIC_WEB_PORT ? `:${env.PUBLIC_WEB_PORT}` : ""}`;
 
     return (
-      <main className="flex min-h-svh items-center justify-center bg-snow px-16 py-12 font-sans text-ink">
-        <Card className="w-full max-w-sm border-0 p-6 text-center shadow-[var(--shadow-subtle)]">
-          <span className="mx-auto mb-5 flex size-10 items-center justify-center rounded-full bg-ice text-ink">
+      <main className="flex min-h-svh items-center justify-center bg-stone-canvas px-4 py-12 font-sans text-ink-black">
+        <Card className="w-full max-w-sm p-6 text-center shadow-[var(--shadow-md)]">
+          <span className="mx-auto mb-5 flex size-10 items-center justify-center rounded-full bg-stone-muted/40 text-ink-black">
             <Building2 className="size-5" />
           </span>
-          <h1 className="font-semibold text-ink text-subheading tracking-[-0.03em]">
+          <h1 className="font-roobert text-lg font-medium tracking-[-0.8px] text-ink-black">
             Organization: {subdomain}
           </h1>
-          <p className="mt-2 text-body-sm text-smoke">
+          <p className="mt-2 text-sm text-warm-gray">
             This organization does not exist or is no longer active.
           </p>
           <Button
             className="mt-6 w-full"
             nativeButton={false}
-            render={<a href={apexUrl} />}
+            render={<a aria-label="Return to Global Sign-In Page" href={apexUrl} />}
             size="lg"
           >
             Return to Global Sign-In Page
@@ -144,37 +135,29 @@ function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-svh items-center justify-center bg-snow px-16 py-12 font-sans text-ink">
-      <div className="w-full max-w-md rounded-3xl bg-paper p-6 shadow-[var(--shadow-subtle)] sm:p-10">
+    <main className="flex min-h-svh items-center justify-center bg-stone-canvas px-4 py-12 font-sans text-ink-black">
+      <div className="w-full max-w-72">
         <div className="flex flex-col items-center">
-          <span className="flex size-12 items-center justify-center overflow-hidden rounded-full bg-midnight text-paper">
+          <span className="flex size-10 items-center justify-center overflow-hidden rounded-full bg-ink-black text-white">
             <Building2 className="size-5" />
           </span>
-          <p className="mt-7 font-semibold text-electric-blue text-eyebrow uppercase tracking-[0.02em]">
-            Secure workspace
-          </p>
-          <h1 className="mt-3 text-center font-semibold text-3xl text-ink tracking-[-0.03em]">
+          <h1 className="mt-9 font-roobert text-lg font-medium tracking-[-0.8px] text-ink-black">
             Log in to {organization?.name ?? "Tenant Application"}
           </h1>
         </div>
 
         {showEmailForm ? (
-          <form className="mt-5 space-y-16" onSubmit={onSubmit}>
-            {!!error && (
+          <form className="mt-5 space-y-4" onSubmit={onSubmit}>
+            {Boolean(err) && (
               <Alert variant="destructive">
                 <AlertCircle className="size-4 shrink-0" />
-                <AlertDescription className="font-medium text-carbon">
-                  {error}
-                </AlertDescription>
+                <AlertDescription className="font-medium text-destructive">{err}</AlertDescription>
               </Alert>
             )}
 
             <div className="space-y-3">
               <div>
-                <Label
-                  className="mb-1.5 block font-semibold text-[11px] text-smoke uppercase tracking-[0.02em]"
-                  htmlFor={emailId}
-                >
+                <Label className="mb-1.5 block text-xs" htmlFor={emailId}>
                   Email
                 </Label>
                 <Input
@@ -191,10 +174,7 @@ function LoginPage() {
               </div>
 
               <div>
-                <Label
-                  className="mb-1.5 block font-semibold text-[11px] text-smoke uppercase tracking-[0.02em]"
-                  htmlFor={passwordId}
-                >
+                <Label className="mb-1.5 block text-xs" htmlFor={passwordId}>
                   Password
                 </Label>
                 <Input
@@ -210,12 +190,7 @@ function LoginPage() {
               </div>
             </div>
 
-            <Button
-              className="w-full"
-              disabled={loading}
-              size="lg"
-              type="submit"
-            >
+            <Button className="w-full" disabled={loading} size="lg" type="submit">
               {loading ? (
                 <>
                   <Loader2 className="mr-2 size-4 animate-spin" />
@@ -226,7 +201,7 @@ function LoginPage() {
               )}
             </Button>
             <Button
-              className="block w-full py-1 text-center text-fog text-xs hover:text-ink"
+              className="block w-full py-1 text-center text-xs text-warm-gray hover:text-ink-black"
               onClick={handleBackToOptions}
               size="xs"
               type="button"
@@ -236,21 +211,14 @@ function LoginPage() {
             </Button>
           </form>
         ) : (
-          <div className="mt-5 space-y-16">
-            {!!error && (
+          <div className="mt-5 space-y-4">
+            {Boolean(err) && (
               <Alert variant="destructive">
                 <AlertCircle className="size-4 shrink-0" />
-                <AlertDescription className="font-medium text-carbon">
-                  {error}
-                </AlertDescription>
+                <AlertDescription className="font-medium text-destructive">{err}</AlertDescription>
               </Alert>
             )}
-            <Button
-              className="w-full"
-              onClick={handleGoogleOption}
-              size="lg"
-              type="button"
-            >
+            <Button className="w-full" onClick={handleGoogleOption} size="lg" type="button">
               Continue with Google
             </Button>
             <Button

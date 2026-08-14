@@ -14,13 +14,7 @@ import {
 } from "lucide-react";
 
 import { PageHeader } from "@/components/page-header";
-import {
-  Card,
-  CardAction,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardAction, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const Route = createFileRoute("/(tenant)/settings/")({
   component: SettingsPage,
@@ -113,20 +107,20 @@ type Service = (typeof sections)[number]["items"][number];
 
 function SettingsPage() {
   return (
-    <main className="min-h-full bg-paper p-5 sm:p-32 lg:p-40">
-      <div className="mx-auto max-w-6xl space-y-32">
+    <main className="bg-stone-canvas p-4 sm:p-8">
+      <div className="mx-auto max-w-6xl space-y-8">
         <PageHeader
           description="Manage your workspace services and configuration."
           title="Settings"
         />
 
-        <div className="space-y-32">
+        <div className="space-y-8">
           {sections.map((section) => (
             <section key={section.label}>
-              <h2 className="mb-3 font-semibold text-[11px] text-electric-blue uppercase tracking-[0.02em]">
+              <h2 className="mb-3 text-[10px] font-medium tracking-[0.14em] text-warm-gray uppercase">
                 {section.label}
               </h2>
-              <div className="grid gap-16 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {section.items.map((item) => (
                   <ServiceCard item={item} key={item.href} />
                 ))}
@@ -139,21 +133,21 @@ function SettingsPage() {
   );
 }
 
-// biome-ignore lint/style/useComponentExportOnlyModules: route modules export a Route config alongside render helpers
+// Biome-ignore lint/style/useComponentExportOnlyModules: route modules export a Route config alongside render helpers
 function ServiceCard({ item }: { item: Service }) {
   const Icon = item.icon;
 
   return (
-    <Link className="group/card block rounded-2xl" to={item.href}>
-      <Card className="h-full border-0 bg-snow transition-colors hover:bg-ice/50">
+    <Link className="group/card block rounded-lg" to={item.href}>
+      <Card className="h-full shadow-[var(--shadow-md)] transition-colors hover:bg-muted">
         <CardHeader>
-          <span className="flex size-11 items-center justify-center rounded-2xl bg-lavender text-iris">
-            <Icon className="size-5" />
+          <span className="flex size-10 items-center justify-center rounded-lg bg-sky-wash/40 text-cyan-edge">
+            <Icon className="size-5 text-cyan-edge" />
           </span>
-          <CardTitle className="text-subheading">{item.label}</CardTitle>
+          <CardTitle>{item.label}</CardTitle>
           <CardDescription>{item.description}</CardDescription>
           <CardAction>
-            <ChevronRight className="size-4 text-smoke transition-transform group-hover/card:translate-x-0.5" />
+            <ChevronRight className="size-4 text-warm-gray transition-transform group-hover/card:translate-x-0.5" />
           </CardAction>
         </CardHeader>
       </Card>

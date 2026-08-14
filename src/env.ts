@@ -19,6 +19,8 @@ export const env = createEnv({
     DB_PORT: z.coerce.number().min(1),
     DB_SSL: z.stringbool(),
     DB_USER: z.string().min(1),
+    GOOGLE_CLIENT_ID: z.string().min(1),
+    GOOGLE_CLIENT_SECRET: z.string().min(1),
     STORAGE_ACCESS_KEY: z.string().min(1),
     STORAGE_BUCKET: z.string().min(1),
     STORAGE_ENDPOINT: z.string().min(1),
